@@ -9,5 +9,8 @@ namespace Project.Common.UI
 
         public void Draw(string objectName) =>
             _textView.DrawText($"{objectName} interact");
+
+        public void Reset() =>
+            _textView.DrawText("");
     }
 }

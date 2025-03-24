@@ -3,6 +3,7 @@
     public enum ObjectType
     {
         Chair,
+        Monitor,
     }
 }
 
