@@ -64,6 +64,8 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
+		private bool _isMoving = true;
+		private bool _isLooked = true;
 	
 #if ENABLE_INPUT_SYSTEM
 		private PlayerInput _playerInput;
@@ -112,6 +114,9 @@ namespace StarterAssets
 
 		private void Update()
 		{
+			if (_isMoving == false)
+				return;
+			
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
@@ -119,6 +124,9 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
+			if (_isLooked == false) 
+				return;
+			
 			CameraRotation();
 		}
 
@@ -264,5 +272,17 @@ namespace StarterAssets
 			// when selected, draw a gizmo in the position of, and matching radius of, the grounded collider
 			Gizmos.DrawSphere(new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z), GroundedRadius);
 		}
+
+		public void EnableMoving() =>
+			_isMoving = true;
+
+		public void DisabelMoving() =>
+			_isMoving = false;
+
+		public void EnableLooked() =>
+			_isLooked = true;
+
+		public void DisableLooked() =>
+			_isLooked = false;
 	}
 }

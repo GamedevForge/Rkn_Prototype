@@ -8,12 +8,12 @@ namespace Project.Common.Installers
     public class ProjectInstaller : MonoInstaller
     {
         [SerializeField] private ObjectsData _objectsData;
-        [SerializeField] private PlayerRayCastData _playerData;
+        [SerializeField] private PlayerRayCastData _playerRayCastData;
         
         public override void InstallBindings()
         {
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
-            Container.Bind<PlayerRayCastData>().FromInstance(_playerData).AsSingle();
+            Container.Bind<PlayerRayCastData>().FromInstance(_playerRayCastData).AsSingle();
         }
     }
 

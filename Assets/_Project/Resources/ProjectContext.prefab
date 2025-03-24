@@ -75,4 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectsData: {fileID: 11400000, guid: c9cb63d13c2275d4cb9c1e774f1ecdd5, type: 2}
-  _playerData: {fileID: 11400000, guid: c43e3f65865b54847a0faa99b2498297, type: 2}
+  _playerRayCastData: {fileID: 11400000, guid: 53f076ce7d6e5a14ebda09ff34ac8eb9, type: 2}
