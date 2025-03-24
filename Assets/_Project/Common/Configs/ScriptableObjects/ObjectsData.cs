@@ -9,15 +9,4 @@ namespace Project.Common.Configs
     {
         [field: SerializeField] public Dictionary<Core.ObjectType, ObjectConfig> Configs { get; private set; }    
     }
-
-    public class ObjectsDataService
-    {
-        private readonly ObjectsData _objectsData;
-
-        public ObjectsDataService(ObjectsData objectsData) =>
-            _objectsData = objectsData;
-
-        public ObjectConfig GetObjectConfig(Core.ObjectType objectType) =>
-            _objectsData.Configs[objectType];
-    }
 }

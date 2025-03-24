@@ -1,9 +1,20 @@
+using Project.Common.Configs;
 using UnityEngine;
 using Zenject;
 
-public class ProjectInstaller : MonoInstaller
+namespace Project.Common.Installers
 {
-    public override void InstallBindings()
+    
+    public class ProjectInstaller : MonoInstaller
     {
+        [SerializeField] private ObjectsData _objectsData;
+        [SerializeField] private PlayerRayCastData _playerData;
+        
+        public override void InstallBindings()
+        {
+            Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
+            Container.Bind<PlayerRayCastData>().FromInstance(_playerData).AsSingle();
+        }
     }
+
 }
