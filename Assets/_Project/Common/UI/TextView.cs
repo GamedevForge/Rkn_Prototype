@@ -1,11 +1,14 @@
 using TMPro;
 using UnityEngine;
 
-[RequireComponent (typeof(TMP_Text))]
-public class TextView : MonoBehaviour
-{
-    private TMP_Text Text => GetComponent<TMP_Text>();
+namespace Project.Common.UI
+{ 
+    [RequireComponent (typeof(TMP_Text))]
+    public class TextView : MonoBehaviour
+    {
+        private TMP_Text Text => GetComponent<TMP_Text>();
 
-    public void DrawText(string text) =>
-        Text.text = text;
+        public void DrawText(string text) =>
+            Text.text = text;
+    }
 }

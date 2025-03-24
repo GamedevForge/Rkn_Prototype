@@ -1,9 +1,16 @@
 using UnityEngine;
 using Zenject;
+using Project.Common.UI;
 
-public class CoreInstaller : MonoInstaller
+namespace Project.Common.Installers
 {
-    public override void InstallBindings()
+    public class CoreInstaller : MonoInstaller
     {
+        [SerializeField] private TextView _interactiveObjectsTextView;
+    
+        public override void InstallBindings()
+        {
+            Container.Bind<InteractiveObjectsTextController>().AsSingle().WithArguments(_interactiveObjectsTextView);
+        }
     }
 }
