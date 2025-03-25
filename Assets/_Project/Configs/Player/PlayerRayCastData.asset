@@ -21,7 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  <Distance>k__BackingField: 10
+  <Distance>k__BackingField: 5
   <InteractableObjectLayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 64

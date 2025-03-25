@@ -3,6 +3,7 @@ using Zenject;
 using Project.Common.UI;
 using StarterAssets;
 using Project.Common.Core;
+using UnityEngine.AI;
 
 namespace Project.Common.Installers
 {
@@ -13,6 +14,7 @@ namespace Project.Common.Installers
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private PlayerInteractController _playerInteractController;
         [SerializeField] private PlayerRayCasterController _playerRayCasterController;
+        [SerializeField] private NavMeshAgent _playerNavMeshAgent;
     
         public override void InstallBindings()
         {
@@ -23,6 +25,7 @@ namespace Project.Common.Installers
 
             Container.Bind<PlayerRayCasterModel>().AsSingle();
             Container.Bind<PlayerState>().AsSingle();
+            Container.Bind<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent);
 
             Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(_interactiveObjectsTextView);
         }
