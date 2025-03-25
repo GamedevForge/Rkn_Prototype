@@ -23,7 +23,7 @@ namespace Project.Common.Core
                 return;
 
             if (Physics.Raycast(ray, out RaycastHit hit, _data.Distance, _data.InteractableObjectLayerMask))
-                _model.ChangeCurrentObject(hit.transform.gameObject);
+                _model.ChangeCurrentObject(hit.transform.GetComponent<IInteractableObject>());
             else
                 _model.ChangeCurrentObject(null);
         }

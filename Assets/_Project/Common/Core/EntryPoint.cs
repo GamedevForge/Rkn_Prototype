@@ -2,6 +2,7 @@
 using Zenject;
 using System;
 using StarterAssets;
+using Project.Common.UI;
 
 namespace Project.Common.Core
 {
@@ -12,13 +13,15 @@ namespace Project.Common.Core
         private readonly PlayerRayCasterController _rayCasterController;
         private readonly PlayerRayCasterModel _rayCasterModel;
         private readonly PlayerStateController _playerStateController;
+        private readonly InteractiveObjectsTextController _textController;
 
         public EntryPoint(PlayerState playerState,
             PlayerInteractController playerInteractController,
             PlayerRayCasterController rayCasterController,
             PlayerRayCasterModel rayCasterModel,
             FirstPersonController firstPersonController,
-            CharacterController characterController)
+            CharacterController characterController,
+            TextView interactiveObjectsTextView)
         {
             _playerState = playerState;
             _interactController = playerInteractController;
@@ -28,6 +31,8 @@ namespace Project.Common.Core
                 firstPersonController, 
                 characterController, 
                 _playerState);
+            _textController = new(interactiveObjectsTextView,
+                rayCasterModel);
         }
 
         public void Initialize()
@@ -35,11 +40,13 @@ namespace Project.Common.Core
             _interactController.Initialize(_rayCasterModel);
             _rayCasterController.Initialize(_rayCasterModel);
             _playerStateController.Initialize();
+            _textController.Initialize();
         }
 
         public void Dispose()
         {
             _playerStateController.Dispose();
+            _textController.Dispose();
         }
     }
 }

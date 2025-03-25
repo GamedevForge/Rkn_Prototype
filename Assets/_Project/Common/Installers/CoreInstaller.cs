@@ -21,11 +21,10 @@ namespace Project.Common.Installers
             Container.Bind<FirstPersonController>().FromInstance(_firstPersonController).AsSingle();
             Container.Bind<CharacterController>().FromInstance(_characterController).AsSingle();
 
-            Container.Bind<InteractiveObjectsTextController>().AsSingle().WithArguments(_interactiveObjectsTextView);
             Container.Bind<PlayerRayCasterModel>().AsSingle();
             Container.Bind<PlayerState>().AsSingle();
-            
-            Container.BindInterfacesTo<EntryPoint>().AsSingle();
+
+            Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(_interactiveObjectsTextView);
         }
     }
 }

@@ -3,20 +3,20 @@ using System;
 
 namespace Project.Common.Core
 {
-    public class PlayerRayCasterModel : IObjectChangedEvent<GameObject>
+    public class PlayerRayCasterModel : IObjectChangedEvent<IInteractableObject>
     {
-        public event Action<GameObject> OnCurrentObjectChanged;
-        public GameObject CurrentGameObject { get; private set; }
+        public event Action<IInteractableObject> OnCurrentObjectChanged;
+        public IInteractableObject CurrentGameObject { get; private set; }
 
-        public void ChangeCurrentObject(GameObject gameObject)
+        public void ChangeCurrentObject(IInteractableObject interactableObject)
         {
-            if (gameObject != CurrentGameObject)
+            if (interactableObject != CurrentGameObject)
             {
-                CurrentGameObject = gameObject;
-                OnCurrentObjectChanged?.Invoke(gameObject);
+                CurrentGameObject = interactableObject;
+                OnCurrentObjectChanged?.Invoke(interactableObject);
             }
             else 
-                CurrentGameObject = gameObject;
+                CurrentGameObject = interactableObject;
         }
     }
 }

@@ -6,11 +6,11 @@ namespace Project.Common.Core
     [RequireComponent(typeof(PlayerInput))]
     public class PlayerInteractController : MonoBehaviour
     {
-        private IObjectChangedEvent<GameObject> _objectChangedEvent;
+        private IObjectChangedEvent<IInteractableObject> _objectChangedEvent;
 
-        private GameObject _currentInteractableObject;
+        private IInteractableObject _currentInteractableObject;
 
-        public void Initialize(IObjectChangedEvent<GameObject> objectChangedEvent)
+        public void Initialize(IObjectChangedEvent<IInteractableObject> objectChangedEvent)
         {
             _objectChangedEvent = objectChangedEvent;
             _objectChangedEvent.OnCurrentObjectChanged += ChangeCurrentInteractableObject;
@@ -19,17 +19,13 @@ namespace Project.Common.Core
         private void OnDestroy() =>
             _objectChangedEvent.OnCurrentObjectChanged -= ChangeCurrentInteractableObject;
 
-        private void ChangeCurrentInteractableObject(GameObject gameObject) =>
+        private void ChangeCurrentInteractableObject(IInteractableObject gameObject) =>
             _currentInteractableObject = gameObject;
 
-        public void Interact()
+        public void OnInteract()
         {
-            Debug.Log(_currentInteractableObject);
-            if (_currentInteractableObject != null)
-            {
-                if (_currentInteractableObject.TryGetComponent(out IIntertableObject intertableObject))
-                    intertableObject.Interact();
-            }
+            if (_currentInteractableObject != null || _currentInteractableObject.CanInteract)
+                _currentInteractableObject.Interact();
         }
     }
 }
