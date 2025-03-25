@@ -11,7 +11,6 @@ namespace Project.Common.Core
     {
         [SerializeField] private Transform _endPointTransform;
         [SerializeField] private Transform _intermediateCameraPoint;
-        [SerializeField] private Transform _cameraEndPoint;
         [SerializeField] private float _intermediateDuration;
         [SerializeField] private float _endDuration;
 
@@ -71,5 +70,3 @@ namespace Project.Common.Core
         }
     }
 }
-
-
