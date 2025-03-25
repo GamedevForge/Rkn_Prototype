@@ -276,7 +276,7 @@ namespace StarterAssets
 		public void EnableMoving() =>
 			_isMoving = true;
 
-		public void DisabelMoving() =>
+		public void DisableMoving() =>
 			_isMoving = false;
 
 		public void EnableLooked() =>
@@ -284,5 +284,12 @@ namespace StarterAssets
 
 		public void DisableLooked() =>
 			_isLooked = false;
+
+		public void SetRotation(float x, float y)
+		{
+			_cinemachineTargetPitch = x;
+			_rotationVelocity = y;
+			transform.rotation = Quaternion.Euler(Vector3.up * _rotationVelocity);
+        }
 	}
 }

@@ -15,6 +15,8 @@ namespace Project.Common.Installers
         [SerializeField] private PlayerInteractController _playerInteractController;
         [SerializeField] private PlayerRayCasterController _playerRayCasterController;
         [SerializeField] private NavMeshAgent _playerNavMeshAgent;
+        [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private Transform _playerTransform;
     
         public override void InstallBindings()
         {
@@ -25,7 +27,7 @@ namespace Project.Common.Installers
 
             Container.Bind<PlayerRayCasterModel>().AsSingle();
             Container.Bind<PlayerState>().AsSingle();
-            Container.Bind<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent);
+            Container.Bind<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform);
 
             Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(_interactiveObjectsTextView);
         }

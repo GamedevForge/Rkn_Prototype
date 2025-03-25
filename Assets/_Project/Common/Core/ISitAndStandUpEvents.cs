@@ -6,6 +6,7 @@ namespace Project.Common.Core
     {
         event Action OnSit;
         event Action OnStandUp;
+        event Action OnLookedEnable;
     }
 }
 

@@ -6,6 +6,7 @@ namespace Project.Common.Core
     {
         public event Action OnSit;
         public event Action OnStandUp;
+        public event Action OnLookedEnable;
 
         public bool IsSitting { get; private set; } = false;
 
@@ -20,6 +21,9 @@ namespace Project.Common.Core
             IsSitting = false;
             OnStandUp?.Invoke();
         }
+
+        public void EnableLooked() =>
+            OnLookedEnable?.Invoke();
     }
 }
 

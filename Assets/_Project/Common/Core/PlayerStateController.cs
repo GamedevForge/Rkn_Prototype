@@ -23,19 +23,24 @@ namespace Project.Common.Core
         public void Initialize()
         {
             _playerState.OnSit += Sit;
+            _playerState.OnLookedEnable += EnableLooked;
         }
         
         public void Dispose()
         {        
             _playerState.OnSit -= Sit;
+            _playerState.OnLookedEnable -= EnableLooked;
         }
 
         private void Sit()
         {
-            _firstPersonController.DisabelMoving();
+            _firstPersonController.DisableMoving();
             _firstPersonController.DisableLooked();
             _characterController.enabled = false;
         }
+
+        private void EnableLooked() =>
+            _firstPersonController.EnableLooked();
     }
 }
 
