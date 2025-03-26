@@ -20,7 +20,8 @@ namespace Project.Common.Core
         private FirstPersonController _firstPersonController;
 
         public string Name => _dataService.GetObjectConfig(ObjectType.Chair).Name;
-        public bool CanInteract => _playerState.IsSitting;
+        public bool CanInteract => _playerState.IsSitting ||
+            _playerState.IsProcessing == false;
 
         [Inject] private void Construct(ObjectsDataService objectsDataService,
             PlayerState playerState,
@@ -36,6 +37,7 @@ namespace Project.Common.Core
         public async void Interact()
         {
             _playerState.Sit();
+            _playerState.EnableProcessing();
             _playerComponents.Agent.enabled = true;
             _playerComponents.Agent.destination = _endPointTransform.position;
 
@@ -49,6 +51,7 @@ namespace Project.Common.Core
             _firstPersonController.SetRotation(0f, _playerComponents.CameraTransform.rotation.eulerAngles.y * 2);
             _playerComponents.CameraTransform.rotation = Quaternion.identity;
             _playerState.EnableLooked();
+            _playerState.DisableProcessing();
         }
 
         private async UniTask PlayCameraAnimationAsync()

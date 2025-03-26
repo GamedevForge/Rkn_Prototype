@@ -9,6 +9,7 @@ namespace Project.Common.Core
         public event Action OnLookedEnable;
 
         public bool IsSitting { get; private set; } = false;
+        public bool IsProcessing { get; private set; } = false;
 
         public void Sit()
         {
@@ -24,6 +25,12 @@ namespace Project.Common.Core
 
         public void EnableLooked() =>
             OnLookedEnable?.Invoke();
+
+        public void EnableProcessing() =>
+            IsProcessing = true;
+
+        public void DisableProcessing() => 
+            IsProcessing = false;
     }
 }
 

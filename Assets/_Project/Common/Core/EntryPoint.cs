@@ -14,6 +14,8 @@ namespace Project.Common.Core
         private readonly PlayerRayCasterModel _rayCasterModel;
         private readonly PlayerStateController _playerStateController;
         private readonly InteractiveObjectsTextController _textController;
+        private readonly PlayerQuitController _playerQuitController;
+        private readonly FirstPersonController _firstPersonController;
 
         public EntryPoint(PlayerState playerState,
             PlayerInteractController playerInteractController,
@@ -21,7 +23,8 @@ namespace Project.Common.Core
             PlayerRayCasterModel rayCasterModel,
             FirstPersonController firstPersonController,
             CharacterController characterController,
-            TextView interactiveObjectsTextView)
+            TextView interactiveObjectsTextView,
+            PlayerQuitController playerQuitController)
         {
             _playerState = playerState;
             _interactController = playerInteractController;
@@ -33,6 +36,8 @@ namespace Project.Common.Core
                 _playerState);
             _textController = new(interactiveObjectsTextView,
                 rayCasterModel);
+            _firstPersonController = firstPersonController;
+            _playerQuitController = playerQuitController;
         }
 
         public void Initialize()
@@ -41,6 +46,7 @@ namespace Project.Common.Core
             _rayCasterController.Initialize(_rayCasterModel);
             _playerStateController.Initialize();
             _textController.Initialize();
+            _playerQuitController.Initialize(_playerState, _firstPersonController);
         }
 
         public void Dispose()

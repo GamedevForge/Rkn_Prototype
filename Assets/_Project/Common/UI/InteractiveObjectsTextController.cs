@@ -1,7 +1,6 @@
 using Zenject;
 using System;
 using Project.Common.Core;
-using UnityEngine;
 
 namespace Project.Common.UI
 {
@@ -25,9 +24,9 @@ namespace Project.Common.UI
 
         private void OnObjectChanged(IInteractableObject interactiveObject)
         {
-            if (interactiveObject == null || interactiveObject.CanInteract)
+            if (interactiveObject == null)
                 Reset();
-            else
+            else if (interactiveObject.CanInteract)
                 Draw(interactiveObject.Name);
         }
 

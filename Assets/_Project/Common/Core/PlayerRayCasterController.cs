@@ -22,8 +22,12 @@ namespace Project.Common.Core
             if (Physics.Raycast(ray, _data.Distance, _data.RayCastIgnoreLayerMask))
                 return;
 
-            if (Physics.Raycast(ray, out RaycastHit hit, _data.Distance, _data.InteractableObjectLayerMask))
-                _model.ChangeCurrentObject(hit.transform.GetComponent<IInteractableObject>());
+            if (Physics.Raycast(ray, out RaycastHit hit, _data.Distance, _data.InteractableObjectLayerMask) &&
+                hit.transform.TryGetComponent(out IInteractableObject interactableObject) &&
+                interactableObject.CanInteract)
+            {
+                _model.ChangeCurrentObject(interactableObject);
+            }
             else
                 _model.ChangeCurrentObject(null);
         }

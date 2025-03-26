@@ -23,12 +23,14 @@ namespace Project.Common.Core
         public void Initialize()
         {
             _playerState.OnSit += Sit;
+            _playerState.OnStandUp += StandUp;
             _playerState.OnLookedEnable += EnableLooked;
         }
         
         public void Dispose()
         {        
             _playerState.OnSit -= Sit;
+            _playerState.OnStandUp -= StandUp;
             _playerState.OnLookedEnable -= EnableLooked;
         }
 
@@ -37,6 +39,13 @@ namespace Project.Common.Core
             _firstPersonController.DisableMoving();
             _firstPersonController.DisableLooked();
             _characterController.enabled = false;
+        }
+
+        private void StandUp()
+        {
+            _firstPersonController.EnableMoving();
+            _firstPersonController.EnableLooked();
+            _characterController.enabled = true;
         }
 
         private void EnableLooked() =>

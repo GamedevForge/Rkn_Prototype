@@ -24,7 +24,7 @@ namespace Project.Common.Core
 
         public void OnInteract()
         {
-            if (_currentInteractableObject != null || _currentInteractableObject.CanInteract)
+            if (_currentInteractableObject != null && _currentInteractableObject.CanInteract)
                 _currentInteractableObject.Interact();
         }
     }
