@@ -4,6 +4,7 @@ using Project.Common.UI;
 using StarterAssets;
 using Project.Common.Core;
 using UnityEngine.AI;
+using Project.Common.Configs;
 
 namespace Project.Common.Installers
 {
@@ -18,6 +19,9 @@ namespace Project.Common.Installers
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Transform _playerTransform;
         [SerializeField] private PlayerQuitController _playerQuitController;
+        [SerializeField] private CursorData _cursorData;
+        [SerializeField] private StarterAssetsInputs _assetsInputs;
+        [SerializeField] private RectTransform _cursorRectTransform;
     
         public override void InstallBindings()
         {
@@ -30,6 +34,7 @@ namespace Project.Common.Installers
             Container.Bind<PlayerRayCasterModel>().AsSingle();
             Container.Bind<PlayerState>().AsSingle();
             Container.Bind<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform);
+            Container.Bind<CursorAnimation>().AsSingle().WithArguments(_assetsInputs, _cursorRectTransform, _cursorData);
 
             Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(_interactiveObjectsTextView);
         }

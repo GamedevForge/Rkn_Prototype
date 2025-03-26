@@ -1,4 +1,5 @@
-﻿using StarterAssets;
+﻿using Sirenix.OdinInspector.Editor;
+using StarterAssets;
 using UnityEngine;
 
 namespace Project.Common.UI
@@ -29,5 +30,10 @@ namespace Project.Common.UI
                 -_yOffSet, 
                 transform.localPosition.z);
         }
+    }
+
+    public interface IWindow
+    {
+
     }
 }

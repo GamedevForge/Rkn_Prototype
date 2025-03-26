@@ -16,6 +16,7 @@ namespace Project.Common.Core
         private readonly InteractiveObjectsTextController _textController;
         private readonly PlayerQuitController _playerQuitController;
         private readonly FirstPersonController _firstPersonController;
+        private readonly CursorAnimation _cursorAnimation;
 
         public EntryPoint(PlayerState playerState,
             PlayerInteractController playerInteractController,
@@ -24,6 +25,7 @@ namespace Project.Common.Core
             FirstPersonController firstPersonController,
             CharacterController characterController,
             TextView interactiveObjectsTextView,
+            CursorAnimation cursorAnimation,
             PlayerQuitController playerQuitController)
         {
             _playerState = playerState;
@@ -38,6 +40,7 @@ namespace Project.Common.Core
                 rayCasterModel);
             _firstPersonController = firstPersonController;
             _playerQuitController = playerQuitController;
+            _cursorAnimation = cursorAnimation;
         }
 
         public void Initialize()
@@ -47,12 +50,14 @@ namespace Project.Common.Core
             _playerStateController.Initialize();
             _textController.Initialize();
             _playerQuitController.Initialize(_playerState, _firstPersonController);
+            _cursorAnimation.Initialize();
         }
 
         public void Dispose()
         {
             _playerStateController.Dispose();
             _textController.Dispose();
+            _cursorAnimation.Dispose();
         }
     }
 }
