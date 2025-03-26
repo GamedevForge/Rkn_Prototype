@@ -22,7 +22,11 @@ namespace Project.Common.Core
     
         public async void OnQuit()
         {
-            if (_playerState.IsSitting && _playerState.IsProcessing == false)
+            if (_playerState.IsSitting && _playerState.IsProcessing == false && _playerState.InComputer)
+            {
+                _playerState.StandUpAtComputer();
+            }        
+            else if (_playerState.IsSitting && _playerState.IsProcessing == false)
             {
                 _playerState.EnableProcessing();
                 _firstPersonController.DisableLooked();

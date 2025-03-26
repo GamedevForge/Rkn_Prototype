@@ -25,6 +25,7 @@ namespace Project.Common.Core
             _playerState.OnSit += Sit;
             _playerState.OnStandUp += StandUp;
             _playerState.OnLookedEnable += EnableLooked;
+            _playerState.OnLookedDisable += DisableLooked;
         }
         
         public void Dispose()
@@ -32,6 +33,7 @@ namespace Project.Common.Core
             _playerState.OnSit -= Sit;
             _playerState.OnStandUp -= StandUp;
             _playerState.OnLookedEnable -= EnableLooked;
+            _playerState.OnLookedDisable -= DisableLooked;
         }
 
         private void Sit()
@@ -50,6 +52,9 @@ namespace Project.Common.Core
 
         private void EnableLooked() =>
             _firstPersonController.EnableLooked();
+
+        private void DisableLooked() =>
+            _firstPersonController.DisableLooked();
     }
 }
 
