@@ -1,8 +1,9 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Project.Common.UI
-{ 
+{
     [RequireComponent (typeof(TMP_Text))]
     public class TextView : MonoBehaviour
     {
