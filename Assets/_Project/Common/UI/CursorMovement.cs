@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using Sirenix.OdinInspector.Editor;
+﻿using Sirenix.OdinInspector.Editor;
 using StarterAssets;
 using UnityEngine;
 
@@ -30,19 +29,6 @@ namespace Project.Common.UI
                 _xOffSet, 
                 -_yOffSet, 
                 transform.localPosition.z);
-        }
-    }
-
-    public interface IWindow
-    {
-        UniTask OpenWindowAsync();
-    }
-
-    public class NewsWindow : MonoBehaviour, IWindow
-    {
-        public UniTask OpenWindowAsync()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
