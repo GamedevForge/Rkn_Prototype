@@ -22,7 +22,6 @@ namespace Project.Common.Installers
         [SerializeField] private CursorData _cursorData;
         [SerializeField] private StarterAssetsInputs _assetsInputs;
         [SerializeField] private RectTransform _cursorRectTransform;
-        [SerializeField] private NewsWindowOpenController _newsWindowOpenController;
     
         public override void InstallBindings()
         {
@@ -36,8 +35,9 @@ namespace Project.Common.Installers
             Container.Bind<PlayerState>().AsSingle();
             Container.Bind<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform);
             Container.Bind<CursorAnimation>().AsSingle().WithArguments(_assetsInputs, _cursorRectTransform, _cursorData);
+            Container.Bind<NewsWindowModel>().AsSingle();
 
-            Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(_interactiveObjectsTextView, _newsWindowOpenController);
+            Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(_interactiveObjectsTextView);
         }
     }
 }

@@ -1,7 +1,9 @@
+using Project.Common.Core;
 using System;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
+using Zenject;
 #endif
 
 namespace StarterAssets
@@ -9,6 +11,8 @@ namespace StarterAssets
 	public class StarterAssetsInputs : MonoBehaviour
 	{
 		public event Action OnClick;
+
+		private PlayerState _playerState;
 		
 		[Header("Character Input Values")]
 		public Vector2 move;
@@ -22,6 +26,9 @@ namespace StarterAssets
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
+
+		[Inject] private void Construct(PlayerState playerState) =>
+			_playerState = playerState;
 
 #if ENABLE_INPUT_SYSTEM
 		public void OnMove(InputValue value)
@@ -49,7 +56,8 @@ namespace StarterAssets
 
 		public void OnLeftClick()
 		{
-			OnClick?.Invoke();
+			if (_playerState.InComputer)
+				OnClick?.Invoke();
 		}
 #endif
 

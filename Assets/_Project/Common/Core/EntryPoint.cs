@@ -17,8 +17,6 @@ namespace Project.Common.Core
         private readonly PlayerQuitController _playerQuitController;
         private readonly FirstPersonController _firstPersonController;
         private readonly CursorAnimation _cursorAnimation;
-        private readonly NewsWindowOpenController _newsWindowOpenController;
-        private readonly NewsWindowModel _newsWindowModel;
 
         public EntryPoint(PlayerState playerState,
             PlayerInteractController playerInteractController,
@@ -28,8 +26,7 @@ namespace Project.Common.Core
             CharacterController characterController,
             TextView interactiveObjectsTextView,
             CursorAnimation cursorAnimation,
-            PlayerQuitController playerQuitController,
-            NewsWindowOpenController newsWindowOpenController)
+            PlayerQuitController playerQuitController)
         {
             _playerState = playerState;
             _interactController = playerInteractController;
@@ -41,11 +38,9 @@ namespace Project.Common.Core
                 _playerState);
             _textController = new(interactiveObjectsTextView,
                 rayCasterModel);
-            _newsWindowModel = new();
             _firstPersonController = firstPersonController;
             _playerQuitController = playerQuitController;
             _cursorAnimation = cursorAnimation;
-            _newsWindowOpenController = newsWindowOpenController;
         }
 
         public void Initialize()
@@ -56,7 +51,6 @@ namespace Project.Common.Core
             _textController.Initialize();
             _playerQuitController.Initialize(_playerState, _firstPersonController);
             _cursorAnimation.Initialize();
-            _newsWindowOpenController.Initialize(_newsWindowModel);
         }
 
         public void Dispose()

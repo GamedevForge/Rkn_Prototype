@@ -8,11 +8,11 @@ namespace Project.Common.UI
     {
         public abstract UniTask Interact();
 
-        protected virtual async UniTask PlayOpenAnimation(Vector2 sizeDelta, 
+        protected virtual async UniTask PlayOpenCloseAnimation(Vector3 sizeDelta, 
             float duration, 
             RectTransform rectTransform)
         {
-            Tween tween = rectTransform.DOSizeDelta(sizeDelta, duration);
+            Tween tween = rectTransform.DOScale(sizeDelta, duration);
             await tween.AsyncWaitForCompletion();
         }
     }
