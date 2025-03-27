@@ -32,8 +32,8 @@ namespace Project.Common.Core
                 MousePadSize.x / 2 + MousePadPosition.x);
 
             _yOffSet = Mathf.Clamp(_yOffSet + _assetsInputs.look.y * _speed,
-                -MousePadSize.z / 2 + MousePadPosition.y / 2,
-                MousePadSize.z / 2 + MousePadPosition.y / 2);
+                -MousePadSize.z / 2 + MousePadPosition.z,
+                MousePadSize.z / 2 - MousePadPosition.z);
 
             transform.localPosition = new Vector3(
                 _xOffSet,
