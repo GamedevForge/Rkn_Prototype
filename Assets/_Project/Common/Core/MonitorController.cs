@@ -10,6 +10,7 @@ namespace Project.Common.Core
     public class MonitorController : MonoBehaviour, IInteractableObject
     {
         [SerializeField] private RectTransform _monitorCanvasRectTransform;
+        [SerializeField] private ArmAnimationController _armAnimationController;
         [SerializeField] private float _duration;
         
         private ObjectsDataService _dataService;
@@ -45,6 +46,7 @@ namespace Project.Common.Core
             _playerState.SitDownAtComputer();
             _playerState.DisableLooked();
             await SetLooked();
+            await _armAnimationController.PlayShowAnimationAsync();
             await PlayMonitorAnimationAsync(0.0009f);
             _playerState.DisableProcessing();
         }
@@ -52,6 +54,7 @@ namespace Project.Common.Core
         private async void QuitInMonitor()
         {
             _playerState.EnableProcessing();
+            await _armAnimationController.PlayHideAnimationAsync();
             await PlayMonitorAnimationAsync(0f);
             _playerState.EnableLooked();
             _playerState.DisableProcessing();
