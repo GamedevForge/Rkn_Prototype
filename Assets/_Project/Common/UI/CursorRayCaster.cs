@@ -1,26 +1,43 @@
-﻿using StarterAssets;
+﻿using Project.Common.Core;
+using StarterAssets;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using Zenject;
 
 namespace Project.Common.UI
 {
-    public class CursorRayCaster : MonoBehaviour
+    public class CursorRayCaster : CursorBaseRaycaster
     {
         [SerializeField] private StarterAssetsInputs _assetsInputs;
-        [SerializeField] private LayerMask _layerMask;
+        //[SerializeField] private LayerMask _layerMask;
+        
+        private PlayerState _playerState;
 
-        private void Awake()
+        [Inject] private void Construct(PlayerState playerState) =>
+            _playerState = playerState; 
+
+        protected override void Awake()
         {
             _assetsInputs.OnClick += OnLeftClick;
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
             _assetsInputs.OnClick -= OnLeftClick;          
         }
 
+        public override void Raycast(PointerEventData eventData, List<RaycastResult> resultAppendList)
+        {
+            if (_playerState.InComputer == false)
+                return;
+
+            base.Raycast(eventData, resultAppendList);
+        }
+
         public void OnLeftClick()
         {
-            Ray ray = new(transform.position, Vector3.forward);
+            /*Ray ray = new(transform.position, Vector3.forward);
 
             Debug.DrawRay(transform.position, Vector3.forward);
 
@@ -28,7 +45,7 @@ namespace Project.Common.UI
                 && hit.transform.TryGetComponent(out IWidgetInteractable widgetInteractable))
             {
                 widgetInteractable.Interact();
-            }
+            }*/
         }
     }
 }
