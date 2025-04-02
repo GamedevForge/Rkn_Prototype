@@ -32,6 +32,12 @@ namespace Project.Common.Installers
         [SerializeField] private RectTransform _newsWindowRectTransform;
         [SerializeField] private RectTransform _newsButtonRectTransform;
         [SerializeField] private NewsListData _newsListData;
+        [SerializeField] private Transform _armTransform;
+        [SerializeField] private Transform _lookAtPointForCamera;
+        [SerializeField] private Transform _approveButtonTransform;
+        [SerializeField] private Transform _rejectButtonTransform;
+        [SerializeField] private ApproveOrRejectData _approveOrRejectData;
+        [SerializeField] private NewsController _newsController;
     
         public override void InstallBindings()
         {
@@ -56,6 +62,12 @@ namespace Project.Common.Installers
                     CanvasRectTransform = _canvasRectTransform,
                     NewsButtonTransform = _newsButtonRectTransform,
                     TargetRectTransform = _newsWindowRectTransform,
+                    NewsController = _newsController,
+                    ApproveButtonTransform = _approveButtonTransform,
+                    RejectButtonTransform = _rejectButtonTransform,
+                    CameraLookAtPointTransform = _lookAtPointForCamera,
+                    ArmTransform = _armTransform,
+                    ApproveOrRejectData = _approveOrRejectData,
                     Duration = _windowsData.AnimationDuration,
                 });
         }

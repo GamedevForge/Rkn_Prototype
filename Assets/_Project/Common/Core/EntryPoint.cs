@@ -17,6 +17,7 @@ namespace Project.Common.Core
         private readonly PlayerQuitController _playerQuitController;
         private readonly FirstPersonController _firstPersonController;
         private readonly CursorAnimation _cursorAnimation;
+        private readonly PlayerComponents _playerComponents;
 
         public EntryPoint(PlayerState playerState,
             PlayerInteractController playerInteractController,
@@ -25,6 +26,7 @@ namespace Project.Common.Core
             FirstPersonController firstPersonController,
             CharacterController characterController,
             TextView interactiveObjectsTextView,
+            PlayerComponents playerComponents,
             CursorAnimation cursorAnimation,
             PlayerQuitController playerQuitController,
             NewsWindowData newsWindowData)
@@ -33,6 +35,7 @@ namespace Project.Common.Core
             _interactController = playerInteractController;
             _rayCasterController = rayCasterController;
             _rayCasterModel = rayCasterModel;
+            _playerComponents = playerComponents;
             
             _playerStateController = new(
                 firstPersonController, 
@@ -67,15 +70,27 @@ namespace Project.Common.Core
 
         private void CreateNewsWindow(NewsWindowData newsWindowData)
         {
-            NewsWindowModelView newsWindowModel = new();
+            NewsWindowModelView newsWindowModelView = new();
             WindowBaseAnimation windowBaseAnimation = new(
                 newsWindowData.TargetRectTransform,
                 newsWindowData.CanvasRectTransform,
                 newsWindowData.NewsButtonTransform,
                 newsWindowData.Duration);
             windowBaseAnimation.Initialize();
-            NewsWindowController newsWindowController = new(windowBaseAnimation, newsWindowModel, newsWindowData.TargetRectTransform);
-            newsWindowData.NewsWidget.Initialize(newsWindowController, newsWindowModel);
+            NewsWindowController newsWindowController = new(windowBaseAnimation, newsWindowModelView, newsWindowData.TargetRectTransform);
+            newsWindowData.NewsWidget.Initialize(newsWindowController, newsWindowModelView);
+
+            NewsModel newsModel = new(newsWindowData.News);
+            NewsApproveOrRejectAnimations animation = new(
+                newsWindowData.ArmTransform,
+                _playerComponents,
+                newsWindowData.CameraLookAtPointTransform,
+                newsWindowData.ApproveOrRejectData,
+                newsWindowData.ApproveButtonTransform,
+                newsWindowData.RejectButtonTransform,
+                _firstPersonController,
+                _playerState);
+            newsWindowData.NewsController.Initialize(newsModel, newsWindowModelView, animation, _playerState);
         }
     }
 }
