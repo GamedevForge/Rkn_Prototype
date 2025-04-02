@@ -24,11 +24,14 @@ namespace Project.Common.Installers
         [SerializeField] private RectTransform _cursorRectTransform;
         [SerializeField] private RectTransform _canvasRectTransform;
 
+        [Header("Windows:")]
+        [SerializeField] private WindowsData _windowsData;
+
         [Header("NewsObjects:")]
         [SerializeField] private BaseWidget _newsWindowWidget;
         [SerializeField] private RectTransform _newsWindowRectTransform;
         [SerializeField] private RectTransform _newsButtonRectTransform;
-        [SerializeField] private float _duration;
+        [SerializeField] private NewsListData _newsListData;
     
         public override void InstallBindings()
         {
@@ -48,11 +51,12 @@ namespace Project.Common.Installers
                 _interactiveObjectsTextView,
                 new NewsWindowData
                 {
+                    News = _newsListData,
                     NewsWidget = _newsWindowWidget,
                     CanvasRectTransform = _canvasRectTransform,
                     NewsButtonTransform = _newsButtonRectTransform,
                     TargetRectTransform = _newsWindowRectTransform,
-                    Duration = _duration,
+                    Duration = _windowsData.AnimationDuration,
                 });
         }
     }

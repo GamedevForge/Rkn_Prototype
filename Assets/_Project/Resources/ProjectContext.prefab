@@ -76,3 +76,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _objectsData: {fileID: 11400000, guid: c9cb63d13c2275d4cb9c1e774f1ecdd5, type: 2}
   _playerRayCastData: {fileID: 11400000, guid: 53f076ce7d6e5a14ebda09ff34ac8eb9, type: 2}
+  _newsListData: {fileID: 11400000, guid: 3ca8e3f81888f2349a65932b00fb3553, type: 2}

@@ -2,13 +2,14 @@
 
 namespace Project.Common.UI
 {
-    public class NewsWindowModel : IOpenCloseUI
+    public class NewsWindowModelView : IOpenCloseUI, IWindowWithSprite
     {
         public Sprite NewsSprite { get; private set; } 
         public bool IsOpen { get; private set; } = false;
 
-        public void ChangeNewsSprite(Sprite newsSprite) =>
-            NewsSprite = newsSprite;
+        public void ChangeNewsSprite(Sprite sprite) =>
+            NewsSprite = sprite;
+
 
         public void Open()
         {

@@ -67,14 +67,14 @@ namespace Project.Common.Core
 
         private void CreateNewsWindow(NewsWindowData newsWindowData)
         {
-            NewsWindowModel newsWindowModel = new();
+            NewsWindowModelView newsWindowModel = new();
             WindowBaseAnimation windowBaseAnimation = new(
                 newsWindowData.TargetRectTransform,
                 newsWindowData.CanvasRectTransform,
                 newsWindowData.NewsButtonTransform,
                 newsWindowData.Duration);
             windowBaseAnimation.Initialize();
-            NewsWindowController newsWindowController = new(windowBaseAnimation, newsWindowModel);
+            NewsWindowController newsWindowController = new(windowBaseAnimation, newsWindowModel, newsWindowData.TargetRectTransform);
             newsWindowData.NewsWidget.Initialize(newsWindowController, newsWindowModel);
         }
     }
