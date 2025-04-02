@@ -320,7 +320,5 @@ namespace Project.Common.UI
             return distance < (uIRectTransform.sizeDelta.x / 2f) * canvasTransform.localScale.x
                 || distance < (uIRectTransform.sizeDelta.y / 2f) * canvasTransform.localScale.y;
         }
-            //uIRectTranform.sizeDelta.x * canvasTransform.localScale.x + uIRectTranform.position.x < cursorPosition.x &&
-            //uIRectTranform.sizeDelta.y * canvasTransform.localScale.y + uIRectTranform.position.y < cursorPosition.y;
     }
 }

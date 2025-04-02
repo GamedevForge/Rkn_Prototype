@@ -6,7 +6,7 @@ using Zenject;
 namespace Project.Common.UI
 {
     [RequireComponent(typeof(Image))]
-    public class NewsWindowOpenCloseController : BaseWidget
+    public class NewsWindowOpenCloseController : BaseWidget1
     {
         [SerializeField] private RectTransform _windowRectTransform;
         [SerializeField] private float _duration;
@@ -14,11 +14,11 @@ namespace Project.Common.UI
 
         private bool _animationInProcessing = false;
         private Vector3 _originSizeDelta;
-        private NewsWindowModel _model;
+        private NewsWindowModel1 _model;
 
         private Image Image => GetComponent<Image>();
 
-        [Inject] private void Construct(NewsWindowModel model) =>
+        [Inject] private void Construct(NewsWindowModel1 model) =>
             _model = model;
 
         private void Awake()

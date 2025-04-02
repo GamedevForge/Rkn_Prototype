@@ -35,7 +35,7 @@ namespace Project.Common.Installers
             Container.Bind<PlayerState>().AsSingle();
             Container.Bind<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform);
             Container.Bind<CursorAnimation>().AsSingle().WithArguments(_assetsInputs, _cursorRectTransform, _cursorData);
-            Container.Bind<NewsWindowModel>().AsSingle();
+            Container.Bind<NewsWindowModel1>().AsSingle();
 
             Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(_interactiveObjectsTextView);
         }

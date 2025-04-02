@@ -10,7 +10,6 @@ namespace Project.Common.UI
     public class CursorRayCaster : CursorBaseRaycaster
     {
         [SerializeField] private StarterAssetsInputs _assetsInputs;
-        //[SerializeField] private LayerMask _layerMask;
         
         private PlayerState _playerState;
 
