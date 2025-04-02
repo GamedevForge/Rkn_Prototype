@@ -3,6 +3,7 @@ using Zenject;
 using System;
 using StarterAssets;
 using Project.Common.UI;
+using Project.Common.Installers;
 
 namespace Project.Common.Core
 {
@@ -32,7 +33,8 @@ namespace Project.Common.Core
             CursorAnimation cursorAnimation,
             PlayerQuitController playerQuitController,
             NewsWindowData newsWindowData,
-            DataBaseWindowData dataBaseWindowData)
+            DataBaseWindowData dataBaseWindowData,
+            RequirementsWindowData requirementsWindowData)
         {
             _playerState = playerState;
             _interactController = playerInteractController;
@@ -54,6 +56,7 @@ namespace Project.Common.Core
 
             CreateNewsWindow(newsWindowData);
             CreateDataBaseWindow(dataBaseWindowData);
+            CreateRequirementsWindow(requirementsWindowData);
         }
 
         public void Initialize()
@@ -118,6 +121,26 @@ namespace Project.Common.Core
 
             dataBaseWindowData.DataBaseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
             dataBaseWindowData.DataBaseCloseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
+            _windowsRepository.AddWindow(dataBaseWindowViewModel, dataBaseWindowController);
+        }
+
+        private void CreateRequirementsWindow(RequirementsWindowData requirementsWindowData)
+        {
+            RequirementsWindowViewModel dataBaseWindowViewModel = new();
+            WindowBaseAnimation windowBaseAnimation = new(
+                requirementsWindowData.TargetRectTransform,
+                requirementsWindowData.CanvasRectTransform,
+                requirementsWindowData.DataBaseButtonTransform,
+                requirementsWindowData.Duration);
+            windowBaseAnimation.Initialize();
+
+            BaseWindowController dataBaseWindowController = new(
+                windowBaseAnimation,
+                dataBaseWindowViewModel,
+                requirementsWindowData.TargetRectTransform);
+
+            requirementsWindowData.DataBaseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
+            requirementsWindowData.DataBaseCloseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
             _windowsRepository.AddWindow(dataBaseWindowViewModel, dataBaseWindowController);
         }
     }

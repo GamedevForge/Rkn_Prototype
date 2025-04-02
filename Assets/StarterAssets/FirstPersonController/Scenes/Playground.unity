@@ -3686,6 +3686,10 @@ MonoBehaviour:
   _dataBaseWindowCloseWidget: {fileID: 1208253387}
   _databaseWindowRectTransform: {fileID: 1570374481}
   _databaseButtonRectTransform: {fileID: 748567091}
+  _requirementsWindowWidget: {fileID: 2055991857}
+  _requirementsWindowCloseWidget: {fileID: 891355714}
+  _requirementsWindowRectTransform: {fileID: 1490390006}
+  _requirementsButtonRectTransform: {fileID: 812929998}
 --- !u!114 &1008458924
 MonoBehaviour:
   m_ObjectHideFlags: 0

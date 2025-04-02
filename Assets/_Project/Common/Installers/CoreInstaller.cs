@@ -49,6 +49,12 @@ namespace Project.Common.Installers
         [SerializeField] private RectTransform _databaseWindowRectTransform;
         [SerializeField] private RectTransform _databaseButtonRectTransform;
 
+        [Header("RequirementsObjects")]
+        [SerializeField] private BaseWidget _requirementsWindowWidget;
+        [SerializeField] private CloseWidget _requirementsWindowCloseWidget;
+        [SerializeField] private RectTransform _requirementsWindowRectTransform;
+        [SerializeField] private RectTransform _requirementsButtonRectTransform;
+
         public override void InstallBindings()
         {
             Container.Bind<PlayerInteractController>().FromInstance(_playerInteractController).AsSingle();
@@ -91,6 +97,15 @@ namespace Project.Common.Installers
                     DataBaseWidget = _dataBaseWindowWidget,
                     Duration = _windowsData.AnimationDuration,
                     DataBaseCloseWidget = _dataBaseWindowCloseWidget,
+                },
+                new RequirementsWindowData
+                {
+                    TargetRectTransform = _requirementsWindowRectTransform,
+                    CanvasRectTransform = _canvasRectTransform,
+                    DataBaseButtonTransform = _requirementsButtonRectTransform,
+                    DataBaseWidget = _requirementsWindowWidget,
+                    Duration = _windowsData.AnimationDuration,
+                    DataBaseCloseWidget = _requirementsWindowCloseWidget,
                 });
         }
     }
