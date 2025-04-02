@@ -289,7 +289,6 @@ namespace Project.Common.UI
                 if (!graphic.raycastTarget || graphic.canvasRenderer.cull || graphic.depth == -1)
                     continue;
 
-                Debug.Log(CursorOverTheObject(graphic.rectTransform, pointerPosition, canvas.transform));
                 //if (!RectTransformUtility.RectangleContainsScreenPoint(graphic.rectTransform, pointerPosition, eventCamera, graphic.raycastPadding))
                     //continue;
 

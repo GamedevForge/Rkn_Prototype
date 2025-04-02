@@ -7,5 +7,7 @@ namespace Project.Common.UI
         bool OpenOrCloseInProcessing { get; }
         UniTask OpenWindow();
         UniTask CloseWindow();
+        void HighUpThePeckingOrder();
+        void DownThePeckingOrder();
     }
 }

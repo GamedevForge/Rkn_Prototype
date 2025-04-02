@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Project.Common.UI;
 using Project.Common.Configs;
+using UnityEngine.UI;
 
 namespace Project.Common.Core
 {
@@ -8,6 +9,7 @@ namespace Project.Common.Core
     {
         public NewsListData News;
         public BaseWidget NewsWidget;
+        public CloseWidget NewsCloseWidget;
         public RectTransform CanvasRectTransform;
         public RectTransform TargetRectTransform;
         public RectTransform NewsButtonTransform;
@@ -17,6 +19,7 @@ namespace Project.Common.Core
         public Transform CameraLookAtPointTransform;
         public Transform ArmTransform;
         public ApproveOrRejectData ApproveOrRejectData;
+        public Image NewsImage;
         public float Duration;
     }
 }

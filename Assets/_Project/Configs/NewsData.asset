@@ -22,4 +22,8 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   <NewsConfigs>k__BackingField:
-  - Sprite: {fileID: 0}
+  - Sprite: {fileID: -2114756081, guid: 5fffbc023e4eb1142a1312b2c3208cde, type: 3}
+  - Sprite: {fileID: -140800148, guid: 2efb7ecaf02b5db4e84a532aeaeb5ef1, type: 3}
+  - Sprite: {fileID: 1115001795, guid: 9bc533dd50879da45b1c16834723e135, type: 3}
+  - Sprite: {fileID: 1161820330, guid: 48ccbab2215c9cc4ebf6d8657f5d642d, type: 3}
+  - Sprite: {fileID: -1480952625, guid: 5e99a03e4847cc44ba5447c55ff88616, type: 3}

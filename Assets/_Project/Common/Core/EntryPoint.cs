@@ -18,6 +18,7 @@ namespace Project.Common.Core
         private readonly FirstPersonController _firstPersonController;
         private readonly CursorAnimation _cursorAnimation;
         private readonly PlayerComponents _playerComponents;
+        private readonly WindowsRepository _windowsRepository;
 
         public EntryPoint(PlayerState playerState,
             PlayerInteractController playerInteractController,
@@ -26,10 +27,12 @@ namespace Project.Common.Core
             FirstPersonController firstPersonController,
             CharacterController characterController,
             TextView interactiveObjectsTextView,
+            WindowsRepository windowsRepository,
             PlayerComponents playerComponents,
             CursorAnimation cursorAnimation,
             PlayerQuitController playerQuitController,
-            NewsWindowData newsWindowData)
+            NewsWindowData newsWindowData,
+            DataBaseWindowData dataBaseWindowData)
         {
             _playerState = playerState;
             _interactController = playerInteractController;
@@ -47,8 +50,10 @@ namespace Project.Common.Core
             _firstPersonController = firstPersonController;
             _playerQuitController = playerQuitController;
             _cursorAnimation = cursorAnimation;
+            _windowsRepository = windowsRepository;
 
             CreateNewsWindow(newsWindowData);
+            CreateDataBaseWindow(dataBaseWindowData);
         }
 
         public void Initialize()
@@ -70,15 +75,17 @@ namespace Project.Common.Core
 
         private void CreateNewsWindow(NewsWindowData newsWindowData)
         {
-            NewsWindowModelView newsWindowModelView = new();
+            NewsWindowViewModel newsWindowViewModel = new(newsWindowData.NewsImage);            
             WindowBaseAnimation windowBaseAnimation = new(
                 newsWindowData.TargetRectTransform,
                 newsWindowData.CanvasRectTransform,
                 newsWindowData.NewsButtonTransform,
                 newsWindowData.Duration);
+            
             windowBaseAnimation.Initialize();
-            NewsWindowController newsWindowController = new(windowBaseAnimation, newsWindowModelView, newsWindowData.TargetRectTransform);
-            newsWindowData.NewsWidget.Initialize(newsWindowController, newsWindowModelView);
+            BaseWindowController newsWindowController = new(windowBaseAnimation, newsWindowViewModel, newsWindowData.TargetRectTransform);
+            newsWindowData.NewsWidget.Initialize(newsWindowController, newsWindowViewModel);
+            newsWindowData.NewsCloseWidget.Initialize(newsWindowController, newsWindowViewModel);
 
             NewsModel newsModel = new(newsWindowData.News);
             NewsApproveOrRejectAnimations animation = new(
@@ -90,7 +97,28 @@ namespace Project.Common.Core
                 newsWindowData.RejectButtonTransform,
                 _firstPersonController,
                 _playerState);
-            newsWindowData.NewsController.Initialize(newsModel, newsWindowModelView, animation, _playerState);
+            newsWindowData.NewsController.Initialize(newsModel, newsWindowViewModel, animation, _playerState);
+            _windowsRepository.AddWindow(newsWindowViewModel, newsWindowController);
+        }
+
+        private void CreateDataBaseWindow(DataBaseWindowData dataBaseWindowData)
+        {
+            DataBaseWindowViewModel dataBaseWindowViewModel = new();
+            WindowBaseAnimation windowBaseAnimation = new(
+                dataBaseWindowData.TargetRectTransform,
+                dataBaseWindowData.CanvasRectTransform,
+                dataBaseWindowData.DataBaseButtonTransform,
+                dataBaseWindowData.Duration);
+            windowBaseAnimation.Initialize();
+
+            BaseWindowController dataBaseWindowController = new(
+                windowBaseAnimation,
+                dataBaseWindowViewModel,
+                dataBaseWindowData.TargetRectTransform);
+
+            dataBaseWindowData.DataBaseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
+            dataBaseWindowData.DataBaseCloseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
+            _windowsRepository.AddWindow(dataBaseWindowViewModel, dataBaseWindowController);
         }
     }
 }

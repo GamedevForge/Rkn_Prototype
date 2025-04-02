@@ -3,30 +3,30 @@ using UnityEngine;
 
 namespace Project.Common.UI
 {
-    public class NewsWindowController : IWindowController
+    public class BaseWindowController : IWindowController
     {
         private readonly IWindowAnimation _windowAnimation;
-        private readonly NewsWindowModelView _windowModel;
+        private readonly IWindowViewModel _windowViewModel;
         private readonly RectTransform _windowRectTransform;
 
         public bool OpenOrCloseInProcessing { get; private set; } = false;
 
-        public NewsWindowController(
-            IWindowAnimation windowAnimation, 
-            NewsWindowModelView windowModel,
+        public BaseWindowController(
+            IWindowAnimation windowAnimation,
+            IWindowViewModel windowViewModel,
             RectTransform windowRectTransform)
         {
             _windowAnimation = windowAnimation;
-            _windowModel = windowModel;
+            _windowViewModel = windowViewModel;
             _windowRectTransform = windowRectTransform;
         }
 
         public async UniTask OpenWindow()
         {
             OpenOrCloseInProcessing = true;
-            _windowRectTransform.SetAsLastSibling();
+            HighUpThePeckingOrder();
             await _windowAnimation.PlayOpenAnimationAsync();
-            _windowModel.Open();
+            _windowViewModel.Open();
             OpenOrCloseInProcessing = false;
         }
         
@@ -34,9 +34,20 @@ namespace Project.Common.UI
         {
             OpenOrCloseInProcessing = true;
             await _windowAnimation.PlayCloseAnimationAsync();
-            _windowRectTransform.SetAsFirstSibling();
-            _windowModel.Close();
+            DownThePeckingOrder();
+            _windowViewModel.Close();
             OpenOrCloseInProcessing = false;
+        }
+
+        public void HighUpThePeckingOrder()
+        {
+            _windowRectTransform.SetAsLastSibling();
+            _windowViewModel.UpTheHierarchy();
+        }
+
+        public void DownThePeckingOrder()
+        {
+            _windowViewModel.DescendInHierarchy();
         }
     }
 }

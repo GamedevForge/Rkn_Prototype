@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Project.Common.UI
 {
@@ -14,16 +17,20 @@ namespace Project.Common.UI
         [SerializeField] private Color _baseColor;
         [SerializeField] private Color _onEnterColor;
 
-        private IWindowController _windowController;
-        private IOpenCloseUI _openCloseUI;
+        protected IWindowController WindowController {  get; private set; }
+        protected IOpenCloseUI OpenCloseUI { get; private set; }
+        protected WindowsRepository Repository { get; private set; }
 
         private Image Image => GetComponent<Image>();
+
+        [Inject] private void Construct(WindowsRepository repository) =>
+            Repository = repository;
 
         public void Initialize(IWindowController windowController,
             IOpenCloseUI openCloseUI)
         {
-            _windowController = windowController;
-            _openCloseUI = openCloseUI; 
+            WindowController = windowController;
+            OpenCloseUI = openCloseUI; 
         }
 
         private void Awake() =>
@@ -31,13 +38,25 @@ namespace Project.Common.UI
 
         public virtual void OnPointerClick(PointerEventData eventData)
         {
-            if (_windowController.OpenOrCloseInProcessing)
+            if (WindowController.OpenOrCloseInProcessing)
                 return;
             
-            if (_openCloseUI.IsOpen)
-                _windowController.CloseWindow();
-            else
-                _windowController.OpenWindow();
+            if (OpenCloseUI.IsOpen == false)
+            {
+                WindowController.OpenWindow();
+                Repository.DowngradeEverythingInHierarchyExcept(OpenCloseUI);
+            }
+            else if (OpenCloseUI.OnTopOfHierarchy || 
+                Repository.CheckAllObjectsAtTheBottomOfHierarchy())
+            {
+                WindowController.CloseWindow();
+            }
+            else if(OpenCloseUI.OnTopOfHierarchy == false &&
+                OpenCloseUI.IsOpen == true)
+            {
+                WindowController.HighUpThePeckingOrder();
+                Repository.DowngradeEverythingInHierarchyExcept(OpenCloseUI);
+            }
         }
 
         public virtual void OnPointerEnter(PointerEventData eventData) =>

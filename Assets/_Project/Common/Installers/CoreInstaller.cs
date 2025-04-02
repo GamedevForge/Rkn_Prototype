@@ -5,6 +5,8 @@ using StarterAssets;
 using Project.Common.Core;
 using UnityEngine.AI;
 using Project.Common.Configs;
+using UnityEngine.UI;
+using static Project.Common.Core.EntryPoint;
 
 namespace Project.Common.Installers
 {
@@ -29,6 +31,7 @@ namespace Project.Common.Installers
 
         [Header("NewsObjects:")]
         [SerializeField] private BaseWidget _newsWindowWidget;
+        [SerializeField] private CloseWidget _newsWindowCloseWidget;
         [SerializeField] private RectTransform _newsWindowRectTransform;
         [SerializeField] private RectTransform _newsButtonRectTransform;
         [SerializeField] private NewsListData _newsListData;
@@ -38,7 +41,14 @@ namespace Project.Common.Installers
         [SerializeField] private Transform _rejectButtonTransform;
         [SerializeField] private ApproveOrRejectData _approveOrRejectData;
         [SerializeField] private NewsController _newsController;
-    
+        [SerializeField] private Image _newsImage;
+
+        [Header("DataBaseObjects")]
+        [SerializeField] private BaseWidget _dataBaseWindowWidget;
+        [SerializeField] private CloseWidget _dataBaseWindowCloseWidget;
+        [SerializeField] private RectTransform _databaseWindowRectTransform;
+        [SerializeField] private RectTransform _databaseButtonRectTransform;
+
         public override void InstallBindings()
         {
             Container.Bind<PlayerInteractController>().FromInstance(_playerInteractController).AsSingle();
@@ -52,6 +62,7 @@ namespace Project.Common.Installers
             Container.Bind<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform);
             Container.Bind<CursorAnimation>().AsSingle().WithArguments(_assetsInputs, _cursorRectTransform, _cursorData);
             Container.Bind<NewsWindowModel1>().AsSingle();
+            Container.Bind<WindowsRepository>().AsSingle();
 
             Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(
                 _interactiveObjectsTextView,
@@ -68,7 +79,18 @@ namespace Project.Common.Installers
                     CameraLookAtPointTransform = _lookAtPointForCamera,
                     ArmTransform = _armTransform,
                     ApproveOrRejectData = _approveOrRejectData,
+                    NewsImage = _newsImage,
                     Duration = _windowsData.AnimationDuration,
+                    NewsCloseWidget = _newsWindowCloseWidget,
+                },
+                new DataBaseWindowData
+                {
+                    TargetRectTransform = _databaseWindowRectTransform,
+                    CanvasRectTransform = _canvasRectTransform,
+                    DataBaseButtonTransform = _databaseButtonRectTransform,
+                    DataBaseWidget = _dataBaseWindowWidget,
+                    Duration = _windowsData.AnimationDuration,
+                    DataBaseCloseWidget = _dataBaseWindowCloseWidget,
                 });
         }
     }
