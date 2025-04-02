@@ -31,6 +31,9 @@ namespace Project.Common.UI
 
         public virtual void OnPointerClick(PointerEventData eventData)
         {
+            if (_windowController.OpenOrCloseInProcessing)
+                return;
+            
             if (_openCloseUI.IsOpen)
                 _windowController.CloseWindow();
             else

@@ -15,11 +15,6 @@ namespace Project.Common.UI
 
         private Vector3 _originScale;
 
-        private Vector3 MonitorCenter => new(
-            _canvasTransform.position.x / 2f, 
-            _canvasTransform.position.y / 2f, 
-            _canvasTransform.position.z);
-
         public WindowBaseAnimation(
             RectTransform target, 
             RectTransform canvasTransform,
@@ -36,7 +31,7 @@ namespace Project.Common.UI
             _originScale = _target.localScale;
 
         public async UniTask PlayOpenAnimationAsync() =>
-            await Task.WhenAll(MoveAnimation(MonitorCenter).AsyncWaitForCompletion(), 
+            await Task.WhenAll(MoveAnimation(_canvasTransform.position).AsyncWaitForCompletion(), 
                 ScaleAnimation(_originScale).AsyncWaitForCompletion());
 
         public async UniTask PlayCloseAnimationAsync() =>
@@ -44,7 +39,7 @@ namespace Project.Common.UI
                 ScaleAnimation(Vector3.zero).AsyncWaitForCompletion());
 
         private Tween MoveAnimation(Vector3 endPosition) =>
-            _target.DOLocalMove(endPosition, _duration);
+            _target.DOMove(endPosition, _duration);
 
         private Tween ScaleAnimation(Vector3 scale) =>
             _target.DOScale(scale, _duration);

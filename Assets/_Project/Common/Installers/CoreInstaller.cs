@@ -22,6 +22,13 @@ namespace Project.Common.Installers
         [SerializeField] private CursorData _cursorData;
         [SerializeField] private StarterAssetsInputs _assetsInputs;
         [SerializeField] private RectTransform _cursorRectTransform;
+        [SerializeField] private RectTransform _canvasRectTransform;
+
+        [Header("NewsObjects:")]
+        [SerializeField] private BaseWidget _newsWindowWidget;
+        [SerializeField] private RectTransform _newsWindowRectTransform;
+        [SerializeField] private RectTransform _newsButtonRectTransform;
+        [SerializeField] private float _duration;
     
         public override void InstallBindings()
         {
@@ -37,7 +44,16 @@ namespace Project.Common.Installers
             Container.Bind<CursorAnimation>().AsSingle().WithArguments(_assetsInputs, _cursorRectTransform, _cursorData);
             Container.Bind<NewsWindowModel1>().AsSingle();
 
-            Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(_interactiveObjectsTextView);
+            Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(
+                _interactiveObjectsTextView,
+                new NewsWindowData
+                {
+                    NewsWidget = _newsWindowWidget,
+                    CanvasRectTransform = _canvasRectTransform,
+                    NewsButtonTransform = _newsButtonRectTransform,
+                    TargetRectTransform = _newsWindowRectTransform,
+                    Duration = _duration,
+                });
         }
     }
 }

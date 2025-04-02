@@ -26,21 +26,26 @@ namespace Project.Common.Core
             CharacterController characterController,
             TextView interactiveObjectsTextView,
             CursorAnimation cursorAnimation,
-            PlayerQuitController playerQuitController)
+            PlayerQuitController playerQuitController,
+            NewsWindowData newsWindowData)
         {
             _playerState = playerState;
             _interactController = playerInteractController;
             _rayCasterController = rayCasterController;
             _rayCasterModel = rayCasterModel;
+            
             _playerStateController = new(
                 firstPersonController, 
                 characterController, 
                 _playerState);
             _textController = new(interactiveObjectsTextView,
                 rayCasterModel);
+            
             _firstPersonController = firstPersonController;
             _playerQuitController = playerQuitController;
             _cursorAnimation = cursorAnimation;
+
+            CreateNewsWindow(newsWindowData);
         }
 
         public void Initialize()
@@ -58,6 +63,19 @@ namespace Project.Common.Core
             _playerStateController.Dispose();
             _textController.Dispose();
             _cursorAnimation.Dispose();
+        }
+
+        private void CreateNewsWindow(NewsWindowData newsWindowData)
+        {
+            NewsWindowModel newsWindowModel = new();
+            WindowBaseAnimation windowBaseAnimation = new(
+                newsWindowData.TargetRectTransform,
+                newsWindowData.CanvasRectTransform,
+                newsWindowData.NewsButtonTransform,
+                newsWindowData.Duration);
+            windowBaseAnimation.Initialize();
+            NewsWindowController newsWindowController = new(windowBaseAnimation, newsWindowModel);
+            newsWindowData.NewsWidget.Initialize(newsWindowController, newsWindowModel);
         }
     }
 }
