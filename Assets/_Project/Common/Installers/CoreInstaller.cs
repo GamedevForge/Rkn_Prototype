@@ -48,6 +48,11 @@ namespace Project.Common.Installers
         [SerializeField] private CloseWidget _dataBaseWindowCloseWidget;
         [SerializeField] private RectTransform _databaseWindowRectTransform;
         [SerializeField] private RectTransform _databaseButtonRectTransform;
+        [SerializeField] private InquiriesData _inquiriesData;
+        [SerializeField] private TMPro.TMP_Text _textInfo;
+        [SerializeField] private GameObject _buttonPrefab;
+        [SerializeField] private Transform _buttonPrefabsParent;
+        [SerializeField] private DataBaseController _dataBaseController;
 
         [Header("RequirementsObjects")]
         [SerializeField] private BaseWidget _requirementsWindowWidget;
@@ -97,6 +102,11 @@ namespace Project.Common.Installers
                     DataBaseWidget = _dataBaseWindowWidget,
                     Duration = _windowsData.AnimationDuration,
                     DataBaseCloseWidget = _dataBaseWindowCloseWidget,
+                    InquiriesData = _inquiriesData,
+                    TextInfo = _textInfo,
+                    ButtonPrefab = _buttonPrefab,
+                    ButtonPrefabsParent = _buttonPrefabsParent,
+                    DataBaseController = _dataBaseController,
                 },
                 new RequirementsWindowData
                 {

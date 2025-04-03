@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using Project.Common.UI;
+using Project.Common.Configs;
+using TMPro;
 
 namespace Project.Common.Core
 {
@@ -10,6 +12,11 @@ namespace Project.Common.Core
         public RectTransform DataBaseButtonTransform;
         public BaseWidget DataBaseWidget;
         public CloseWidget DataBaseCloseWidget;
+        public InquiriesData InquiriesData;
+        public TMP_Text TextInfo;
+        public GameObject ButtonPrefab;
+        public Transform ButtonPrefabsParent;
+        public DataBaseController DataBaseController;
         public float Duration;
     }
 }

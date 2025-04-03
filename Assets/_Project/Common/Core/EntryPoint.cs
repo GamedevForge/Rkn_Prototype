@@ -20,6 +20,10 @@ namespace Project.Common.Core
         private readonly CursorAnimation _cursorAnimation;
         private readonly PlayerComponents _playerComponents;
         private readonly WindowsRepository _windowsRepository;
+        private readonly IInstantiator _instantiator;
+
+        private DataBaseWindowViewModel _dataBaseWindowViewModel;
+        private DataBaseViewController _dataBaseViewController;
 
         public EntryPoint(PlayerState playerState,
             PlayerInteractController playerInteractController,
@@ -28,6 +32,7 @@ namespace Project.Common.Core
             FirstPersonController firstPersonController,
             CharacterController characterController,
             TextView interactiveObjectsTextView,
+            IInstantiator instantiator,
             WindowsRepository windowsRepository,
             PlayerComponents playerComponents,
             CursorAnimation cursorAnimation,
@@ -41,6 +46,7 @@ namespace Project.Common.Core
             _rayCasterController = rayCasterController;
             _rayCasterModel = rayCasterModel;
             _playerComponents = playerComponents;
+            _instantiator = instantiator;
             
             _playerStateController = new(
                 firstPersonController, 
@@ -74,6 +80,8 @@ namespace Project.Common.Core
             _playerStateController.Dispose();
             _textController.Dispose();
             _cursorAnimation.Dispose();
+            _dataBaseWindowViewModel.Dispose();
+            _dataBaseWindowViewModel.Dispose();
         }
 
         private void CreateNewsWindow(NewsWindowData newsWindowData)
@@ -101,27 +109,39 @@ namespace Project.Common.Core
                 _firstPersonController,
                 _playerState);
             newsWindowData.NewsController.Initialize(newsModel, newsWindowViewModel, animation, _playerState);
-            _windowsRepository.AddWindow(newsWindowViewModel, newsWindowController);
+            _windowsRepository.Add(newsWindowViewModel, newsWindowController);
         }
 
         private void CreateDataBaseWindow(DataBaseWindowData dataBaseWindowData)
         {
-            DataBaseWindowViewModel dataBaseWindowViewModel = new();
+            DataBaseModel dataBaseModel = new(dataBaseWindowData.InquiriesData);
+            _dataBaseWindowViewModel = new(dataBaseModel, dataBaseWindowData.TextInfo);
+            GameObjectPool gameObjectPool = new(_instantiator, dataBaseWindowData.ButtonPrefab);
+            ResultSearchRepository repository = new();
+            SearchEngineBase searchEngine = new(dataBaseWindowData.InquiriesData.Inquiries);
+            _dataBaseViewController = new(
+                gameObjectPool, 
+                _dataBaseWindowViewModel, 
+                dataBaseWindowData.ButtonPrefabsParent, 
+                repository);
             WindowBaseAnimation windowBaseAnimation = new(
                 dataBaseWindowData.TargetRectTransform,
                 dataBaseWindowData.CanvasRectTransform,
                 dataBaseWindowData.DataBaseButtonTransform,
                 dataBaseWindowData.Duration);
             windowBaseAnimation.Initialize();
+            _dataBaseWindowViewModel.Initialize();
+            _dataBaseViewController.Initialize();
+            dataBaseWindowData.DataBaseController.Initialize(dataBaseModel, searchEngine);
 
             BaseWindowController dataBaseWindowController = new(
                 windowBaseAnimation,
-                dataBaseWindowViewModel,
+                _dataBaseWindowViewModel,
                 dataBaseWindowData.TargetRectTransform);
 
-            dataBaseWindowData.DataBaseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
-            dataBaseWindowData.DataBaseCloseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
-            _windowsRepository.AddWindow(dataBaseWindowViewModel, dataBaseWindowController);
+            dataBaseWindowData.DataBaseWidget.Initialize(dataBaseWindowController, _dataBaseWindowViewModel);
+            dataBaseWindowData.DataBaseCloseWidget.Initialize(dataBaseWindowController, _dataBaseWindowViewModel);
+            _windowsRepository.Add(_dataBaseWindowViewModel, dataBaseWindowController);
         }
 
         private void CreateRequirementsWindow(RequirementsWindowData requirementsWindowData)
@@ -141,7 +161,7 @@ namespace Project.Common.Core
 
             requirementsWindowData.DataBaseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
             requirementsWindowData.DataBaseCloseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
-            _windowsRepository.AddWindow(dataBaseWindowViewModel, dataBaseWindowController);
+            _windowsRepository.Add(dataBaseWindowViewModel, dataBaseWindowController);
         }
     }
 }

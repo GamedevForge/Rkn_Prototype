@@ -4,14 +4,14 @@ namespace Project.Common.UI
 {
     public class WindowsRepository
     {
-        public IEnumerable<KeyValuePair<IOpenCloseUI, IWindowController>> WindowsViewModels => _openClosesUI;
+        public IEnumerable<KeyValuePair<IOpenCloseUI, IWindowController>> Objects => _openClosesUI;
 
         private Dictionary<IOpenCloseUI, IWindowController> _openClosesUI = new();
 
-        public void AddWindow(IOpenCloseUI windowViewModel, IWindowController windowController) =>
+        public void Add(IOpenCloseUI windowViewModel, IWindowController windowController) =>
             _openClosesUI.Add(windowViewModel, windowController);
 
-        public void RemoveWindow(IOpenCloseUI windowViewModel) =>
+        public void Remove(IOpenCloseUI windowViewModel) =>
             _openClosesUI.Remove(windowViewModel);
 
         public bool CheckIfOtherWindowsAreOpen(IOpenCloseUI windowViewModel)
