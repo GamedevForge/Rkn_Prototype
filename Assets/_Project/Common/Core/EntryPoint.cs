@@ -123,7 +123,8 @@ namespace Project.Common.Core
                 gameObjectPool, 
                 _dataBaseWindowViewModel, 
                 dataBaseWindowData.ButtonPrefabsParent, 
-                repository);
+                repository,
+                dataBaseWindowData.SecondParent);
             WindowBaseAnimation windowBaseAnimation = new(
                 dataBaseWindowData.TargetRectTransform,
                 dataBaseWindowData.CanvasRectTransform,

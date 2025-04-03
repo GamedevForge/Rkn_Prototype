@@ -14,6 +14,7 @@ namespace Project.Common.Core
         public bool IsSitting { get; private set; } = false;
         public bool IsProcessing { get; private set; } = false;
         public bool InComputer { get; private set; } = false;
+        public bool InputOnKeyboard { get; private set; } = false;
 
         public void Sit()
         {
@@ -38,6 +39,12 @@ namespace Project.Common.Core
 
         public void DisableProcessing() => 
             IsProcessing = false;
+
+        public void OnKeyboard() =>
+            InputOnKeyboard = true;
+
+        public void NotAtKeyboard() =>
+            InputOnKeyboard = false;
 
         public void SitDownAtComputer()
         {

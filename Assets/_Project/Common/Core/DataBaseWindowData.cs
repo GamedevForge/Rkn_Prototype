@@ -16,6 +16,7 @@ namespace Project.Common.Core
         public TMP_Text TextInfo;
         public GameObject ButtonPrefab;
         public Transform ButtonPrefabsParent;
+        public Transform SecondParent;
         public DataBaseController DataBaseController;
         public float Duration;
     }

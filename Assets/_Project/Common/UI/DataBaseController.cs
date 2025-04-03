@@ -18,7 +18,7 @@ namespace Project.Common.UI
             _model.OnRequestChanged += FindResults;
         }
 
-        private void Awake() =>
+        private void OnDestroy() =>
             _model.OnRequestChanged -= FindResults;
 
         public void FindResults(string request) =>

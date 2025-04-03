@@ -52,6 +52,7 @@ namespace Project.Common.Installers
         [SerializeField] private TMPro.TMP_Text _textInfo;
         [SerializeField] private GameObject _buttonPrefab;
         [SerializeField] private Transform _buttonPrefabsParent;
+        [SerializeField] private Transform _secondParent;
         [SerializeField] private DataBaseController _dataBaseController;
 
         [Header("RequirementsObjects")]
@@ -107,6 +108,7 @@ namespace Project.Common.Installers
                     ButtonPrefab = _buttonPrefab,
                     ButtonPrefabsParent = _buttonPrefabsParent,
                     DataBaseController = _dataBaseController,
+                    SecondParent = _secondParent,
                 },
                 new RequirementsWindowData
                 {

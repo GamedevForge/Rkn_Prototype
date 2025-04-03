@@ -316,8 +316,8 @@ namespace Project.Common.UI
         {
             float distance = Vector2.Distance(uIRectTransform.position, cursorPosition);
 
-            return distance < (uIRectTransform.sizeDelta.x / 2f) * canvasTransform.localScale.x
-                || distance < (uIRectTransform.sizeDelta.y / 2f) * canvasTransform.localScale.y;
+            return distance < (uIRectTransform.sizeDelta.x / 2f) * canvasTransform.localScale.x * uIRectTransform.localScale.x
+                || distance < (uIRectTransform.sizeDelta.y / 2f) * canvasTransform.localScale.y * uIRectTransform.localScale.y;
         }
     }
 }
