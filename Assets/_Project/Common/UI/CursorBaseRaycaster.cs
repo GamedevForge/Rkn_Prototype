@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -9,7 +10,7 @@ namespace Project.Common.UI
 {
     public class CursorBaseRaycaster : BaseRaycaster
     {
-        [SerializeField] private Transform _cursorTransform;
+        [SerializeField] private RectTransform _cursorTransform;
 
         protected const int kNoEventMaskSet = -1;
 
@@ -114,6 +115,8 @@ namespace Project.Common.UI
             }
         }
 
+        private RectTransform CanvasRectTransform => m_Canvas.GetComponent<RectTransform>();
+
         [NonSerialized] private List<Graphic> m_RaycastResults = new List<Graphic>();
 
         /// <summary>
@@ -194,7 +197,7 @@ namespace Project.Common.UI
             {
                 var go = m_RaycastResults[index].gameObject;
                 bool appendGraphic = true;
-
+                
                 if (ignoreReversedGraphics)
                 {
                     if (currentEventCamera == null)
@@ -289,11 +292,12 @@ namespace Project.Common.UI
                 if (!graphic.raycastTarget || graphic.canvasRenderer.cull || graphic.depth == -1)
                     continue;
 
-                //if (!RectTransformUtility.RectangleContainsScreenPoint(graphic.rectTransform, pointerPosition, eventCamera, graphic.raycastPadding))
-                    //continue;
-
-                if(!CursorOverTheObject(graphic.rectTransform, pointerPosition, canvas.transform))
+                Debug.Log(pointerPosition);
+                if (!RectTransformUtility.RectangleContainsScreenPoint(graphic.rectTransform, pointerPosition))
                     continue;
+
+                //if(!CursorOverTheObject(graphic.rectTransform, pointerPosition, canvas.transform))
+                    //continue;
 
                 if (eventCamera != null && eventCamera.WorldToScreenPoint(graphic.rectTransform.position).z > eventCamera.farClipPlane)
                     continue;
@@ -314,10 +318,15 @@ namespace Project.Common.UI
 
         private static bool CursorOverTheObject(RectTransform uIRectTransform, Vector2 cursorPosition, Transform canvasTransform)
         {
-            float distance = Vector2.Distance(uIRectTransform.position, cursorPosition);
+            if (uIRectTransform.rect.Contains(cursorPosition))
+                return true;
+            else
+                return false;
+
+            /*float distance = Vector2.Distance(uIRectTransform.position, cursorPosition);
 
             return distance < (uIRectTransform.sizeDelta.x / 2f) * canvasTransform.localScale.x * uIRectTransform.localScale.x
-                || distance < (uIRectTransform.sizeDelta.y / 2f) * canvasTransform.localScale.y * uIRectTransform.localScale.y;
+                || distance < (uIRectTransform.sizeDelta.y / 2f) * canvasTransform.localScale.y * uIRectTransform.localScale.y;*/
         }
     }
 }
