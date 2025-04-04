@@ -1,13 +1,20 @@
 ﻿using System.Collections.Generic;
+using Zenject;
 
 namespace Project.Common.UI
 {
-    public class WindowsRepository
+    public class WindowsRepository : IInitializable
     {
         public IEnumerable<KeyValuePair<IOpenCloseUI, IWindowController>> Objects => _openClosesUI;
 
         private Dictionary<IOpenCloseUI, IWindowController> _openClosesUI = new();
 
+        public void Initialize()
+        {
+            foreach (IWindowController windowController in _openClosesUI.Values)
+                windowController.CloseWindow();
+        }
+        
         public void Add(IOpenCloseUI windowViewModel, IWindowController windowController) =>
             _openClosesUI.Add(windowViewModel, windowController);
 

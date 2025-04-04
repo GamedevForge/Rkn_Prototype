@@ -21,7 +21,7 @@ namespace Project.Common.UI
             _windowRectTransform = windowRectTransform;
         }
 
-        public async UniTask OpenWindow()
+        public virtual async UniTask OpenWindow()
         {
             OpenOrCloseInProcessing = true;
             HighUpThePeckingOrder();
@@ -30,7 +30,7 @@ namespace Project.Common.UI
             OpenOrCloseInProcessing = false;
         }
         
-        public async UniTask CloseWindow()
+        public virtual async UniTask CloseWindow()
         {
             OpenOrCloseInProcessing = true;
             await _windowAnimation.PlayCloseAnimationAsync();
@@ -39,13 +39,13 @@ namespace Project.Common.UI
             OpenOrCloseInProcessing = false;
         }
 
-        public void HighUpThePeckingOrder()
+        public virtual void HighUpThePeckingOrder()
         {
             _windowRectTransform.SetAsLastSibling();
             _windowViewModel.UpTheHierarchy();
         }
 
-        public void DownThePeckingOrder()
+        public virtual void DownThePeckingOrder()
         {
             _windowViewModel.DescendInHierarchy();
         }

@@ -63,6 +63,7 @@ namespace Project.Common.Core
             CreateNewsWindow(newsWindowData);
             CreateDataBaseWindow(dataBaseWindowData);
             CreateRequirementsWindow(requirementsWindowData);
+            _windowsRepository.Initialize();
         }
 
         public void Initialize()
@@ -94,7 +95,7 @@ namespace Project.Common.Core
                 newsWindowData.Duration);
             
             windowBaseAnimation.Initialize();
-            BaseWindowController newsWindowController = new(windowBaseAnimation, newsWindowViewModel, newsWindowData.TargetRectTransform);
+            NewsWindowController newsWindowController = new(windowBaseAnimation, newsWindowViewModel, newsWindowData.TargetRectTransform, _playerState);
             newsWindowData.NewsWidget.Initialize(newsWindowController, newsWindowViewModel);
             newsWindowData.NewsCloseWidget.Initialize(newsWindowController, newsWindowViewModel);
 
@@ -135,10 +136,11 @@ namespace Project.Common.Core
             _dataBaseViewController.Initialize();
             dataBaseWindowData.DataBaseController.Initialize(dataBaseModel, searchEngine);
 
-            BaseWindowController dataBaseWindowController = new(
+            DataBaseWindowController dataBaseWindowController = new(
                 windowBaseAnimation,
                 _dataBaseWindowViewModel,
-                dataBaseWindowData.TargetRectTransform);
+                dataBaseWindowData.TargetRectTransform,
+                repository);
 
             dataBaseWindowData.DataBaseWidget.Initialize(dataBaseWindowController, _dataBaseWindowViewModel);
             dataBaseWindowData.DataBaseCloseWidget.Initialize(dataBaseWindowController, _dataBaseWindowViewModel);

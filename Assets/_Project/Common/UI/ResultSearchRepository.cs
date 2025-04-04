@@ -14,6 +14,18 @@ namespace Project.Common.UI
         public void Remove(SearchButton searchButton) =>
             _list.Remove(searchButton);
 
+        public void EnableAllSearchButtons()
+        {
+            foreach (var button in _list)
+                button.gameObject.SetActive(true);
+        }
+
+        public void DisableAllSearchButtons()
+        {
+            foreach (var button in _list)
+                button.gameObject.SetActive(false);
+        }
+
         public void Clear() => _list.Clear();
     }
 }

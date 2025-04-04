@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
 namespace Project.Common.UI
@@ -14,8 +13,6 @@ namespace Project.Common.UI
         private readonly Transform _parent;
         private readonly Transform _secondParent;
         private readonly ResultSearchRepository _repository;
-
-        private GridLayoutGroup GridLayoutGroup => _parent.GetComponent<GridLayoutGroup>();
 
         public DataBaseViewController(
             GameObjectPool pool, 

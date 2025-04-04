@@ -12,7 +12,8 @@ namespace Project.Common.UI
 
         private bool IsPossible => _playerState.IsProcessing == false &&
             _playerState.IsSitting &&
-            _playerState.InComputer;
+            _playerState.InComputer &&
+            _playerState.InputOnKeyboard;
 
         public void Initialize(
             NewsModel newsModel, 

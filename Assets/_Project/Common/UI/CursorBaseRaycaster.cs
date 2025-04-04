@@ -292,7 +292,7 @@ namespace Project.Common.UI
                 if (!graphic.raycastTarget || graphic.canvasRenderer.cull || graphic.depth == -1)
                     continue;
 
-                Debug.Log(pointerPosition);
+                //Debug.Log(pointerPosition);
                 if (!RectTransformUtility.RectangleContainsScreenPoint(graphic.rectTransform, pointerPosition))
                     continue;
 
