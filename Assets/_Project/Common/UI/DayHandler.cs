@@ -1,16 +1,22 @@
-﻿using Zenject;
+﻿using System;
 
 namespace Project.Common.UI
 {
     public class DayHandler
-    { 
-        public readonly int DayNumber;
+    {
+        public event Action<int> OnDayNumberChanged;
+        
+        public int DayNumber { get; private set; }
 
-        public DayHandler(
-        [InjectOptional]
-        int day)
+        public DayHandler(int day)
         {
             DayNumber = day;
+        }
+
+        public void SetDayCount(int dayNumber)
+        {
+            DayNumber = dayNumber;
+            OnDayNumberChanged?.Invoke(DayNumber);
         }
     }
 }

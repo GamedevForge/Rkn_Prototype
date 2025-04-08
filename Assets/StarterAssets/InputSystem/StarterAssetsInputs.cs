@@ -32,7 +32,8 @@ namespace StarterAssets
 
         private void Awake()
         {
-			_playerState.OnSitDownAtComputer += SitOnComputer;
+            SetCursorState(cursorLocked);
+            _playerState.OnSitDownAtComputer += SitOnComputer;
 			_playerState.OnStandUpAtComputer += StandUpOnComputer;
         }
 

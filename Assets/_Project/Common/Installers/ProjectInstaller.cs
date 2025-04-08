@@ -8,6 +8,9 @@ namespace Project.Common.Installers
     
     public class ProjectInstaller : MonoInstaller
     {
+        [InjectOptional]
+        public int DayNumber;
+
         [SerializeField] private ObjectsData _objectsData;
         [SerializeField] private PlayerRayCastData _playerRayCastData;
 
@@ -16,6 +19,7 @@ namespace Project.Common.Installers
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
             Container.Bind<PlayerRayCastData>().FromInstance(_playerRayCastData).AsSingle();
             Container.Bind<DayHandler>().AsSingle();
+            Container.BindInstance(DayNumber).WhenInjectedInto<DayHandler>();
         }
     }
 

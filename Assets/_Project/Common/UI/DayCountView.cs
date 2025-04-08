@@ -12,7 +12,16 @@ namespace Project.Common.UI
         [Inject] private void Construct(DayHandler dayHandler)
         {
             _dayHandler = dayHandler;
-            _text.text = "Day " + _dayHandler.DayNumber;
+            SetNewState(_dayHandler.DayNumber);
+            _dayHandler.OnDayNumberChanged += SetNewState;
         }
+
+        private void OnDestroy()
+        {
+            _dayHandler.OnDayNumberChanged -= SetNewState;
+        }
+
+        private void SetNewState(int day) =>
+            _text.text = "Day " + day;
     }
 }
