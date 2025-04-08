@@ -1,4 +1,5 @@
 using Project.Common.Configs;
+using Project.Common.UI;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,7 @@ namespace Project.Common.Installers
         {
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
             Container.Bind<PlayerRayCastData>().FromInstance(_playerRayCastData).AsSingle();
+            Container.Bind<DayHandler>().AsSingle();
         }
     }
 

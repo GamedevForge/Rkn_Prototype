@@ -30,8 +30,20 @@ namespace StarterAssets
 		[Inject] private void Construct(PlayerState playerState) =>
 			_playerState = playerState;
 
+        private void Awake()
+        {
+			_playerState.OnSitDownAtComputer += SitOnComputer;
+			_playerState.OnStandUpAtComputer += StandUpOnComputer;
+        }
+
+        private void OnDestroy()
+        {
+            _playerState.OnSitDownAtComputer -= SitOnComputer;
+            _playerState.OnStandUpAtComputer -= StandUpOnComputer;
+        }
+
 #if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
+        public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
 		}
@@ -89,8 +101,22 @@ namespace StarterAssets
 
 		private void SetCursorState(bool newState)
 		{
-			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.Confined;
 		}
+
+		private void SitOnComputer()
+		{
+            cursorLocked = false;
+            Cursor.lockState = CursorLockMode.Confined;
+			Cursor.visible = false;
+        }
+
+		private void StandUpOnComputer()
+		{
+			cursorLocked = true;
+			Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = true;
+        }
 	}
 	
 }
