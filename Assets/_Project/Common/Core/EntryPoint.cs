@@ -149,7 +149,8 @@ namespace Project.Common.Core
 
         private void CreateRequirementsWindow(RequirementsWindowData requirementsWindowData)
         {
-            RequirementsWindowViewModel dataBaseWindowViewModel = new();
+            RequirementsModel model = _instantiator.Instantiate<RequirementsModel>();
+            RequirementsWindowViewModel dataBaseWindowViewModel = new(model);
             WindowBaseAnimation windowBaseAnimation = new(
                 requirementsWindowData.TargetRectTransform,
                 requirementsWindowData.CanvasRectTransform,
@@ -157,11 +158,13 @@ namespace Project.Common.Core
                 requirementsWindowData.Duration);
             windowBaseAnimation.Initialize();
 
-            BaseWindowController dataBaseWindowController = new(
+            RequirementsWindowViewController dataBaseWindowController = new(
                 windowBaseAnimation,
                 dataBaseWindowViewModel,
-                requirementsWindowData.TargetRectTransform);
+                requirementsWindowData.TargetRectTransform,
+                requirementsWindowData.Text);
 
+            dataBaseWindowController.Initialize();
             requirementsWindowData.DataBaseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
             requirementsWindowData.DataBaseCloseWidget.Initialize(dataBaseWindowController, dataBaseWindowViewModel);
             _windowsRepository.Add(dataBaseWindowViewModel, dataBaseWindowController);

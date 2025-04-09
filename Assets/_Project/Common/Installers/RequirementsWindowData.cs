@@ -10,6 +10,7 @@ namespace Project.Common.Installers
         public RectTransform DataBaseButtonTransform;
         public BaseWidget DataBaseWidget;
         public CloseWidget DataBaseCloseWidget;
+        public TMPro.TMP_Text Text;
         public float Duration;
     }
 }

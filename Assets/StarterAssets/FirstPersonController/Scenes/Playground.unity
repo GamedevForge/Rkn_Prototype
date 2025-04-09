@@ -3933,6 +3933,7 @@ MonoBehaviour:
   _dataBaseController: {fileID: 1570374482}
   _requirementsWindowWidget: {fileID: 2055991857}
   _requirementsWindowCloseWidget: {fileID: 891355714}
+  __requirementsText: {fileID: 179239302}
   _requirementsWindowRectTransform: {fileID: 1490390006}
   _requirementsButtonRectTransform: {fileID: 812929998}
 --- !u!114 &1008458924

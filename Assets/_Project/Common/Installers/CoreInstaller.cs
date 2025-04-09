@@ -58,6 +58,7 @@ namespace Project.Common.Installers
         [Header("RequirementsObjects")]
         [SerializeField] private BaseWidget _requirementsWindowWidget;
         [SerializeField] private CloseWidget _requirementsWindowCloseWidget;
+        [SerializeField] private TMPro.TMP_Text __requirementsText;
         [SerializeField] private RectTransform _requirementsWindowRectTransform;
         [SerializeField] private RectTransform _requirementsButtonRectTransform;
 
@@ -118,6 +119,7 @@ namespace Project.Common.Installers
                     DataBaseWidget = _requirementsWindowWidget,
                     Duration = _windowsData.AnimationDuration,
                     DataBaseCloseWidget = _requirementsWindowCloseWidget,
+                    Text = __requirementsText,
                 });
         }
     }
