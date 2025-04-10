@@ -22,7 +22,7 @@ namespace Project.Common.UI
         public void LoadScene()
         {
             _dayHandler.SetDayCount(_dayReceiver.DayNumber);
-            _sceneLoader.LoadScene("Playground", LoadSceneMode.Single, (container) =>
+            _sceneLoader.LoadScene("Neighborhood", LoadSceneMode.Single, (container) =>
             {
                 container.BindInstance(_dayReceiver.DayNumber).WhenInjectedInto<ProjectInstaller>();
             });
