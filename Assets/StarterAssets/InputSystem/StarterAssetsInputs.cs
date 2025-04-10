@@ -1,5 +1,6 @@
 using Project.Common.Core;
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
@@ -26,6 +27,9 @@ namespace StarterAssets
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
+
+		[Header("Lock jump")]
+		[SerializeField] private bool _lockJumping;
 
 		[Inject] private void Construct(PlayerState playerState) =>
 			_playerState = playerState;
@@ -87,6 +91,9 @@ namespace StarterAssets
 
 		public void JumpInput(bool newJumpState)
 		{
+			if (_lockJumping)
+				return;
+
 			jump = newJumpState;
 		}
 
