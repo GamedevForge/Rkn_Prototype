@@ -31,7 +31,7 @@ namespace Project.Common.Core
             PlayerRayCasterModel rayCasterModel,
             FirstPersonController firstPersonController,
             CharacterController characterController,
-            TextView interactiveObjectsTextView,
+            InteractableObjectsView interactiveObjectsTextView,
             IInstantiator instantiator,
             WindowsRepository windowsRepository,
             PlayerComponents playerComponents,

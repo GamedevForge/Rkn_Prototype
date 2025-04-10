@@ -1,10 +1,11 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 
 namespace Project.Common.Core
 {
-    public class PlayerRayCasterModel : IObjectChangedEvent<IInteractableObject>
+    public class PlayerRayCasterModel : IHoldEvent<IInteractableObject>, IHoldFunction<IInteractableObject>
     {
+        public event Action<float, float, bool> OnHold;
+        public Action<float, bool> OnHoldDelegate {  get; set; }
         public event Action<IInteractableObject> OnCurrentObjectChanged;
         public IInteractableObject CurrentGameObject { get; private set; }
 
@@ -18,6 +19,9 @@ namespace Project.Common.Core
             else 
                 CurrentGameObject = interactableObject;
         }
+
+        public void Hold(float time, float endTime, bool isPressed) =>
+            OnHold?.Invoke(time, endTime, isPressed);
     }
 }
 

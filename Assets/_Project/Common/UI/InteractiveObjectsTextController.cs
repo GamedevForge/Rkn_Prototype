@@ -6,28 +6,42 @@ namespace Project.Common.UI
 {
     public class InteractiveObjectsTextController : IInitializable, IDisposable
     {
-        private readonly TextView _textView;
-        private readonly IObjectChangedEvent<IInteractableObject> _objectChangedEvent;
+        private readonly InteractableObjectsView _textView;
+        private readonly IHoldEvent<IInteractableObject> _objectChangedEvent;
 
-        public InteractiveObjectsTextController(TextView textView,
-            IObjectChangedEvent<IInteractableObject> objectChangedEvent)
+        public InteractiveObjectsTextController(InteractableObjectsView textView,
+            IHoldEvent<IInteractableObject> objectChangedEvent)
         {
             _textView = textView;
             _objectChangedEvent = objectChangedEvent;
         }
 
-        public void Initialize() =>
+        public void Initialize()
+        {
             _objectChangedEvent.OnCurrentObjectChanged += OnObjectChanged;
+            _objectChangedEvent.OnHold += OnHold;
+        }
 
-        public void Dispose() =>
+        public void Dispose()
+        {
             _objectChangedEvent.OnCurrentObjectChanged -= OnObjectChanged;
+            _objectChangedEvent.OnHold -= OnHold;
+        }
 
         private void OnObjectChanged(IInteractableObject interactiveObject)
         {
             if (interactiveObject == null)
                 Reset();
-            else if (interactiveObject.CanInteract)
+            else if (interactiveObject.CanInteract && interactiveObject.InteractType == InteractType.Click)
                 Draw(interactiveObject.Name);
+            else if (interactiveObject.CanInteract && interactiveObject.InteractType == InteractType.Hold)
+                DrawHoldText(interactiveObject.Name);
+        }
+
+        private void OnHold(float time, float endTime, bool active)
+        {
+            _textView.DrawSlider(time / endTime);
+            _textView.SetSliderActive(active);
         }
 
         public void Draw(string objectName) =>
@@ -35,5 +49,8 @@ namespace Project.Common.UI
 
         public void Reset() =>
             _textView.DrawText("");
+
+        public void DrawHoldText(string objectName) =>
+            _textView.DrawText($"Hold to {objectName} interact");
     }
 }

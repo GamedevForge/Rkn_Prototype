@@ -5,6 +5,7 @@
         Chair,
         Monitor,
         Bus,
+        Bed,
     }
 }
 

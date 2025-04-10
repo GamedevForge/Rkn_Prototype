@@ -12,7 +12,7 @@ namespace Project.Common.Installers
 {
     public class CoreInstaller : MonoInstaller
     {
-        [SerializeField] private TextView _interactiveObjectsTextView;
+        [SerializeField] private InteractableObjectsView _interactiveObjectsTextView;
         [SerializeField] private FirstPersonController _firstPersonController;
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private PlayerInteractController _playerInteractController;

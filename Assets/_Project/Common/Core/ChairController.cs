@@ -19,6 +19,9 @@ namespace Project.Common.Core
         private PlayerComponents _playerComponents;
         private FirstPersonController _firstPersonController;
 
+        [field: SerializeField] public float HoldTime { get; private set; } 
+
+        public InteractType InteractType => InteractType.Click;
         public string Name => _dataService.GetObjectConfig(ObjectType.Chair).Name;
         public bool CanInteract => _playerState.IsSitting ||
             _playerState.IsProcessing == false;
