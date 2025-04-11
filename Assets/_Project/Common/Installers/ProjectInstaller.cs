@@ -1,4 +1,5 @@
 using Project.Common.Configs;
+using Project.Common.Core;
 using Project.Common.UI;
 using UnityEngine;
 using Zenject;
@@ -24,6 +25,7 @@ namespace Project.Common.Installers
             Container.Bind<DayHandler>().AsSingle();
             Container.Bind<NewsListData>().FromInstance(_newsListData).AsSingle();
             Container.BindInterfacesAndSelfTo<NewsModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameQuitController>().AsSingle();
             Container.BindInstance(DayNumber).WhenInjectedInto<DayHandler>();
         }
     }
