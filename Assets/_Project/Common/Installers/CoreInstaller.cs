@@ -42,6 +42,8 @@ namespace Project.Common.Installers
         [SerializeField] private ApproveOrRejectData _approveOrRejectData;
         [SerializeField] private NewsController _newsController;
         [SerializeField] private Image _newsImage;
+        [SerializeField] private GameObject _newsGameObject;
+        [SerializeField] private GameObject _screenIfNewsIsOver;
 
         [Header("DataBaseObjects")]
         [SerializeField] private BaseWidget _dataBaseWindowWidget;
@@ -95,6 +97,8 @@ namespace Project.Common.Installers
                     NewsImage = _newsImage,
                     Duration = _windowsData.AnimationDuration,
                     NewsCloseWidget = _newsWindowCloseWidget,
+                    NewsGameObject = _newsGameObject,
+                    ScreenIfNewsIsOver = _screenIfNewsIsOver,
                 },
                 new DataBaseWindowData
                 {

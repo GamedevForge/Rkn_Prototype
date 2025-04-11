@@ -6,18 +6,19 @@ namespace Project.Common.UI
     public class NewsController : MonoBehaviour
     {
         private NewsModel _model;
-        private IWindowWithSprite _view;
+        private INewsViewModel _view;
         private NewsApproveOrRejectAnimations _animationController;
         private PlayerState _playerState;
 
         private bool IsPossible => _playerState.IsProcessing == false &&
             _playerState.IsSitting &&
             _playerState.InComputer &&
-            _playerState.InputOnKeyboard;
+            _playerState.InputOnKeyboard &&
+            _model.NewsIsNotOverForToday;
 
         public void Initialize(
-            NewsModel newsModel, 
-            IWindowWithSprite newsViewModel,
+            NewsModel newsModel,
+            INewsViewModel newsViewModel,
             NewsApproveOrRejectAnimations newsApproveOrRejectAnimations,
             PlayerState playerState)
         {
@@ -25,6 +26,11 @@ namespace Project.Common.UI
             _view = newsViewModel;
             _animationController = newsApproveOrRejectAnimations;
             _playerState = playerState;
+
+            if (_model.NewsIsNotOverForToday == false)
+                _view.NewsIsOver();
+            else
+                _view.ChangeSprite(_model.CurrentNews.Sprite);
         }
 
         public async void OnApprove()
@@ -48,7 +54,11 @@ namespace Project.Common.UI
         private void ChangeNews()
         {
             _model.ChangeCurrentNews();
-            _view.ChangeNewsSprite(_model.CurrentNews.Sprite);
+            _model.ApproveOrRejectNews();
+            if (_model.NewsIsNotOverForToday == false)
+                _view.NewsIsOver();
+            else
+                _view.ChangeSprite(_model.CurrentNews.Sprite);
         }
     }
 }

@@ -21,6 +21,7 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  <NewsPerDay>k__BackingField: 5
   <NewsConfigs>k__BackingField:
   - Sprite: {fileID: -2114756081, guid: 5fffbc023e4eb1142a1312b2c3208cde, type: 3}
   - Sprite: {fileID: -140800148, guid: 2efb7ecaf02b5db4e84a532aeaeb5ef1, type: 3}

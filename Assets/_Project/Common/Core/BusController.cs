@@ -7,14 +7,16 @@ namespace Project.Common.Core
 {
     public class BusController : MonoBehaviour, IInteractableObject
     {
+        [SerializeField] private string SceneName = "Playground";
+
         private ObjectsDataService _dataService;
         private ZenjectSceneLoader _sceneLoader;
 
         [field: SerializeField] public float HoldTime { get; private set; }
         
-        public InteractType InteractType => InteractType.Click;
-        public bool CanInteract { get; private set; } = true;
-        public string Name => _dataService.GetObjectConfig(ObjectType.Bus).Name;
+        public virtual InteractType InteractType => InteractType.Click;
+        public virtual bool CanInteract { get; private set; } = true;
+        public virtual string Name => _dataService.GetObjectConfig(ObjectType.Bus).Name;
 
         [Inject] private void Construct(ObjectsDataService dataService, ZenjectSceneLoader sceneLoader)
         {
@@ -22,14 +24,20 @@ namespace Project.Common.Core
             _sceneLoader = sceneLoader;
         }
  
-        public void Interact()
+        public virtual void Interact()
         {
-            _sceneLoader.LoadScene("Playground");
+            LoadScene();
         }
 
-        private async UniTask PlayAnimationAsync()
+        protected virtual async UniTask PlayAnimationAsync()
         {
-            //
+            await UniTask.Yield();
         }
+
+        protected ObjectConfig GetObjectConfig(ObjectType objectType) =>
+            _dataService.GetObjectConfig(objectType);
+
+        private void LoadScene() =>
+            _sceneLoader.LoadScene(SceneName);
     }
 }

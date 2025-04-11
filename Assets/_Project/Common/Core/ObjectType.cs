@@ -6,6 +6,7 @@
         Monitor,
         Bus,
         Bed,
+        Door
     }
 }
 

@@ -14,6 +14,7 @@ namespace Project.Common.Installers
         [SerializeField] private ObjectsData _objectsData;
         [SerializeField] private PlayerRayCastData _playerRayCastData;
         [SerializeField] private RequirementsData _requirementsData;
+        [SerializeField] private NewsListData _newsListData;
 
         public override void InstallBindings()
         {
@@ -21,6 +22,8 @@ namespace Project.Common.Installers
             Container.Bind<RequirementsDataService>().AsSingle().WithArguments(_requirementsData);
             Container.Bind<PlayerRayCastData>().FromInstance(_playerRayCastData).AsSingle();
             Container.Bind<DayHandler>().AsSingle();
+            Container.Bind<NewsListData>().FromInstance(_newsListData).AsSingle();
+            Container.BindInterfacesAndSelfTo<NewsModel>().AsSingle();
             Container.BindInstance(DayNumber).WhenInjectedInto<DayHandler>();
         }
     }

@@ -20,6 +20,8 @@ namespace Project.Common.Core
         public Transform ArmTransform;
         public ApproveOrRejectData ApproveOrRejectData;
         public Image NewsImage;
+        public GameObject NewsGameObject;
+        public GameObject ScreenIfNewsIsOver;
         public float Duration;
     }
 }

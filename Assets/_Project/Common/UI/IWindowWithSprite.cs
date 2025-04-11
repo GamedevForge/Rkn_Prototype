@@ -4,6 +4,6 @@ namespace Project.Common.UI
 {
     public interface IWindowWithSprite
     {
-        void ChangeNewsSprite(Sprite sprite);
+        void ChangeSprite(Sprite sprite);
     }
 }
