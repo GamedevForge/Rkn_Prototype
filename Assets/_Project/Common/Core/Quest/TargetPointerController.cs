@@ -1,3 +1,6 @@
+using Project.Common.Configs;
+using System.Collections.Generic;
+using Zenject;
 using UnityEngine;
 
 namespace Project.Common.Core.Quest
@@ -5,6 +8,7 @@ namespace Project.Common.Core.Quest
     public class TargetPointerController : MonoBehaviour
     {
         [SerializeField] private Transform _target;
+        [SerializeField] private TMPro.TMP_Text _text;
         [SerializeField] private RectTransform _markerInScreenTransform;
         [SerializeField] private RectTransform _markerOutSideTransform;
 
@@ -17,17 +21,18 @@ namespace Project.Common.Core.Quest
 
         private void Update()
         {
+            if (_target == null)
+                return;
+
             Vector3 screenPointPosition = _camera.WorldToScreenPoint(_target.position);
             Vector2 viewPortPosition = _camera.ScreenToViewportPoint(screenPointPosition);
-
-            Debug.Log(screenPointPosition + " | " + viewPortPosition);
 
             if (viewPortPosition.x < 0f || viewPortPosition.x > 1f || viewPortPosition.y < 0f || viewPortPosition.y > 1f)
             {
                 _markerInScreenTransform.gameObject.SetActive(false);
                 _markerOutSideTransform.gameObject.SetActive(true);
                 _markerOutSideTransform.position = new Vector2(
-                    Mathf.Clamp(screenPointPosition.x, MinX + _markerOutSideTransform.sizeDelta.x / 2, MaxX - _markerOutSideTransform.sizeDelta.x / 2), 
+                    Mathf.Clamp(screenPointPosition.x, MinX + _markerOutSideTransform.sizeDelta.x / 2, MaxX - _markerOutSideTransform.sizeDelta.x / 2),
                     Mathf.Clamp(screenPointPosition.y, MinY + _markerOutSideTransform.sizeDelta.y / 2, MaxY - _markerOutSideTransform.sizeDelta.y / 2));
             }
             else
@@ -47,6 +52,66 @@ namespace Project.Common.Core.Quest
                         Mathf.Clamp(screenPointPosition.y, MinY + _markerOutSideTransform.sizeDelta.y / 2, MaxY - _markerOutSideTransform.sizeDelta.y / 2));
                 }
             }
+        }
+
+        public void SetTarget(Transform target, string name)
+        {
+            _text.text = name;
+            _target = target;
+        }
+    }
+
+    public class QuestController : IInitializable
+    {
+        private readonly QuestConfigService _configService;
+        private readonly List<QuestEvent> _questEvents = new();
+
+        private QuestConfig _currentQuestConfig;
+
+        public QuestController(QuestConfigService configService)
+        {
+            _configService = configService;
+        }
+        
+        public void Initialize()
+        {
+            _currentQuestConfig = _configService.GetQuestConfig();
+        }
+
+        public void AddQuestEvent(QuestEvent questEvent)
+        {
+            _questEvents.Add(questEvent);
+        }
+
+        public void RemoveQuestEvent(QuestEvent questEvent)
+        {
+            _questEvents.Remove(questEvent);
+        }
+
+        private void CloseCurrentQuest(string id)
+        {
+            if (_currentQuestConfig == null)
+                return;
+            
+            foreach (QuestEvent questEvent in _questEvents)
+            {
+                if (id == questEvent.ID && id == _currentQuestConfig.ID)
+                    _currentQuestConfig.IsActive = false;
+            }
+            GetNextQuest();
+        }
+
+        private void GetNextQuest() =>
+            _currentQuestConfig = _configService.GetQuestConfig();
+    }
+
+    public class QuestView
+    {
+        private readonly TargetPointerController _targetPointerController;
+
+        public QuestView(TargetPointerController targetPointerController)
+        {
+            _targetPointerController = targetPointerController;
         }
     }
 }

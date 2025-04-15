@@ -6,7 +6,6 @@ using Project.Common.Core;
 using UnityEngine.AI;
 using Project.Common.Configs;
 using UnityEngine.UI;
-using static Project.Common.Core.EntryPoint;
 
 namespace Project.Common.Installers
 {

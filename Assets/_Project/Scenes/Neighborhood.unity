@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 380060924}
+  _text: {fileID: 1812546473}
   _markerInScreenTransform: {fileID: 679688693}
   _markerOutSideTransform: {fileID: 1351068294}
 --- !u!114 &29493964
@@ -1792,6 +1793,7 @@ GameObject:
   - component: {fileID: 380060927}
   - component: {fileID: 380060926}
   - component: {fileID: 380060925}
+  - component: {fileID: 380060929}
   m_Layer: 6
   m_Name: Bus
   m_TagString: Untagged
@@ -1827,6 +1829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: Playground
+  _markerTarget: {fileID: 380060924}
   <HoldTime>k__BackingField: 0
 --- !u!65 &380060926
 BoxCollider:
@@ -1902,6 +1905,32 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380060923}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &380060929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380060923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 280b9acefd17729408b876ec6e5bac39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 380060925}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _event
+      Entry: 10
+      Data: 0
+  <ID>k__BackingField: go_to_work
 --- !u!1 &447048930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4433,6 +4462,7 @@ GameObject:
   - component: {fileID: 1008458925}
   - component: {fileID: 1008458924}
   - component: {fileID: 1008458923}
+  - component: {fileID: 1008458926}
   m_Layer: 0
   m_Name: SceneInstaller
   m_TagString: Untagged
@@ -4542,6 +4572,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1008458926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008458922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 443c2a5d6de895c48a7544e679797b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _questEvents:
+  - {fileID: 380060929}
 --- !u!1 &1017751201
 GameObject:
   m_ObjectHideFlags: 0
