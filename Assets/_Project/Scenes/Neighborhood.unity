@@ -1829,7 +1829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: Playground
-  _markerTarget: {fileID: 380060924}
+  <MarkerTarget>k__BackingField: {fileID: 0}
   <HoldTime>k__BackingField: 0
 --- !u!65 &380060926
 BoxCollider:
@@ -1931,6 +1931,7 @@ MonoBehaviour:
       Entry: 10
       Data: 0
   <ID>k__BackingField: go_to_work
+  <Type>k__BackingField: 0
 --- !u!1 &447048930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4540,6 +4541,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1008458923}
+  - {fileID: 1008458926}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:

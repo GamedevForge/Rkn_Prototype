@@ -12,7 +12,7 @@ namespace Project.Common.Core.Quest
         public event Action<string> OnEvent;
 
         [field: SerializeField] public string ID { get; private set; }
-        [field: SerializeField] public QuestEventType Type { get; private set; }
+        [field: SerializeField] public QuestType Type { get; private set; }
         
         [OdinSerialize] private IQuestEvent<Transform> _event;
 
@@ -39,7 +39,7 @@ namespace Project.Common.Core.Quest
             OnEvent?.Invoke(ID);
     }
 
-    public enum QuestEventType
+    public enum QuestType
     {
         WithTarget,
         WithoutTarget

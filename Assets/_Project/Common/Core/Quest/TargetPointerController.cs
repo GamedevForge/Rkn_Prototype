@@ -64,45 +64,47 @@ namespace Project.Common.Core.Quest
     public class QuestController : IInitializable
     {
         private readonly QuestConfigService _configService;
+        private readonly QuestView _view;
         private readonly List<QuestEvent> _questEvents = new();
 
-        private QuestConfig _currentQuestConfig;
+        public QuestConfig CurrentQuestConfig { get; private set; }
 
-        public QuestController(QuestConfigService configService)
+        public QuestController(QuestConfigService configService, QuestView questView)
         {
             _configService = configService;
+            _view = questView;
         }
         
-        public void Initialize()
-        {
-            _currentQuestConfig = _configService.GetQuestConfig();
-        }
+        public void Initialize() =>
+            CurrentQuestConfig = _configService.GetQuestConfig();
 
         public void AddQuestEvent(QuestEvent questEvent)
         {
             _questEvents.Add(questEvent);
+            questEvent.OnEvent += CloseCurrentQuest;
         }
 
         public void RemoveQuestEvent(QuestEvent questEvent)
         {
             _questEvents.Remove(questEvent);
+            questEvent.OnEvent -= CloseCurrentQuest;
         }
 
         private void CloseCurrentQuest(string id)
         {
-            if (_currentQuestConfig == null)
+            if (CurrentQuestConfig == null)
                 return;
             
             foreach (QuestEvent questEvent in _questEvents)
             {
-                if (id == questEvent.ID && id == _currentQuestConfig.ID)
-                    _currentQuestConfig.IsActive = false;
+                if (id == questEvent.ID && id == CurrentQuestConfig.ID)
+                    CurrentQuestConfig.IsActive = false;
             }
             GetNextQuest();
         }
 
         private void GetNextQuest() =>
-            _currentQuestConfig = _configService.GetQuestConfig();
+            CurrentQuestConfig = _configService.GetQuestConfig();
     }
 
     public class QuestView
@@ -113,5 +115,10 @@ namespace Project.Common.Core.Quest
         {
             _targetPointerController = targetPointerController;
         }
+    }
+
+    public class QuestViewFactory
+    {
+
     }
 }
