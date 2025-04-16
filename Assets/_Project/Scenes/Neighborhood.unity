@@ -3525,6 +3525,7 @@ MonoBehaviour:
   _intermediateDuration: 0.2
   _endDuration: 0.3
   <HoldTime>k__BackingField: 0
+  <MarkerTarget>k__BackingField: {fileID: 0}
 --- !u!65 &831620382
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8066,6 +8067,7 @@ GameObject:
   - component: {fileID: 1689817477}
   - component: {fileID: 1689817476}
   - component: {fileID: 1689817475}
+  - component: {fileID: 1689817479}
   m_Layer: 6
   m_Name: Bed
   m_TagString: Untagged
@@ -8101,6 +8103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <HoldTime>k__BackingField: 1.5
+  <MarkerTarget>k__BackingField: {fileID: 1689817474}
 --- !u!65 &1689817476
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8175,6 +8178,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689817473}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1689817479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689817473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 280b9acefd17729408b876ec6e5bac39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 1689817475}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _event
+      Entry: 10
+      Data: 0
+  <ID>k__BackingField: sleep
+  <Type>k__BackingField: 0
 --- !u!1 &1704350434
 GameObject:
   m_ObjectHideFlags: 0
@@ -10769,6 +10799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09bb8d9fc190c4d429f766d18a1f110d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _newsIsOverEvent: {fileID: 0}
 --- !u!1 &2114283753834967212
 GameObject:
   m_ObjectHideFlags: 0

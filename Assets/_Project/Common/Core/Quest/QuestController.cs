@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Zenject;
 using Project.Common.UI;
 using Cysharp.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 namespace Project.Common.Core.Quest
 {
@@ -20,16 +21,24 @@ namespace Project.Common.Core.Quest
             _view = questView;
         }
         
-        public void Initialize()
+        public async void Initialize()
         {
             CurrentQuestConfig = _configService.GetQuestConfig();
             if (CurrentQuestConfig == null)
                 return;
 
+            await UniTask.WaitWhile(() => CurrentQuestConfig.SceneName != SceneManager.GetActiveScene().name);
+
             if (CurrentQuestConfig.Type == QuestType.WithTarget)
+            {
+                _view.EnableTargetpointer();
                 SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig).Forget();
+            }
             else
+            {
+                _view.DisableTargetPointer();
                 SetQuestView(null, CurrentQuestConfig).Forget();
+            }
         }
 
         public void AddQuestEvent(QuestEvent questEvent)
@@ -46,38 +55,37 @@ namespace Project.Common.Core.Quest
 
         private async void CloseCurrentQuest(string id)
         {
+            _view.DisableTargetPointer();
             if (CurrentQuestConfig == null)
                 return;
-            
-            //if (_questEvents.Count > 0)
-            //{
-                /*foreach (QuestEvent questEvent in _questEvents)
-                {
-                    if (id == questEvent.ID && id == CurrentQuestConfig.ID)
-                    {
-                        CurrentQuestConfig.IsActive = false;
-                        await RemoveQuestView(CurrentQuestConfig);
-                    }
-                }*/
-            //}
-            //else
-            //{
-                if (id == CurrentQuestConfig.ID)
-                {
-                    CurrentQuestConfig.IsActive = false;
-                    await RemoveQuestView(CurrentQuestConfig);
-                }
-            //}
-            await GetNextQuest();
+
+            if (id == CurrentQuestConfig.ID)
+            {
+                CurrentQuestConfig.IsActive = false;
+                await RemoveQuestView(CurrentQuestConfig);
+                await GetNextQuest();
+            }
         }
 
         private async UniTask GetNextQuest()
         {
             CurrentQuestConfig = _configService.GetQuestConfig();
+
+            if (CurrentQuestConfig == null)
+                return;
+
+            await UniTask.WaitWhile(() => CurrentQuestConfig.SceneName != SceneManager.GetActiveScene().name);
+
             if (CurrentQuestConfig.Type == QuestType.WithTarget)
+            {
+                _view.EnableTargetpointer();
                 await SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig);
+            }
             else
+            {
+                _view.DisableTargetPointer();
                 await SetQuestView(null, CurrentQuestConfig);
+            }
         }
 
         private QuestEvent GetQuestEvent(string id)

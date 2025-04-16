@@ -28,7 +28,9 @@ namespace Project.Common.Configs
 
         private void ChangeCurrentQuestConfigs(int dayNumber)
         {
-            if (dayNumber <= _questData.QuestConfigs.Count)
+            if (dayNumber != 0)
+                dayNumber--;
+            if (dayNumber < _questData.QuestConfigs.Count)
                 CurrentQuestConfigs = _questData.QuestConfigs[dayNumber];
             else
                 CurrentQuestConfigs = null;
@@ -36,6 +38,9 @@ namespace Project.Common.Configs
 
         public QuestConfig GetQuestConfig()
         {
+            if (CurrentQuestConfigs == null)
+                return null;
+            
             foreach (var config in CurrentQuestConfigs)
             {
                 if (config.IsActive)

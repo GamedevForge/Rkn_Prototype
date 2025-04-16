@@ -15,6 +15,8 @@ namespace Project.Common.Core.Quest
         private float MinY => _camera.ViewportToScreenPoint(new Vector3(0f, 0f, 0f)).y;
         private float MaxY => _camera.ViewportToScreenPoint(new Vector3(0f, 1f, 0f)).y;
 
+        private void Awake() =>
+            gameObject.SetActive(false);
 
         private void Update()
         {

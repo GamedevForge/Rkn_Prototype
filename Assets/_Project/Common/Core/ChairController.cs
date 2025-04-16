@@ -4,11 +4,14 @@ using Project.Common.Configs;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using StarterAssets;
+using System;
 
 namespace Project.Common.Core
 {
-    public class ChairController : MonoBehaviour, IInteractableObject
+    public class ChairController : MonoBehaviour, IInteractableObject, IQuestEvent<Transform>
     {
+        public event Action OnEvent;
+        
         [SerializeField] private Transform _endPointTransform;
         [SerializeField] private Transform _intermediateCameraPoint;
         [SerializeField] private float _intermediateDuration;
@@ -25,6 +28,7 @@ namespace Project.Common.Core
         public string Name => _dataService.GetObjectConfig(ObjectType.Chair).Name;
         public bool CanInteract => _playerState.IsSitting ||
             _playerState.IsProcessing == false;
+        [field: SerializeField] public Transform MarkerTarget { get; private set; }
 
         [Inject] private void Construct(ObjectsDataService objectsDataService,
             PlayerState playerState,
@@ -39,6 +43,7 @@ namespace Project.Common.Core
 
         public async void Interact()
         {
+            OnEvent?.Invoke();
             _playerState.Sit();
             _playerState.EnableProcessing();
             _playerComponents.Agent.enabled = true;

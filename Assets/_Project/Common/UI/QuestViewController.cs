@@ -26,10 +26,10 @@ namespace Project.Common.UI
 
         public async UniTask ShowQuest(QuestConfig questConfig, Transform targetForPointer = null)
         {
-            QuestUIElement questUIElement = await _factory.Get(questConfig.QuestDescription, questConfig.ID);
-            _repository.Add(questUIElement);
             if (targetForPointer != null)
                 _targetPointerController.SetTarget(targetForPointer, questConfig.QuestDescription);
+            QuestUIElement questUIElement = await _factory.Get(questConfig.QuestDescription, questConfig.ID);
+            _repository.Add(questUIElement);
         }
 
         public async UniTask RemoveQuest(QuestConfig questConfig)
@@ -42,5 +42,11 @@ namespace Project.Common.UI
             await _factory.Remove(uIElement);
             _repository.Remove(uIElement);
         }
+
+        public void DisableTargetPointer() =>
+            _targetPointerController.gameObject.SetActive(false);
+
+        public void EnableTargetpointer() =>
+            _targetPointerController.gameObject.SetActive(true);
     }
 }

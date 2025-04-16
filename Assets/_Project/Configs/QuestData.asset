@@ -43,6 +43,15 @@ MonoBehaviour:
     - Name: QuestDescription
       Entry: 1
       Data: "\u041F\u043E\u0435\u0445\u0430\u0442\u044C \u043D\u0430 \u0440\u0430\u0431\u043E\u0442\u0443"
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: IsActive
+      Entry: 5
+      Data: true
+    - Name: SceneName
+      Entry: 1
+      Data: Neighborhood
     - Name: 
       Entry: 8
       Data: 
@@ -56,6 +65,15 @@ MonoBehaviour:
       Entry: 1
       Data: "\u0421\u0435\u0441\u0442\u044C \u0437\u0430 \u0440\u0430\u0431\u043E\u0447\u0438\u0435
         \u043C\u0435\u0441\u0442\u043E"
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: IsActive
+      Entry: 5
+      Data: true
+    - Name: SceneName
+      Entry: 1
+      Data: Playground
     - Name: 
       Entry: 8
       Data: 
@@ -69,6 +87,15 @@ MonoBehaviour:
       Entry: 1
       Data: "\u041E\u0434\u043E\u0431\u0440\u0438\u0442\u044C \u0438\u043B\u0438
         \u0431\u043B\u043E\u043A\u0438\u0440\u043E\u0432\u0430\u0442\u044C \u043D\u043E\u0432\u043E\u0441\u0442\u044C"
+    - Name: Type
+      Entry: 3
+      Data: 1
+    - Name: IsActive
+      Entry: 5
+      Data: true
+    - Name: SceneName
+      Entry: 1
+      Data: Playground
     - Name: 
       Entry: 8
       Data: 
@@ -77,12 +104,21 @@ MonoBehaviour:
       Data: 5|Project.Common.Configs.QuestConfig, Assembly-CSharp
     - Name: ID
       Entry: 1
+      Data: continue_evaluate_the_news_until_the_end_of_day
+    - Name: QuestDescription
+      Entry: 1
       Data: "\u041F\u0440\u043E\u0434\u043E\u043B\u0436\u0430\u0442\u044C \u043E\u0446\u0435\u043D\u0438\u0432\u0430\u0442\u044C
         \u043D\u043E\u0432\u043E\u0441\u0442\u0438 \u0434\u043E \u043A\u043E\u043D\u0446\u0430
         \u0440\u0430\u0431\u043E\u0447\u0435\u0433\u043E \u0434\u043D\u044F"
-    - Name: QuestDescription
+    - Name: Type
+      Entry: 3
+      Data: 1
+    - Name: IsActive
+      Entry: 5
+      Data: true
+    - Name: SceneName
       Entry: 1
-      Data: continue_evaluate_the_news_until_the_end_of_day
+      Data: Playground
     - Name: 
       Entry: 8
       Data: 
@@ -95,6 +131,15 @@ MonoBehaviour:
     - Name: QuestDescription
       Entry: 1
       Data: "\u041F\u043E\u0435\u0445\u0430\u0442\u044C \u0434\u043E\u043C\u043E\u0439"
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: IsActive
+      Entry: 5
+      Data: true
+    - Name: SceneName
+      Entry: 1
+      Data: Playground
     - Name: 
       Entry: 8
       Data: 
@@ -107,6 +152,15 @@ MonoBehaviour:
     - Name: QuestDescription
       Entry: 1
       Data: "\u041F\u043E\u0441\u043F\u0430\u0442\u044C"
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: IsActive
+      Entry: 5
+      Data: true
+    - Name: SceneName
+      Entry: 1
+      Data: Neighborhood
     - Name: 
       Entry: 8
       Data: 

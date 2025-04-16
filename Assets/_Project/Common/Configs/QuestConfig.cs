@@ -9,6 +9,7 @@ namespace Project.Common.Configs
         public string ID;
         public string QuestDescription;
         public QuestType Type;
-        public bool IsActive = true; 
+        public bool IsActive = true;
+        public string SceneName;
     }
 }

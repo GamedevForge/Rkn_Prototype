@@ -1,14 +1,21 @@
 ﻿using Project.Common.Core;
+using System;
 using UnityEngine;
 
 namespace Project.Common.UI
 {
-    public class NewsController : MonoBehaviour
+    public class NewsController : MonoBehaviour, IQuestEvent<Transform>
     {
+        public event Action OnEvent;
+
+        [SerializeField] private NewsIsOverEvent _newsIsOverEvent;
+
         private NewsModel _model;
         private INewsViewModel _view;
         private NewsApproveOrRejectAnimations _animationController;
         private PlayerState _playerState;
+
+        public Transform MarkerTarget => null;
 
         private bool IsPossible => _playerState.IsProcessing == false &&
             _playerState.IsSitting &&
@@ -38,6 +45,7 @@ namespace Project.Common.UI
             if (IsPossible == false)
                 return;
             
+            OnEvent?.Invoke();
             await _animationController.PlayApproveAnimationAsync();
             ChangeNews();
         }
@@ -47,6 +55,7 @@ namespace Project.Common.UI
             if (IsPossible == false)
                 return;
 
+            OnEvent?.Invoke();
             await _animationController.PlayRejectAnimationAsync();
             ChangeNews();
         }
@@ -56,7 +65,10 @@ namespace Project.Common.UI
             _model.ChangeCurrentNews();
             _model.ApproveOrRejectNews();
             if (_model.NewsIsNotOverForToday == false)
+            {
+                _newsIsOverEvent.TriggerEvent();
                 _view.NewsIsOver();
+            }
             else
                 _view.ChangeSprite(_model.CurrentNews.Sprite);
         }
