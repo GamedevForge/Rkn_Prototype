@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Zenject;
 using Project.Common.UI;
+using Cysharp.Threading.Tasks;
 
 namespace Project.Common.Core.Quest
 {
@@ -19,8 +20,14 @@ namespace Project.Common.Core.Quest
             _view = questView;
         }
         
-        public void Initialize() =>
+        public void Initialize()
+        {
             CurrentQuestConfig = _configService.GetQuestConfig();
+            if (CurrentQuestConfig == null)
+                return;
+            
+            SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig).Forget();
+        }
 
         public void AddQuestEvent(QuestEvent questEvent)
         {
@@ -34,7 +41,7 @@ namespace Project.Common.Core.Quest
             questEvent.OnEvent -= CloseCurrentQuest;
         }
 
-        private void CloseCurrentQuest(string id)
+        private async void CloseCurrentQuest(string id)
         {
             if (CurrentQuestConfig == null)
                 return;
@@ -44,16 +51,16 @@ namespace Project.Common.Core.Quest
                 if (id == questEvent.ID && id == CurrentQuestConfig.ID)
                 {
                     CurrentQuestConfig.IsActive = false;
-                    RemoveQuestView(CurrentQuestConfig);
+                    await RemoveQuestView(CurrentQuestConfig);
                 }
             }
-            GetNextQuest();
+            await GetNextQuest();
         }
 
-        private void GetNextQuest()
+        private async UniTask GetNextQuest()
         {
             CurrentQuestConfig = _configService.GetQuestConfig();
-            SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig);
+            await SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig);
         }
 
         private QuestEvent GetQuestEvent(string id)
@@ -66,15 +73,15 @@ namespace Project.Common.Core.Quest
             return null;
         }
 
-        private void SetQuestView(UnityEngine.Transform markerTarget, QuestConfig questConfig)
+        private async UniTask SetQuestView(UnityEngine.Transform markerTarget, QuestConfig questConfig)
         {
             if (questConfig == null)
                 return;
             
-            _view.ShowQuest(questConfig, markerTarget);
+            await _view.ShowQuest(questConfig, markerTarget);
         }
 
-        private void RemoveQuestView(QuestConfig questConfig) =>
+        private UniTask RemoveQuestView(QuestConfig questConfig) =>
             _view.RemoveQuest(questConfig);
     }
 }

@@ -17,8 +17,11 @@ namespace Project.Common.Configs
             _dayHandler = dayHandler;
         }
 
-        public void Initialize() =>
+        public void Initialize()
+        {
             _dayHandler.OnDayNumberChanged += ChangeCurrentQuestConfigs;
+            ChangeCurrentQuestConfigs(_dayHandler.DayNumber);
+        }
 
         public void Dispose() =>
             _dayHandler.OnDayNumberChanged -= ChangeCurrentQuestConfigs;

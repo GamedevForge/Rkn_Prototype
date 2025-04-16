@@ -25,7 +25,7 @@ namespace Project.Common.UI
             _targetPointerPrefab = targetPointerPrefab;
         }
 
-        public QuestUIElement Get(string description, string id)
+        public async UniTask<QuestUIElement> Get(string description, string id)
         {
             GameObject uiElement = _pool.Get();
             QuestUIElement questUIElement = uiElement.GetComponent<QuestUIElement>();
@@ -34,20 +34,20 @@ namespace Project.Common.UI
             uiElement.transform.SetParent(_parent);
 
             questUIElement.SetDescription(description, id);
-            questUIElement.PlayOpenAnimationAsync().Forget();
+            await questUIElement.PlayOpenAnimationAsync();
             return questUIElement;
         }
 
-        public void Remove(QuestUIElement questUIElement)
+        public async UniTask Remove(QuestUIElement questUIElement)
         {
-            questUIElement.PlayCloseAnimationAsync().Forget();
+            await questUIElement.PlayCloseAnimationAsync();
             _pool.Release(questUIElement.gameObject);
         }
 
         public GameObject CreateBoard()
         {
             GameObject board = _instantiator.InstantiatePrefab(_questBoardPrefab);
-            _parent = board.transform;
+            _parent = board.GetComponentInChildren<BoardTransform>().Parent;
             GameObject.DontDestroyOnLoad(board);
             return board;
         }

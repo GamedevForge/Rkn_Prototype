@@ -1,4 +1,5 @@
-﻿using Project.Common.Configs;
+﻿using Cysharp.Threading.Tasks;
+using Project.Common.Configs;
 using Project.Common.Core.Quest;
 using UnityEngine;
 using Zenject;
@@ -23,21 +24,22 @@ namespace Project.Common.UI
                 .GetComponentInChildren<TargetPointerController>();
         }
 
-        public void ShowQuest(QuestConfig questConfig, Transform targetForPointer = null)
+        public async UniTask ShowQuest(QuestConfig questConfig, Transform targetForPointer = null)
         {
-            _repository.Add(_factory.Get(questConfig.QuestDescription, questConfig.ID));
+            QuestUIElement questUIElement = await _factory.Get(questConfig.QuestDescription, questConfig.ID);
+            _repository.Add(questUIElement);
             if (targetForPointer != null)
                 _targetPointerController.SetTarget(targetForPointer, questConfig.QuestDescription);
         }
 
-        public void RemoveQuest(QuestConfig questConfig)
+        public async UniTask RemoveQuest(QuestConfig questConfig)
         {
             QuestUIElement uIElement = _repository.GetUIElement(questConfig.ID);
 
             if (questConfig.Type == QuestType.WithTarget)
                 _targetPointerController.SetTarget(null, null);
 
-            _factory.Remove(uIElement);
+            await _factory.Remove(uIElement);
             _repository.Remove(uIElement);
         }
     }

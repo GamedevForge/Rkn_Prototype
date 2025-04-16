@@ -35,10 +35,10 @@ namespace Project.Common.Installers
             Container.BindInterfacesAndSelfTo<GameQuitController>().AsSingle();
             Container.BindInstance(DayNumber).WhenInjectedInto<DayHandler>();
 
-            Container.Bind<QuestConfigService>().AsSingle().WithArguments(_questData);
-            Container.Bind<QuestViewFactory>().AsSingle().WithArguments(_boardPrefab, _targetPointerPrefab, _uiElementPrefab);
-            Container.Bind<QuestViewController>().AsSingle();
-            Container.Bind<QuestController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<QuestConfigService>().AsSingle().WithArguments(_questData);
+            Container.BindInterfacesAndSelfTo<QuestViewFactory>().AsSingle().WithArguments(_boardPrefab, _targetPointerPrefab, _uiElementPrefab);
+            Container.BindInterfacesAndSelfTo<QuestViewController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<QuestController>().AsSingle();
         }
     }
 

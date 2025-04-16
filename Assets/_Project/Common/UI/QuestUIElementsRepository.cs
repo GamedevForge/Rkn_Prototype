@@ -4,7 +4,7 @@ namespace Project.Common.UI
 {
     public class QuestUIElementsRepository
     {
-        private readonly List<QuestUIElement> _elements;
+        private readonly List<QuestUIElement> _elements = new();
 
         public void Add(QuestUIElement uIElement) =>
             _elements.Add(uIElement);
