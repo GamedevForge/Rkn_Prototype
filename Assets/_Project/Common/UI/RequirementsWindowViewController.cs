@@ -10,7 +10,7 @@ namespace Project.Common.UI
         private readonly TMP_Text _text;
         
         public RequirementsWindowViewController(
-            IWindowAnimation windowAnimation,
+            IOpenCloseAnimation windowAnimation,
             RequirementsWindowViewModel windowViewModel,
             RectTransform windowRectTransform,
             TMP_Text text) : base(windowAnimation, windowViewModel, windowRectTransform)

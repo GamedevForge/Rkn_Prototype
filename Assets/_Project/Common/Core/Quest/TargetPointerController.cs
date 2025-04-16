@@ -1,6 +1,3 @@
-using Project.Common.Configs;
-using System.Collections.Generic;
-using Zenject;
 using UnityEngine;
 
 namespace Project.Common.Core.Quest
@@ -59,66 +56,5 @@ namespace Project.Common.Core.Quest
             _text.text = name;
             _target = target;
         }
-    }
-
-    public class QuestController : IInitializable
-    {
-        private readonly QuestConfigService _configService;
-        private readonly QuestView _view;
-        private readonly List<QuestEvent> _questEvents = new();
-
-        public QuestConfig CurrentQuestConfig { get; private set; }
-
-        public QuestController(QuestConfigService configService, QuestView questView)
-        {
-            _configService = configService;
-            _view = questView;
-        }
-        
-        public void Initialize() =>
-            CurrentQuestConfig = _configService.GetQuestConfig();
-
-        public void AddQuestEvent(QuestEvent questEvent)
-        {
-            _questEvents.Add(questEvent);
-            questEvent.OnEvent += CloseCurrentQuest;
-        }
-
-        public void RemoveQuestEvent(QuestEvent questEvent)
-        {
-            _questEvents.Remove(questEvent);
-            questEvent.OnEvent -= CloseCurrentQuest;
-        }
-
-        private void CloseCurrentQuest(string id)
-        {
-            if (CurrentQuestConfig == null)
-                return;
-            
-            foreach (QuestEvent questEvent in _questEvents)
-            {
-                if (id == questEvent.ID && id == CurrentQuestConfig.ID)
-                    CurrentQuestConfig.IsActive = false;
-            }
-            GetNextQuest();
-        }
-
-        private void GetNextQuest() =>
-            CurrentQuestConfig = _configService.GetQuestConfig();
-    }
-
-    public class QuestView
-    {
-        private readonly TargetPointerController _targetPointerController;
-
-        public QuestView(TargetPointerController targetPointerController)
-        {
-            _targetPointerController = targetPointerController;
-        }
-    }
-
-    public class QuestViewFactory
-    {
-
     }
 }

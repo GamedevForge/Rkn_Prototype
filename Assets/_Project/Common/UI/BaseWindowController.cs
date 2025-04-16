@@ -5,14 +5,14 @@ namespace Project.Common.UI
 {
     public class BaseWindowController : IWindowController
     {
-        private readonly IWindowAnimation _windowAnimation;
+        private readonly IOpenCloseAnimation _windowAnimation;
         private readonly IWindowViewModel _windowViewModel;
         private readonly RectTransform _windowRectTransform;
 
         public bool OpenOrCloseInProcessing { get; private set; } = false;
 
         public BaseWindowController(
-            IWindowAnimation windowAnimation,
+            IOpenCloseAnimation windowAnimation,
             IWindowViewModel windowViewModel,
             RectTransform windowRectTransform)
         {

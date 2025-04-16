@@ -1,5 +1,6 @@
 using Project.Common.Configs;
 using Project.Common.Core;
+using Project.Common.Core.Quest;
 using Project.Common.UI;
 using UnityEngine;
 using Zenject;
@@ -17,6 +18,12 @@ namespace Project.Common.Installers
         [SerializeField] private RequirementsData _requirementsData;
         [SerializeField] private NewsListData _newsListData;
 
+        [Header("Quest:")]
+        [SerializeField] private GameObject _boardPrefab;
+        [SerializeField] private GameObject _targetPointerPrefab;
+        [SerializeField] private GameObject _uiElementPrefab;
+        [SerializeField] private QuestData _questData;
+
         public override void InstallBindings()
         {
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
@@ -27,6 +34,11 @@ namespace Project.Common.Installers
             Container.BindInterfacesAndSelfTo<NewsModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameQuitController>().AsSingle();
             Container.BindInstance(DayNumber).WhenInjectedInto<DayHandler>();
+
+            Container.Bind<QuestConfigService>().AsSingle().WithArguments(_questData);
+            Container.Bind<QuestViewFactory>().AsSingle().WithArguments(_boardPrefab, _targetPointerPrefab, _uiElementPrefab);
+            Container.Bind<QuestViewController>().AsSingle();
+            Container.Bind<QuestController>().AsSingle();
         }
     }
 

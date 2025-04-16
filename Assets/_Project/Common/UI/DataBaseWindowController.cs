@@ -8,7 +8,7 @@ namespace Project.Common.UI
         private readonly ResultSearchRepository _repository;
         
         public DataBaseWindowController(
-            IWindowAnimation windowAnimation,
+            IOpenCloseAnimation windowAnimation,
             IWindowViewModel windowViewModel,
             RectTransform windowRectTransform,
             ResultSearchRepository repository) : base(windowAnimation, windowViewModel, windowRectTransform) 

@@ -18,7 +18,7 @@ namespace Project.Common.Core.Quest
 
         private QuestController _controller;
 
-        private Transform Target => _event.MarkerTarget;
+        public Transform Target => _event.MarkerTarget;
 
         [Inject] private void Construct(QuestController controller) =>
             _controller = controller;

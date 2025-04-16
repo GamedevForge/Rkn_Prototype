@@ -9,7 +9,7 @@ namespace Project.Common.UI
         private readonly PlayerState _playerState;
         
         public NewsWindowController(
-            IWindowAnimation windowAnimation,
+            IOpenCloseAnimation windowAnimation,
             IWindowViewModel windowViewModel,
             RectTransform windowRectTransform,
             PlayerState playerState) : base(windowAnimation, windowViewModel, windowRectTransform) 

@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Project.Common.UI
 {
-    public class WindowBaseAnimation : IWindowAnimation, IInitializable
+    public class WindowBaseAnimation : IOpenCloseAnimation, IInitializable
     {
         private readonly RectTransform _target;
         private readonly RectTransform _canvasTransform;
