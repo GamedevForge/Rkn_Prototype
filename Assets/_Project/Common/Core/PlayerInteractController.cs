@@ -39,15 +39,6 @@ namespace Project.Common.Core
             }
         }
 
-        /*public void OnInteract(InputValue value)
-        {
-            if (_holdIsProcessing || _currentInteractableObject == null) 
-                return;
-
-            if (_currentInteractableObject.CanInteract && _currentInteractableObject.InteractType == InteractType.Hold)
-                HoldClick(value).Forget();
-        }*/
-
         private async UniTask HoldClick()
         {
             float timer = 0f;

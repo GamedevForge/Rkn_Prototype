@@ -48,6 +48,7 @@ namespace Project.Common.UI
         {
             GameObject board = _instantiator.InstantiatePrefab(_questBoardPrefab);
             _parent = board.GetComponentInChildren<BoardTransform>().Parent;
+            board.transform.SetParent(null);
             GameObject.DontDestroyOnLoad(board);
             return board;
         }
@@ -55,6 +56,7 @@ namespace Project.Common.UI
         public GameObject CreateTargetPointer()
         {
             GameObject targetPointer = _instantiator.InstantiatePrefab(_targetPointerPrefab);
+            targetPointer.transform.SetParent(null);
             GameObject.DontDestroyOnLoad(targetPointer);
             return targetPointer;
         }

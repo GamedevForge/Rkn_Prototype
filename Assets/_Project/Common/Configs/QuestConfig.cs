@@ -1,5 +1,4 @@
 ﻿using Project.Common.Core.Quest;
-using Sirenix.OdinInspector;
 using System;
 
 namespace Project.Common.Configs

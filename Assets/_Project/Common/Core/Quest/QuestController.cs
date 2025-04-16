@@ -25,8 +25,11 @@ namespace Project.Common.Core.Quest
             CurrentQuestConfig = _configService.GetQuestConfig();
             if (CurrentQuestConfig == null)
                 return;
-            
-            SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig).Forget();
+
+            if (CurrentQuestConfig.Type == QuestType.WithTarget)
+                SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig).Forget();
+            else
+                SetQuestView(null, CurrentQuestConfig).Forget();
         }
 
         public void AddQuestEvent(QuestEvent questEvent)
@@ -46,21 +49,35 @@ namespace Project.Common.Core.Quest
             if (CurrentQuestConfig == null)
                 return;
             
-            foreach (QuestEvent questEvent in _questEvents)
-            {
-                if (id == questEvent.ID && id == CurrentQuestConfig.ID)
+            //if (_questEvents.Count > 0)
+            //{
+                /*foreach (QuestEvent questEvent in _questEvents)
+                {
+                    if (id == questEvent.ID && id == CurrentQuestConfig.ID)
+                    {
+                        CurrentQuestConfig.IsActive = false;
+                        await RemoveQuestView(CurrentQuestConfig);
+                    }
+                }*/
+            //}
+            //else
+            //{
+                if (id == CurrentQuestConfig.ID)
                 {
                     CurrentQuestConfig.IsActive = false;
                     await RemoveQuestView(CurrentQuestConfig);
                 }
-            }
+            //}
             await GetNextQuest();
         }
 
         private async UniTask GetNextQuest()
         {
             CurrentQuestConfig = _configService.GetQuestConfig();
-            await SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig);
+            if (CurrentQuestConfig.Type == QuestType.WithTarget)
+                await SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig);
+            else
+                await SetQuestView(null, CurrentQuestConfig);
         }
 
         private QuestEvent GetQuestEvent(string id)
