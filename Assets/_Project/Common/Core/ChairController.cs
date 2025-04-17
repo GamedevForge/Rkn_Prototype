@@ -143,11 +143,17 @@ namespace Project.Common.Core
             _dialogModel = dialogModel;
         }
 
-        public void StartDialog() =>
+        public void StartDialog()
+        {
             _dialogModel.SetDialogState(true);
 
-        public void StopDialog() =>
+        }
+
+        public void StopDialog()
+        {
             _dialogModel.SetDialogState(false);
+
+        }
     }
 
     public class DialogModel
