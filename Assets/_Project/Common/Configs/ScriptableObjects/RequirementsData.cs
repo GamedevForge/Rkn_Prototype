@@ -8,4 +8,9 @@ namespace Project.Common.Configs
     {
         [field: SerializeField] public RequirementsConfig[] RequirementsConfigs { get; private set; }
     }
+
+    public class DialogData : SerializedScriptableObject
+    {
+        [field: SerializeField] public TakeConfig[] DialogTakes { get; private set; }
+    }
 }

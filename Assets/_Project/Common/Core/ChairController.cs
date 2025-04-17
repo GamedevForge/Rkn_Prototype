@@ -23,14 +23,14 @@ namespace Project.Common.Core
         private FirstPersonController _firstPersonController;
 
         [field: SerializeField] public float HoldTime { get; private set; } 
-
+        [field: SerializeField] public Transform MarkerTarget { get; private set; }
         public InteractType InteractType => InteractType.Click;
         public string Name => _dataService.GetObjectConfig(ObjectType.Chair).Name;
         public bool CanInteract => _playerState.IsSitting ||
             _playerState.IsProcessing == false;
-        [field: SerializeField] public Transform MarkerTarget { get; private set; }
 
-        [Inject] private void Construct(ObjectsDataService objectsDataService,
+        [Inject] private void Construct(
+            ObjectsDataService objectsDataService,
             PlayerState playerState,
             PlayerComponents playerComponents,
             FirstPersonController firstPersonController)
@@ -79,5 +79,97 @@ namespace Project.Common.Core
 
             await endTween.AsyncWaitForCompletion();
         }
+    }
+
+    public class DialogStartController : MonoBehaviour, IInteractableObject
+    {
+        [SerializeField] private Transform _target;
+        [SerializeField] private float _animationDuration;
+        
+        private ObjectsDataService _objectsDataService;
+        private PlayerComponents _playerComponents;
+        private PlayerState _playerState;
+        private DialogModel _dialogModel;
+        private DialogController _dialogController;
+
+        public bool CanInteract => true;
+        public InteractType InteractType => InteractType.Click;
+        public float HoldTime => 0f;
+        public string Name => _objectsDataService.GetObjectConfig(ObjectType.Dialog).Name;
+
+        [Inject] private void Construct(
+            ObjectsDataService objectsDataService,
+            PlayerComponents playerComponents,
+            PlayerState playerState,
+            DialogModel dialogModel,
+            DialogController dialogController)
+        {
+            _objectsDataService = objectsDataService;
+            _playerComponents = playerComponents;
+            _playerState = playerState;
+            _dialogModel = dialogModel;
+            _dialogController = dialogController;
+        }
+
+        public async void Interact()
+        {
+            _playerState.Sit();
+            _playerState.DisableLooked();
+
+            await PlayLookAtTargetAnimationAsync();
+
+            _dialogController.StartDialog();
+            await UniTask.WaitWhile(() => _dialogModel.DialogIsProcessing);
+        }
+
+        private async UniTask PlayLookAtTargetAnimationAsync()
+        {
+            Tween tween;
+
+            tween = _playerComponents
+                .CameraTransform
+                .DOLookAt(_target.position, _animationDuration);
+
+            await tween.AsyncWaitForCompletion();
+        }
+    }
+
+    public class DialogController
+    {
+        private readonly DialogModel _dialogModel;
+
+        public DialogController(DialogModel dialogModel)
+        {
+            _dialogModel = dialogModel;
+        }
+
+        public void StartDialog() =>
+            _dialogModel.SetDialogState(true);
+
+        public void StopDialog() =>
+            _dialogModel.SetDialogState(false);
+    }
+
+    public class DialogModel
+    {
+        public event Action<bool> OnDialogStateChange;
+        
+        public bool DialogIsProcessing { get; private set; } = false;
+
+        public void SetDialogState(bool state)
+        {
+            DialogIsProcessing = state;
+            OnDialogStateChange?.Invoke(state);
+        }
+    }
+
+    public class DialogViewController
+    {
+
+    }
+
+    public class DialogViewFactory
+    {
+        
     }
 }

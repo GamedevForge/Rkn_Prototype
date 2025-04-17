@@ -12,4 +12,16 @@ namespace Project.Common.Configs
         public bool IsActive = true;
         public string SceneName;
     }
+
+    [Serializable]
+    public class TakeConfig
+    {
+        public TakeType Type;
+    }
+
+    public enum TakeType
+    {
+        NPCTake,
+        PlayerTake,
+    }
 }

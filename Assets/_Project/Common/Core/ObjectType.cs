@@ -6,7 +6,8 @@
         Monitor,
         Bus,
         Bed,
-        Door
+        Door,
+        Dialog,
     }
 }
 
