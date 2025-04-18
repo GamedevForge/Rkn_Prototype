@@ -7,7 +7,7 @@
         public DialogDataService(DialogListData dialogDataList) =>
             _dialogDataList = dialogDataList;
 
-        public DialogData GetNPCData(string id)
+        public DialogData GetDialogData(string id)
         {
             foreach (DialogData dialogData in _dialogDataList.DialogsData)
             {

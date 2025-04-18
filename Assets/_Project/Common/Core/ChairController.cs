@@ -5,6 +5,9 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using StarterAssets;
 using System;
+using Project.Common.UI;
+using System.Text;
+using System.Collections.Generic;
 
 namespace Project.Common.Core
 {
@@ -85,6 +88,7 @@ namespace Project.Common.Core
     {
         [SerializeField] private Transform _target;
         [SerializeField] private float _animationDuration;
+        [SerializeField] private string _id;
         
         private ObjectsDataService _objectsDataService;
         private PlayerComponents _playerComponents;
@@ -118,7 +122,8 @@ namespace Project.Common.Core
 
             await PlayLookAtTargetAnimationAsync();
 
-            _dialogController.StartDialog();
+
+            _dialogController.StartDialog(_id);
             await UniTask.WaitWhile(() => _dialogModel.DialogIsProcessing);
         }
 
@@ -143,8 +148,16 @@ namespace Project.Common.Core
             _dialogModel = dialogModel;
         }
 
-        public void StartDialog()
+        public void StartDialog(string id)
         {
+            _dialogModel.SetCurrentDialogDataAndName(id);
+
+            if (_dialogModel.DialogIsProcessing == false)
+            {
+                _dialogModel.SetDialogState(false);
+                return;
+            }
+
             _dialogModel.SetDialogState(true);
 
         }
@@ -161,11 +174,31 @@ namespace Project.Common.Core
         public event Action<bool> OnDialogStateChange;
         
         public bool DialogIsProcessing { get; private set; } = false;
+        public bool DialogIsPossible => CurrentDialogData != null;
+        public DialogData CurrentDialogData { get; private set; }
+        public string NPCName { get; private set; }
+
+        private readonly DialogDataService _dialogDataService;
+        private readonly NPCDataService _npcDataService;
+
+        public DialogModel(
+            DialogDataService dialogDataService,
+            NPCDataService npcDataService)
+        {
+            _dialogDataService = dialogDataService;
+            _npcDataService = npcDataService;
+        }
 
         public void SetDialogState(bool state)
         {
             DialogIsProcessing = state;
             OnDialogStateChange?.Invoke(state);
+        }
+
+        public void SetCurrentDialogDataAndName(string id)
+        {
+            CurrentDialogData = _dialogDataService.GetDialogData(id);
+            NPCName = _npcDataService.GetNPCData(id).Name;
         }
     }
 
@@ -176,6 +209,105 @@ namespace Project.Common.Core
 
     public class DialogViewFactory
     {
+        private readonly GameObjectPool _dialogUIElementPool;
+        private readonly GameObjectPool _buttonPool;
+        private readonly IInstantiator _instantiator;
+        private readonly GameObject _dialogBoard;
+
+        private readonly List<DialogTextUIElement> uIElementsList = new();
+
+        private Transform _buttonParent;
+        private Transform _textUIElementParent;
+
+        public DialogViewFactory(
+            GameObject dialogPrefab,
+            GameObject dialogTextUIElement,
+            GameObject dialogUIButton,
+            IInstantiator instantiator)
+        {
+            _buttonPool = new(instantiator, dialogUIButton);
+            _dialogUIElementPool = new(instantiator, dialogTextUIElement);
+            _instantiator = instantiator;
+            _dialogBoard = dialogPrefab;
+        }
+
+        public void CreateBoard()
+        {
+            GameObject boardGameObject = _instantiator.InstantiatePrefab(_dialogBoard);
+            DialogUIParents dialogUIParents = boardGameObject.GetComponent<DialogUIParents>();
+
+            boardGameObject.transform.SetParent(null);
+            GameObject.DontDestroyOnLoad(boardGameObject);
+
+            _buttonParent = dialogUIParents.ButtonsParent;
+            _textUIElementParent = dialogUIParents.TextParent;
+        }
+
+        public DialogUIButton GetButton()
+        {
+            return new DialogUIButton();
+        }
+
+        public async UniTask<DialogTextUIElement> GetTextUIElementAsync(string text)
+        {
+            if (uIElementsList.Count == 1)
+            {
+                await uIElementsList[0].ShowTextAsync(text);
+                return uIElementsList[0];
+            }
+            
+            DialogTextUIElement uIElement = _dialogUIElementPool.Get().GetComponent<DialogTextUIElement>();
+            uIElementsList.Add(uIElement);
+            uIElement.transform.SetParent(_textUIElementParent);
+
+            await uIElement.ShowTextAsync(text);
+
+            return uIElement;
+        }
+    }
+
+    public class DialogTextUIElement : MonoBehaviour
+    {
+        [SerializeField] private TMPro.TMP_Text _text;
+        [SerializeField] private float _animationDuration;
+
+        public async UniTask ShowTextAsync(string text)
+        {
+            StringBuilder stringBuilder = new();
+            _text.text = string.Empty;
+
+            foreach(char symbol in text)
+            {
+                stringBuilder.Append(symbol);
+                _text.text = stringBuilder.ToString();
+                await UniTask.WaitForSeconds(_animationDuration);
+            }
+        }
+    }
+
+    public class DialogUIButton : MonoBehaviour
+    {
+        public event Action OnClicked;
         
+        [SerializeField] private TMPro.TMP_Text _text;
+        
+        public void SetButtonText(string text) =>
+            _text.text = text;
+        
+        public async UniTask PlayShowAnimationAsync()
+        {
+
+        }
+
+        public async UniTask PlayCloseAnimationAsync()
+        {
+
+        }
+    }
+
+    public class DialogUIParents : MonoBehaviour
+    {
+        [field: SerializeField] public Transform TextParent { get; private set; }
+        [field: SerializeField] public Transform ButtonsParent { get; private set; }
     }
 }
