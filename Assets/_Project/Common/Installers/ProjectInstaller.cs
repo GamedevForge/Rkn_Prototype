@@ -24,6 +24,14 @@ namespace Project.Common.Installers
         [SerializeField] private GameObject _uiElementPrefab;
         [SerializeField] private QuestData _questData;
 
+        [Header("Dialog:")]
+        [SerializeField] private GameObject _dialogBoard;
+        [SerializeField] private GameObject _dialogButton;
+        [SerializeField] private GameObject _dialogText;
+        [SerializeField] private PlayerData _playerData;
+        [SerializeField] private DialogListData _dialogListData;
+        [SerializeField] private NPCDataList _npcDataList;
+
         public override void InstallBindings()
         {
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
@@ -39,6 +47,14 @@ namespace Project.Common.Installers
             Container.BindInterfacesAndSelfTo<QuestViewFactory>().AsSingle().WithArguments(_boardPrefab, _targetPointerPrefab, _uiElementPrefab);
             Container.BindInterfacesAndSelfTo<QuestViewController>().AsSingle();
             Container.BindInterfacesAndSelfTo<QuestController>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<PlayerData>().FromInstance(_playerData).AsSingle();
+            Container.Bind<NPCDataService>().AsSingle().WithArguments(_npcDataList);
+            Container.Bind<DialogDataService>().AsSingle().WithArguments(_dialogListData);
+            Container.Bind<DialogModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DialogViewFactory>().AsSingle().WithArguments(_dialogBoard, _dialogText, _dialogButton);
+            Container.BindInterfacesAndSelfTo<DialogViewController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DialogController>().AsSingle();
         }
     }
 

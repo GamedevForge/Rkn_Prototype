@@ -30,7 +30,7 @@ namespace Project.Common.UI
         public void Initialize() =>
             _originScale = _target.localScale;
 
-        public async UniTask PlayOpenAnimationAsync() =>
+        public async UniTask PlayShowAnimationAsync() =>
             await Task.WhenAll(MoveAnimation(_canvasTransform.position).AsyncWaitForCompletion(), 
                 ScaleAnimation(_originScale).AsyncWaitForCompletion());
 

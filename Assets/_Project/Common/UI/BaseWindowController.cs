@@ -25,7 +25,7 @@ namespace Project.Common.UI
         {
             OpenOrCloseInProcessing = true;
             HighUpThePeckingOrder();
-            await _windowAnimation.PlayOpenAnimationAsync();
+            await _windowAnimation.PlayShowAnimationAsync();
             _windowViewModel.Open();
             OpenOrCloseInProcessing = false;
         }

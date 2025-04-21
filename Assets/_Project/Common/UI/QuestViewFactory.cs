@@ -34,7 +34,7 @@ namespace Project.Common.UI
             uiElement.transform.SetParent(_parent);
 
             questUIElement.SetDescription(description, id);
-            await questUIElement.PlayOpenAnimationAsync();
+            await questUIElement.PlayShowAnimationAsync();
             return questUIElement;
         }
 

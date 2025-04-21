@@ -29,7 +29,7 @@ namespace Project.Common.UI
             gameObject.SetActive(false);
         }
 
-        public async UniTask PlayOpenAnimationAsync()
+        public async UniTask PlayShowAnimationAsync()
         {
             gameObject.SetActive(true);
             _currentTween = _canvasGroup.DOFade(1f, _animationDuration);
