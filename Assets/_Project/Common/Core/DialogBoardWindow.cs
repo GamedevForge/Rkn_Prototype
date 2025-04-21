@@ -12,7 +12,7 @@ namespace Project.Common.Core
 
         private CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
 
-        public async UniTask PlayCloseAnimationAsync()
+        public async UniTask PlayShowAnimationAsync()
         {
             Tween tween;
             gameObject.SetActive(true);
@@ -21,7 +21,7 @@ namespace Project.Common.Core
             await tween.AsyncWaitForCompletion();
         }
 
-        public async UniTask PlayShowAnimationAsync()
+        public async UniTask PlayCloseAnimationAsync()
         {
             Tween tween;
 

@@ -98,6 +98,6 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  <WhoSpeaks>k__BackingField: 1
+  <WhoSpeaks>k__BackingField: 0
   <Type>k__BackingField: 1
-  <Text>k__BackingField: 
+  <Text>k__BackingField: "\u041A\u0430\u043A \u0441\u0435\u0431\u044F \u0447\u0443\u0432\u0441\u0442\u0432\u0430\u0435\u0448\u044C?"

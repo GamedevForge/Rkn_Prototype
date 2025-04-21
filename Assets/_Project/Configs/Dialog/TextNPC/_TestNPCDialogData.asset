@@ -25,7 +25,6 @@ MonoBehaviour:
   <DialogTakes>k__BackingField:
   - {fileID: 11400000, guid: d39def43a6fcf9f4ba4f39ce74484932, type: 2}
   - {fileID: 11400000, guid: 2890bae4d92e71248871e7dc75e29ba0, type: 2}
-  - {fileID: 11400000, guid: fe4c5d9459dea974cb326c23090cb641, type: 2}
   - {fileID: 11400000, guid: 0ff563a21e3449b4f8e2c1f21093f166, type: 2}
   - {fileID: 11400000, guid: 9dd54be5d3580f04a8b1bbb2b63768d3, type: 2}
   - {fileID: 11400000, guid: 8b528fc8f71fa3444b83245d34e26a31, type: 2}

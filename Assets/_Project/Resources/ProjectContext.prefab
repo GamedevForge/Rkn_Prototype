@@ -83,9 +83,9 @@ MonoBehaviour:
   _targetPointerPrefab: {fileID: 2747071998983956068, guid: 117b9820dd5f5ae4492cc616b16b4e4f, type: 3}
   _uiElementPrefab: {fileID: 1549872434572485742, guid: 12999269ac982c9429655fae3c4f9bfb, type: 3}
   _questData: {fileID: 11400000, guid: 44d7c6231145dc44aac5bb9a9e25cdda, type: 2}
-  _dialogBoard: {fileID: 0}
-  _dialogButton: {fileID: 0}
-  _dialogText: {fileID: 0}
+  _dialogBoard: {fileID: 9064961910870755993, guid: e60f3b91235bc53428710187d73160e4, type: 3}
+  _dialogButton: {fileID: 5057941354140998012, guid: 30a658bdcead8c94eb62dcbcb7ba0053, type: 3}
+  _dialogText: {fileID: 7011173152214180067, guid: d2e24e66d677e0c4f90778b5f156fe6e, type: 3}
   _playerData: {fileID: 11400000, guid: 6282162aca59f6546b67b3ab379a4b70, type: 2}
   _dialogListData: {fileID: 11400000, guid: 66ddc0d6498c4144aac9c5590478526d, type: 2}
   _npcDataList: {fileID: 11400000, guid: 891894dc56b1e524e88421e2123f99f4, type: 2}

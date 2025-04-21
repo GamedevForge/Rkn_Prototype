@@ -21,4 +21,5 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  <NPCSData>k__BackingField: []
+  <NPCSData>k__BackingField:
+  - {fileID: 11400000, guid: a0b421ba261335f4980525831d05c27d, type: 2}

@@ -21,4 +21,4 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  <PlayerName>k__BackingField: 
+  <PlayerName>k__BackingField: Player

@@ -52,7 +52,7 @@ namespace Project.Common.Core
             await HideAllButtonsAsync();
             ReleaseAllButtons();
 
-            _dialogViewFactory.NameText.text = name;
+            _dialogViewFactory.NameText.text = name + ":";
 
             _currentTakeData = takeData;
             TextAnimationIsActive = true;

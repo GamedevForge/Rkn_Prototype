@@ -29,6 +29,7 @@ namespace Project.Common.Core
         public async UniTask StartDialog(string id)
         {
             _dialogModel.SetCurrentDialogDataAndName(id);
+            _dialogModel.SetDialogState(true);
 
             if (_dialogModel.DialogIsProcessing == false)
             {

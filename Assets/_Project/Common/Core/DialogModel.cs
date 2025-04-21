@@ -10,7 +10,7 @@ namespace Project.Common.Core
         public bool DialogIsProcessing { get; private set; } = false;
         public bool DialogIsPossible => CurrentDialogData != null;
         public DialogData CurrentDialogData { get; private set; }
-        public System.Collections.Generic.List<TakeData> CurrentTakesData { get; private set; }
+        public System.Collections.Generic.List<TakeData> CurrentTakesData { get; private set; } = new();
         public string NPCName { get; private set; }
         public string PlayerName => _playerData.PlayerName;
 
