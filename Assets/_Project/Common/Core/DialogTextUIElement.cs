@@ -14,6 +14,7 @@ namespace Project.Common.Core
         [SerializeField] private float _showAndCloseAnimationDuration;
 
         private bool _animationIsProcessing = false;
+        private bool _speedUpIsProcessing = false;
         private float _sourceAnimationSpeed;
 
         private CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
@@ -47,12 +48,15 @@ namespace Project.Common.Core
 
         public async UniTask SpeedUpAnimation()
         {
-            if (_animationIsProcessing == false)
+            if (_animationIsProcessing == false 
+                && _speedUpIsProcessing == false)
                 return;
 
+            _speedUpIsProcessing = true;
             _animationSpeed = _speedUpAnimationDuration;
             await UniTask.WaitWhile(() => _animationIsProcessing == true);
             _animationSpeed = _sourceAnimationSpeed;
+            _speedUpIsProcessing = false;
         }
     }
 }

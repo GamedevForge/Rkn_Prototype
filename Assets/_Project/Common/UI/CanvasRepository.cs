@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Project.Common.UI
@@ -13,11 +14,13 @@ namespace Project.Common.UI
         public void Remove(GameObject gameObject) =>
             _canvasList.Remove(gameObject);
 
-        public void SetStateAllCanvasWithout(GameObject gameObject, bool state)
+        public void SetStateAllCanvasWithout(bool state, params GameObject[] gameObjects)
         {
             foreach(var canvas in _canvasList)
             {
-                if (canvas != gameObject)
+                if (gameObjects.Contains(canvas))
+                    continue;
+                else
                     canvas.gameObject.SetActive(state);
             }
         }

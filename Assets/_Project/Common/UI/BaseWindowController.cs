@@ -33,7 +33,7 @@ namespace Project.Common.UI
         public virtual async UniTask CloseWindow()
         {
             OpenOrCloseInProcessing = true;
-            await _windowAnimation.PlayCloseAnimationAsync();
+            await _windowAnimation.PlayHideAnimationAsync();
             DownThePeckingOrder();
             _windowViewModel.Close();
             OpenOrCloseInProcessing = false;

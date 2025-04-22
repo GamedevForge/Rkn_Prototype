@@ -13,6 +13,7 @@ namespace Project.Common.Core
         private readonly IInstantiator _instantiator;
         private readonly GameObject _dialogBoard;
         private readonly CanvasRepository _canvasRepository;
+        private readonly WidescreenController _widescreenController;
 
         private readonly List<DialogTextUIElement> uIElementsList = new();
 
@@ -22,12 +23,14 @@ namespace Project.Common.Core
         public DialogBoardWindow DialogBoardWindow { get; private set; }
         public TMPro.TMP_Text NameText { get; private set; }
         public DialogUIButtonGoToNextTake DialogUIButtonGoToNextTake { get; private set; }
+        public DialogUIButtonTextSpeedUpAnimation DialogUIButtonTextSpeedUpAnimation { get; private set; }
 
         public DialogViewFactory(
             GameObject dialogPrefab,
             GameObject dialogTextUIElement,
             GameObject dialogUIButton,
             CanvasRepository canvasRepository,
+            WidescreenController widesceenController,
             IInstantiator instantiator)
         {
             _buttonPool = new(instantiator, dialogUIButton);
@@ -35,6 +38,7 @@ namespace Project.Common.Core
             _instantiator = instantiator;
             _dialogBoard = dialogPrefab;
             _canvasRepository = canvasRepository;
+            _widescreenController = widesceenController;
         }
 
         public void CreateBoard()
@@ -43,6 +47,7 @@ namespace Project.Common.Core
             DialogUIComponents dialogUIParents = boardGameObject.GetComponent<DialogUIComponents>();
             DialogBoardWindow = boardGameObject.GetComponentInChildren<DialogBoardWindow>();
             DialogUIButtonGoToNextTake = dialogUIParents.DialogUIButtonGoToNextTake;
+            DialogUIButtonTextSpeedUpAnimation = dialogUIParents.DialogUIButtonTextSpeedUpAnimation;
 
             _canvasRepository.Add(boardGameObject);
             boardGameObject.transform.SetParent(null);
@@ -54,11 +59,19 @@ namespace Project.Common.Core
             boardGameObject.SetActive(false);
         }
 
-        public UniTask ShowBoard() =>
-            DialogBoardWindow.PlayShowAnimationAsync();
+        public async UniTask ShowBoard()
+        {
+            await UniTask.WhenAll(
+                DialogBoardWindow.PlayShowAnimationAsync(), 
+                _widescreenController.PlayShowAnimationAsync());
+        }
 
-        public UniTask CloseBoard() =>
-            DialogBoardWindow.PlayCloseAnimationAsync();
+        public async UniTask CloseBoard()
+        {
+            await UniTask.WhenAll(
+                DialogBoardWindow.PlayHideAnimationAsync(),
+                _widescreenController.PlayHideAnimationAsync());
+        }
 
         public OptionallyDialogUIButton GetButton(string text)
         {

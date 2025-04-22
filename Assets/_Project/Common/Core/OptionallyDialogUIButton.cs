@@ -47,7 +47,7 @@ namespace Project.Common.Core
             _isActive = true;
         }
 
-        public async UniTask PlayCloseAnimationAsync()
+        public async UniTask PlayHideAnimationAsync()
         {
             Tween tween;
             _isActive = false;

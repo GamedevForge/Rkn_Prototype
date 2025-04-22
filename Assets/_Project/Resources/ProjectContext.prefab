@@ -89,3 +89,4 @@ MonoBehaviour:
   _playerData: {fileID: 11400000, guid: 6282162aca59f6546b67b3ab379a4b70, type: 2}
   _dialogListData: {fileID: 11400000, guid: 66ddc0d6498c4144aac9c5590478526d, type: 2}
   _npcDataList: {fileID: 11400000, guid: 891894dc56b1e524e88421e2123f99f4, type: 2}
+  _widescreenPrefab: {fileID: 8754782788423602165, guid: 40fba329047c272429220667047cef66, type: 3}

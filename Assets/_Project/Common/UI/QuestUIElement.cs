@@ -22,7 +22,7 @@ namespace Project.Common.UI
             CurrentID = id;
         }
 
-        public async UniTask PlayCloseAnimationAsync()
+        public async UniTask PlayHideAnimationAsync()
         {
             _currentTween = _canvasGroup.DOFade(0f, _animationDuration);
             await _currentTween.AsyncWaitForCompletion();

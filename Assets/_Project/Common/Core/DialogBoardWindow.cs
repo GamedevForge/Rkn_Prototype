@@ -24,7 +24,7 @@ namespace Project.Common.Core
             await tween.AsyncWaitForCompletion();
         }
 
-        public async UniTask PlayCloseAnimationAsync()
+        public async UniTask PlayHideAnimationAsync()
         {
             Tween tween;
 

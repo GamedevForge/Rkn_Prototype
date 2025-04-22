@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using Project.Common.UI;
+using UnityEngine;
 
 namespace Project.Common.Core
 {
@@ -14,6 +15,7 @@ namespace Project.Common.Core
         private readonly DialogViewFactory _dialogViewFactory;
         private readonly List<OptionallyDialogUIButton> _activeButtons = new();
         private readonly CanvasRepository _canvasRepository;
+        private readonly IProperty<WidescreenAnimation, GameObject> _widescreenAnimation;
 
         private DialogTextUIElement _currentText;
         private TakeData _currentTakeData;
@@ -22,28 +24,33 @@ namespace Project.Common.Core
 
         public DialogViewController(
             DialogViewFactory dialogViewFactory,
-            CanvasRepository canvasRepository)
+            CanvasRepository canvasRepository,
+            IProperty<WidescreenAnimation, GameObject> widescreenAnimation)
         {
             _dialogViewFactory = dialogViewFactory;
             _canvasRepository = canvasRepository;
+            _widescreenAnimation = widescreenAnimation;
         }
 
         public void Initialize()
         {
             _dialogViewFactory.CreateBoard();
+            _dialogViewFactory.DialogUIButtonTextSpeedUpAnimation.DeactivateButton();
             _dialogViewFactory.DialogUIButtonGoToNextTake.OnClicked += SendPlayerInputUntilGoToNextTake;
+            _dialogViewFactory.DialogUIButtonTextSpeedUpAnimation.OnClicked += SpeedUpAnimation;
         }
 
         public void Dispose()
         {
             ReleaseAllButtons();
             _dialogViewFactory.DialogUIButtonGoToNextTake.OnClicked -= SendPlayerInputUntilGoToNextTake;
+            _dialogViewFactory.DialogUIButtonTextSpeedUpAnimation.OnClicked -= SpeedUpAnimation;
         }
 
         public async UniTask ShowDialogBoard()
         {
             _dialogViewFactory.DialogUIButtonGoToNextTake.ActivateButton();
-            _canvasRepository.SetStateAllCanvasWithout(_dialogViewFactory.DialogBoardWindow.gameObject, false);
+            _canvasRepository.SetStateAllCanvasWithout(false, _dialogViewFactory.DialogBoardWindow.gameObject, _widescreenAnimation.Property1);
             await _dialogViewFactory.ShowBoard();
         }
 
@@ -51,7 +58,7 @@ namespace Project.Common.Core
         {
             await _dialogViewFactory.DialogUIButtonGoToNextTake.PlayCloseAnimationAsync();
             await _dialogViewFactory.CloseBoard();
-            _canvasRepository.SetStateAllCanvasWithout(_dialogViewFactory.DialogBoardWindow.gameObject, true);
+            _canvasRepository.SetStateAllCanvasWithout(true, _dialogViewFactory.DialogBoardWindow.gameObject, _widescreenAnimation.Property1);
         }
 
         public void ShowGoToNextTakeButton() =>
@@ -69,7 +76,9 @@ namespace Project.Common.Core
 
             _currentTakeData = takeData;
             TextAnimationIsActive = true;
+            _dialogViewFactory.DialogUIButtonTextSpeedUpAnimation.ActivateButton();
             _currentText = await _dialogViewFactory.GetTextUIElementAsync(takeData.Text);
+            _dialogViewFactory.DialogUIButtonTextSpeedUpAnimation.DeactivateButton();
             TextAnimationIsActive = false;
 
             if (takeData.Type == TakeType.Optionally)
@@ -121,7 +130,7 @@ namespace Project.Common.Core
             List<UniTask> tasks = new();
 
             foreach (var button in _activeButtons)
-                tasks.Add(button.PlayCloseAnimationAsync());
+                tasks.Add(button.PlayHideAnimationAsync());
 
             await UniTask.WhenAll(tasks);
         }

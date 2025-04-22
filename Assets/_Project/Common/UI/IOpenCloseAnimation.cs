@@ -5,6 +5,6 @@ namespace Project.Common.UI
     public interface IOpenCloseAnimation
     {
         UniTask PlayShowAnimationAsync();
-        UniTask PlayCloseAnimationAsync();
+        UniTask PlayHideAnimationAsync();
     }
 }

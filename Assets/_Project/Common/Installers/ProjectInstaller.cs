@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Project.Common.Installers
 {
-    
+
     public class ProjectInstaller : MonoInstaller
     {
         [InjectOptional]
@@ -32,6 +32,9 @@ namespace Project.Common.Installers
         [SerializeField] private DialogListData _dialogListData;
         [SerializeField] private NPCDataList _npcDataList;
 
+        [Header("Other:")]
+        [SerializeField] private GameObject _widescreenPrefab;
+
         public override void InstallBindings()
         {
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
@@ -44,6 +47,8 @@ namespace Project.Common.Installers
             Container.BindInstance(DayNumber).WhenInjectedInto<DayHandler>();
 
             Container.Bind<CanvasRepository>().AsSingle();
+            Container.BindInterfacesAndSelfTo<WidesreenFactory>().AsSingle();
+            Container.Bind<WidescreenController>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<QuestConfigService>().AsSingle().WithArguments(_questData);
             Container.BindInterfacesAndSelfTo<QuestViewFactory>().AsSingle().WithArguments(_boardPrefab, _targetPointerPrefab, _uiElementPrefab);
@@ -57,7 +62,8 @@ namespace Project.Common.Installers
             Container.BindInterfacesAndSelfTo<DialogViewFactory>().AsSingle().WithArguments(_dialogBoard, _dialogText, _dialogButton);
             Container.BindInterfacesAndSelfTo<DialogViewController>().AsSingle();
             Container.BindInterfacesAndSelfTo<DialogController>().AsSingle();
+
+            Container.BindInterfacesTo<ProjectEntryPoint>().AsSingle().WithArguments(new WidescreenData { Prefab = _widescreenPrefab} );
         }
     }
-
 }

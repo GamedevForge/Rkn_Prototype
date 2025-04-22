@@ -34,7 +34,7 @@ namespace Project.Common.UI
             await Task.WhenAll(MoveAnimation(_canvasTransform.position).AsyncWaitForCompletion(), 
                 ScaleAnimation(_originScale).AsyncWaitForCompletion());
 
-        public async UniTask PlayCloseAnimationAsync() =>
+        public async UniTask PlayHideAnimationAsync() =>
             await Task.WhenAll(MoveAnimation(_buttonTransform.position).AsyncWaitForCompletion(),
                 ScaleAnimation(Vector3.zero).AsyncWaitForCompletion());
 

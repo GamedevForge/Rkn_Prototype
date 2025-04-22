@@ -43,7 +43,7 @@ namespace Project.Common.UI
 
         public async UniTask Remove(QuestUIElement questUIElement)
         {
-            await questUIElement.PlayCloseAnimationAsync();
+            await questUIElement.PlayHideAnimationAsync();
             _pool.Release(questUIElement.gameObject);
         }
 
