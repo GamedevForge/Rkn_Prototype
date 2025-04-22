@@ -18,9 +18,11 @@ namespace Project.Common.Core
         private PlayerState _playerState;
         private DialogModel _dialogModel;
         private DialogController _dialogController;
-        private FirstPersonController _firstPersonController;
+        private StarterAssetsInputs _starterAssetsInputs;
 
-        public bool CanInteract => true;
+        private bool _dialogIsProcessing = false;
+
+        public bool CanInteract => _dialogIsProcessing == false;
         public InteractType InteractType => InteractType.Click;
         public float HoldTime => 0f;
         public string Name => _objectsDataService.GetObjectConfig(ObjectType.Dialog).Name;
@@ -31,30 +33,33 @@ namespace Project.Common.Core
             PlayerState playerState,
             DialogModel dialogModel,
             DialogController dialogController,
-            FirstPersonController firstPersonController)
+            StarterAssetsInputs starterAssetsInputs)
         {
             _objectsDataService = objectsDataService;
             _playerComponents = playerComponents;
             _playerState = playerState;
             _dialogModel = dialogModel;
             _dialogController = dialogController;
-            _firstPersonController = firstPersonController;
+            _starterAssetsInputs = starterAssetsInputs;
         }
 
         public async void Interact()
         {
+            _dialogIsProcessing = true;
             _playerState.Sit();
             _playerState.DisableLooked();
 
             await PlayLookAtTargetAnimationAsync();
 
+            _starterAssetsInputs.ShowCursor();
             await _dialogController.StartDialog(_id);
             await UniTask.WaitWhile(() => _dialogModel.DialogIsProcessing);
 
-            _firstPersonController.SetRotation(0f, _playerComponents.CameraTransform.rotation.eulerAngles.y * 2);
-            _playerComponents.CameraTransform.rotation = Quaternion.identity;
+            _starterAssetsInputs.HideCursor();
             _playerState.EnableLooked();
+            _playerState.StandUp();
             _playerState.DisableProcessing();
+            _dialogIsProcessing = false;
         }
 
         private async UniTask PlayLookAtTargetAnimationAsync()

@@ -7,5 +7,6 @@ namespace Project.Common.Core
         [field: SerializeField] public Transform TextParent { get; private set; }
         [field: SerializeField] public Transform ButtonsParent { get; private set; }
         [field: SerializeField] public TMPro.TMP_Text NameText { get; private set; }
+        [field: SerializeField] public DialogUIButtonGoToNextTake DialogUIButtonGoToNextTake { get; private set; }
     }
 }

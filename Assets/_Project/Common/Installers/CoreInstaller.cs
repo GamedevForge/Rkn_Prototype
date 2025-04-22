@@ -70,6 +70,7 @@ namespace Project.Common.Installers
             Container.Bind<FirstPersonController>().FromInstance(_firstPersonController).AsSingle();
             Container.Bind<CharacterController>().FromInstance(_characterController).AsSingle();
             Container.Bind<PlayerQuitController>().FromInstance(_playerQuitController).AsSingle();
+            Container.Bind<StarterAssetsInputs>().FromInstance(_assetsInputs).AsSingle();
 
             Container.Bind<PlayerRayCasterModel>().AsSingle();
             Container.Bind<PlayerState>().AsSingle();

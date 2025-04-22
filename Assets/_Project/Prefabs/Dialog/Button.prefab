@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 7126092827554913394}
   - component: {fileID: 4846958151224417112}
   - component: {fileID: 6482560859409847425}
-  - component: {fileID: 3941149912964496355}
+  - component: {fileID: 3894555288548568254}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -226,7 +226,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &3941149912964496355
+--- !u!114 &3894555288548568254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5057941354140998012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae87a616ebd735b42886e758887bf7a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1a54e32e4bb3955408fd6be5bed48585, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5299366264756468133}

@@ -19,7 +19,10 @@ namespace Project.Common.Core
         private string _key;
 
         private CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
-        
+
+        private void Awake() =>
+            CanvasGroup.alpha = 0f;
+
         public void SetButtonText(string text)
         {
             _key = text;
@@ -49,7 +52,7 @@ namespace Project.Common.Core
             Tween tween;
             _isActive = false;
 
-            tween = CanvasGroup.DOFade(1f, _animationDuration);
+            tween = CanvasGroup.DOFade(0f, _animationDuration);
             await tween.AsyncWaitForCompletion();
             
             gameObject.SetActive(false);

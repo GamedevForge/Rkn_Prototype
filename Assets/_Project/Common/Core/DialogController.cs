@@ -42,8 +42,9 @@ namespace Project.Common.Core
             GoToNextTakeOrStopDialog();
         }
 
-        public void StopDialog()
+        public async UniTask StopDialog()
         {
+            await _viewController.HideDialogBoard();
             _dialogModel.SetDialogState(false);
             CurrentTakeCount = 0;
         }
@@ -52,7 +53,7 @@ namespace Project.Common.Core
         {
             if (CurrentTakeCount >= _dialogModel.CurrentTakesData.Count)
             {
-                StopDialog();
+                await StopDialog();
                 return;
             }
 
@@ -70,15 +71,23 @@ namespace Project.Common.Core
 
         private async UniTask GoToNextTake(TakeData takeData)
         {
+            _viewController.HideGoToNextTakeButton();
+
             if (takeData.WhoSpeaks == WhoSpeaks.Player)
+            {
                 await _viewController.ShowNextUIElement(takeData, _dialogModel.PlayerName);
+                if (takeData.Type == TakeType.OrdinaryTake)
+                    _viewController.ShowGoToNextTakeButton();
+            }
             else
+            {
                 await _viewController.ShowNextUIElement(takeData, _dialogModel.NPCName);
+                if (takeData.Type == TakeType.OrdinaryTake)
+                    _viewController.ShowGoToNextTakeButton();
+            }
 
             if (takeData.Type == TakeType.Optionally)
                 _viewController.HideGoToNextTakeButton();
-            else
-                _viewController.ShowGoToNextTakeButton();
         }
     }
 }

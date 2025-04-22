@@ -18,6 +18,12 @@ namespace Project.Common.Core
 
         private CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
 
+        private void Awake()
+        {
+            CanvasGroup.alpha = 0f;
+            gameObject.SetActive(false);
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
             if (_isActive)
@@ -41,10 +47,16 @@ namespace Project.Common.Core
             Tween tween;
             _isActive = false;
 
-            tween = CanvasGroup.DOFade(1f, _animationDuration);
+            tween = CanvasGroup.DOFade(0f, _animationDuration);
             await tween.AsyncWaitForCompletion();
 
             gameObject.SetActive(false);
+        }
+
+        public void ActivateButton()
+        {
+            _isActive = true;
+            CanvasGroup.alpha = 1f;
         }
     }
 }

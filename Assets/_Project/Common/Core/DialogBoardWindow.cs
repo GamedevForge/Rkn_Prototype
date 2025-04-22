@@ -12,6 +12,9 @@ namespace Project.Common.Core
 
         private CanvasGroup CanvasGroup => GetComponent<CanvasGroup>();
 
+        private void Awake() =>
+            CanvasGroup.alpha = 0f;
+
         public async UniTask PlayShowAnimationAsync()
         {
             Tween tween;
@@ -25,7 +28,7 @@ namespace Project.Common.Core
         {
             Tween tween;
 
-            tween = CanvasGroup.DOFade(1f, _animationDuration);
+            tween = CanvasGroup.DOFade(0f, _animationDuration);
             await tween.AsyncWaitForCompletion();
 
             gameObject.SetActive(false);

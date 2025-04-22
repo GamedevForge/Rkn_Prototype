@@ -3,6 +3,7 @@ using Project.Common.Configs;
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using Project.Common.UI;
 
 namespace Project.Common.Core
 {
@@ -12,15 +13,19 @@ namespace Project.Common.Core
         
         private readonly DialogViewFactory _dialogViewFactory;
         private readonly List<OptionallyDialogUIButton> _activeButtons = new();
+        private readonly CanvasRepository _canvasRepository;
 
         private DialogTextUIElement _currentText;
         private TakeData _currentTakeData;
 
         public bool TextAnimationIsActive { get; private set; } = false;
 
-        public DialogViewController(DialogViewFactory dialogViewFactory)
+        public DialogViewController(
+            DialogViewFactory dialogViewFactory,
+            CanvasRepository canvasRepository)
         {
             _dialogViewFactory = dialogViewFactory;
+            _canvasRepository = canvasRepository;
         }
 
         public void Initialize()
@@ -35,11 +40,19 @@ namespace Project.Common.Core
             _dialogViewFactory.DialogUIButtonGoToNextTake.OnClicked -= SendPlayerInputUntilGoToNextTake;
         }
 
-        public UniTask ShowDialogBoard() =>
-            _dialogViewFactory.ShowBoard();
+        public async UniTask ShowDialogBoard()
+        {
+            _dialogViewFactory.DialogUIButtonGoToNextTake.ActivateButton();
+            _canvasRepository.SetStateAllCanvasWithout(_dialogViewFactory.DialogBoardWindow.gameObject, false);
+            await _dialogViewFactory.ShowBoard();
+        }
 
-        public UniTask HideDialogBoard() =>
-            _dialogViewFactory.CloseBoard();
+        public async UniTask HideDialogBoard()
+        {
+            await _dialogViewFactory.DialogUIButtonGoToNextTake.PlayCloseAnimationAsync();
+            await _dialogViewFactory.CloseBoard();
+            _canvasRepository.SetStateAllCanvasWithout(_dialogViewFactory.DialogBoardWindow.gameObject, true);
+        }
 
         public void ShowGoToNextTakeButton() =>
             _dialogViewFactory.DialogUIButtonGoToNextTake.gameObject.SetActive(true);
@@ -94,10 +107,10 @@ namespace Project.Common.Core
 
             foreach (var button in _activeButtons)
             {
-                _activeButtons.Remove(button);
                 button.OnClicked -= SendOptionallyPlayerInput;
                 _dialogViewFactory.ReleaseButton(button);
             }
+            _activeButtons.Clear();
         }
 
         private async UniTask HideAllButtonsAsync()

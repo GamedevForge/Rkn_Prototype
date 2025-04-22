@@ -10,6 +10,7 @@ namespace Project.Common.UI
         private readonly IInstantiator _instantiator;
         private readonly GameObject _questBoardPrefab;
         private readonly GameObject _targetPointerPrefab;
+        private readonly CanvasRepository _canvasRepository;
 
         private Transform _parent;
 
@@ -17,12 +18,14 @@ namespace Project.Common.UI
             GameObject boardPrefab,
             GameObject targetPointerPrefab,
             GameObject questUIElementPrefab,
+            CanvasRepository canvasRepository,
             IInstantiator instantiator)
         {
             _pool = new(instantiator, questUIElementPrefab);
             _instantiator = instantiator;
             _questBoardPrefab = boardPrefab;
             _targetPointerPrefab = targetPointerPrefab;
+            _canvasRepository = canvasRepository;
         }
 
         public async UniTask<QuestUIElement> Get(string description, string id)
@@ -47,6 +50,7 @@ namespace Project.Common.UI
         public GameObject CreateBoard()
         {
             GameObject board = _instantiator.InstantiatePrefab(_questBoardPrefab);
+            _canvasRepository.Add(board);
             _parent = board.GetComponentInChildren<BoardTransform>().Parent;
             board.transform.SetParent(null);
             GameObject.DontDestroyOnLoad(board);
@@ -57,6 +61,7 @@ namespace Project.Common.UI
         {
             GameObject targetPointer = _instantiator.InstantiatePrefab(_targetPointerPrefab);
             targetPointer.transform.SetParent(null);
+            _canvasRepository.Add(targetPointer);
             GameObject.DontDestroyOnLoad(targetPointer);
             return targetPointer;
         }

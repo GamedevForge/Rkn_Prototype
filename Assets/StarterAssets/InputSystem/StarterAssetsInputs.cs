@@ -107,7 +107,7 @@ namespace StarterAssets
 			SetCursorState(cursorLocked);
 		}
 
-		private void SetCursorState(bool newState)
+		public void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.Confined;
 		}
@@ -124,6 +124,18 @@ namespace StarterAssets
 			cursorLocked = true;
 			Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
+        }
+
+		public void ShowCursor()
+		{
+			cursorLocked = false;
+			SetCursorState(cursorLocked);
+        }
+
+		public void HideCursor()
+		{
+            cursorLocked = true;
+            SetCursorState(cursorLocked);
         }
 	}
 	

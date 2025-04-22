@@ -12,13 +12,14 @@ namespace Project.Common.Core
         private readonly GameObjectPool _buttonPool;
         private readonly IInstantiator _instantiator;
         private readonly GameObject _dialogBoard;
+        private readonly CanvasRepository _canvasRepository;
 
         private readonly List<DialogTextUIElement> uIElementsList = new();
 
         private Transform _buttonParent;
         private Transform _textUIElementParent;
-        private DialogBoardWindow _dialogBoardWindow;
 
+        public DialogBoardWindow DialogBoardWindow { get; private set; }
         public TMPro.TMP_Text NameText { get; private set; }
         public DialogUIButtonGoToNextTake DialogUIButtonGoToNextTake { get; private set; }
 
@@ -26,21 +27,24 @@ namespace Project.Common.Core
             GameObject dialogPrefab,
             GameObject dialogTextUIElement,
             GameObject dialogUIButton,
+            CanvasRepository canvasRepository,
             IInstantiator instantiator)
         {
             _buttonPool = new(instantiator, dialogUIButton);
             _dialogUIElementPool = new(instantiator, dialogTextUIElement);
             _instantiator = instantiator;
             _dialogBoard = dialogPrefab;
+            _canvasRepository = canvasRepository;
         }
 
         public void CreateBoard()
         {
             GameObject boardGameObject = _instantiator.InstantiatePrefab(_dialogBoard);
             DialogUIComponents dialogUIParents = boardGameObject.GetComponent<DialogUIComponents>();
-            DialogUIButtonGoToNextTake = boardGameObject.GetComponentInChildren<DialogUIButtonGoToNextTake>();
-            _dialogBoardWindow = boardGameObject.GetComponentInChildren<DialogBoardWindow>();
+            DialogBoardWindow = boardGameObject.GetComponentInChildren<DialogBoardWindow>();
+            DialogUIButtonGoToNextTake = dialogUIParents.DialogUIButtonGoToNextTake;
 
+            _canvasRepository.Add(boardGameObject);
             boardGameObject.transform.SetParent(null);
             GameObject.DontDestroyOnLoad(boardGameObject);
 
@@ -51,10 +55,10 @@ namespace Project.Common.Core
         }
 
         public UniTask ShowBoard() =>
-            _dialogBoardWindow.PlayShowAnimationAsync();
+            DialogBoardWindow.PlayShowAnimationAsync();
 
         public UniTask CloseBoard() =>
-            _dialogBoardWindow.PlayCloseAnimationAsync();
+            DialogBoardWindow.PlayCloseAnimationAsync();
 
         public OptionallyDialogUIButton GetButton(string text)
         {
@@ -74,20 +78,28 @@ namespace Project.Common.Core
 
         public async UniTask<DialogTextUIElement> GetTextUIElementAsync(string text)
         {
+            DialogTextUIElement dialogTextUIElement = DialogBoardWindow.GetComponentInChildren<DialogTextUIElement>();
+
+            if (dialogTextUIElement != null)
+            {
+                await dialogTextUIElement.ShowTextAsync(text);
+                return dialogTextUIElement;
+            }
+
             if (uIElementsList.Count == 1)
             {
                 await uIElementsList[0].ShowTextAsync(text);
                 return uIElementsList[0];
             }
-            
-            DialogTextUIElement uIElement = _dialogUIElementPool.Get().GetComponent<DialogTextUIElement>();
-            uIElementsList.Add(uIElement);
-            GameObject.DontDestroyOnLoad(uIElement.gameObject);
-            uIElement.transform.SetParent(_textUIElementParent);
 
-            await uIElement.ShowTextAsync(text);
+            dialogTextUIElement = _dialogUIElementPool.Get().GetComponent<DialogTextUIElement>();
+            uIElementsList.Add(dialogTextUIElement);
+            GameObject.DontDestroyOnLoad(dialogTextUIElement.gameObject);
+            dialogTextUIElement.transform.SetParent(_textUIElementParent);
 
-            return uIElement;
+            await dialogTextUIElement.ShowTextAsync(text);
+
+            return dialogTextUIElement;
         }
     }
 }
