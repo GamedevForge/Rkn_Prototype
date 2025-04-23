@@ -10,9 +10,11 @@ namespace Project.Common.Core
     public class DialogStartController : MonoBehaviour, IInteractableObject
     {
         [SerializeField] private Transform _target;
+        [SerializeField] private Transform _npcRotationTarget;
         [SerializeField] private float _animationDuration;
+        [SerializeField] private float _npcAnimationDuration;
         [SerializeField] private string _id;
-        
+
         private ObjectsDataService _objectsDataService;
         private PlayerComponents _playerComponents;
         private PlayerState _playerState;
@@ -49,7 +51,7 @@ namespace Project.Common.Core
             _playerState.Sit();
             _playerState.DisableLooked();
 
-            await PlayLookAtTargetAnimationAsync();
+            await UniTask.WhenAll(PlayLookAtTargetAnimationAsync(), PlayLookAtPlayerAnimationAsync());
 
             _starterAssetsInputs.ShowCursor();
             await _dialogController.StartDialog(_id);
@@ -64,13 +66,16 @@ namespace Project.Common.Core
 
         private async UniTask PlayLookAtTargetAnimationAsync()
         {
-            Tween tween;
-
-            tween = _playerComponents
+            await _playerComponents
                 .CameraTransform
-                .DOLookAt(_target.position, _animationDuration);
+                .DOLookAt(_target.position, _animationDuration).AsyncWaitForCompletion();
+        }
 
-            await tween.AsyncWaitForCompletion();
+        private async UniTask PlayLookAtPlayerAnimationAsync()
+        {
+            await _npcRotationTarget
+                .DOLookAt(_playerComponents.PlayerTransform.position, _npcAnimationDuration, AxisConstraint.None, Vector3.up)
+                .AsyncWaitForCompletion();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -50,6 +49,14 @@ namespace Project.Common.Core
                 timer < _currentInteractableObject.HoldTime)
             {
                 await UniTask.WaitForFixedUpdate();
+
+                if (_currentInteractableObject == null)
+                {
+                    _objectChangedEvent.Hold(0f, 0f, false);
+                    _holdIsProcessing = false;
+                    return;
+                }
+
                 _objectChangedEvent.Hold(timer, _currentInteractableObject.HoldTime, _isPressed);
                 timer += Time.deltaTime;
 
