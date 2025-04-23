@@ -41,7 +41,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 6
+      Data: 7
     - Name: 
       Entry: 7
       Data: 
@@ -144,6 +144,24 @@ MonoBehaviour:
     - Name: Name
       Entry: 1
       Data: Dialog
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 6
+    - Name: $v
+      Entry: 7
+      Data: 8|Project.Common.Configs.ObjectConfig, Assembly-CSharp
+    - Name: Name
+      Entry: 1
+      Data: Door
     - Name: 
       Entry: 8
       Data: 

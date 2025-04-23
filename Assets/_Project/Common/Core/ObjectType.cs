@@ -8,6 +8,7 @@
         Bed,
         Door,
         Dialog,
+        AnimatedDoor,
     }
 }
 

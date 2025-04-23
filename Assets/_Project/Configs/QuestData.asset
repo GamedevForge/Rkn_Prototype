@@ -48,7 +48,7 @@ MonoBehaviour:
       Data: 0
     - Name: IsActive
       Entry: 5
-      Data: true
+      Data: false
     - Name: SceneName
       Entry: 1
       Data: Neighborhood
@@ -70,7 +70,7 @@ MonoBehaviour:
       Data: 0
     - Name: IsActive
       Entry: 5
-      Data: true
+      Data: false
     - Name: SceneName
       Entry: 1
       Data: Playground
@@ -92,7 +92,7 @@ MonoBehaviour:
       Data: 1
     - Name: IsActive
       Entry: 5
-      Data: true
+      Data: false
     - Name: SceneName
       Entry: 1
       Data: Playground
@@ -115,7 +115,7 @@ MonoBehaviour:
       Data: 1
     - Name: IsActive
       Entry: 5
-      Data: true
+      Data: false
     - Name: SceneName
       Entry: 1
       Data: Playground
@@ -136,7 +136,7 @@ MonoBehaviour:
       Data: 0
     - Name: IsActive
       Entry: 5
-      Data: true
+      Data: false
     - Name: SceneName
       Entry: 1
       Data: Playground
@@ -157,7 +157,7 @@ MonoBehaviour:
       Data: 0
     - Name: IsActive
       Entry: 5
-      Data: true
+      Data: false
     - Name: SceneName
       Entry: 1
       Data: Neighborhood

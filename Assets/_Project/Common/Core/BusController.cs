@@ -45,4 +45,48 @@ namespace Project.Common.Core
         private void LoadScene() =>
             _sceneLoader.LoadScene(SceneName);
     }
+
+    public class DoorController : IInteractableObject
+    {
+        private bool _openIsProcessing = false;
+        private bool _isOpen = false;
+
+        private ObjectsDataService _dataService;
+        
+        public bool CanInteract => _openIsProcessing == false;
+        public InteractType InteractType => InteractType.Click;
+        public float HoldTime { get; private set; }
+        public string Name => _dataService.GetObjectConfig(ObjectType.AnimatedDoor).Name;
+
+        [Inject] private void Construct(ObjectsDataService objectsDataService) =>
+            _dataService = objectsDataService;
+
+        public async void Interact()
+        {
+            _openIsProcessing = true;
+
+            if (_isOpen)
+            {
+                await PlayCloseAnimationAsync();
+                _isOpen = false;
+            }
+            else
+            {
+                await PlayOpenAnimationAsync();
+                _isOpen = true;
+            }
+
+            _openIsProcessing = false;
+        }
+        
+        private async UniTask PlayOpenAnimationAsync()
+        {
+
+        }
+
+        private async UniTask PlayCloseAnimationAsync()
+        {
+
+        }
+    }
 }
