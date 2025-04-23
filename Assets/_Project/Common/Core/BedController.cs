@@ -4,6 +4,7 @@ using Project.Common.Configs;
 using Cysharp.Threading.Tasks;
 using Project.Common.UI;
 using System;
+using System.Collections.Generic;
 
 namespace Project.Common.Core
 {
@@ -48,5 +49,10 @@ namespace Project.Common.Core
             await UniTask.WaitForSeconds(1);
             _holdIsProcessing = false;
         }
+    }
+
+    public class DialogSignal
+    {
+        
     }
 }
