@@ -31,7 +31,7 @@ namespace Project.Common.Core.Quest
 
             if (CurrentQuestConfig.Type == QuestType.WithTarget)
             {
-                _view.EnableTargetpointer();
+                _view.EnableTargetPointer();
                 SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig).Forget();
             }
             else
@@ -78,7 +78,7 @@ namespace Project.Common.Core.Quest
 
             if (CurrentQuestConfig.Type == QuestType.WithTarget)
             {
-                _view.EnableTargetpointer();
+                _view.EnableTargetPointer();
                 await SetQuestView(GetQuestEvent(CurrentQuestConfig.ID).Target, CurrentQuestConfig);
             }
             else

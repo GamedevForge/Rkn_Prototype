@@ -16,7 +16,7 @@ namespace Project.Common.Core.Quest
         private float MaxY => _camera.ViewportToScreenPoint(new Vector3(0f, 1f, 0f)).y;
 
         private void Awake() =>
-            gameObject.SetActive(false);
+            DeactivateTargetPointer();
 
         private void Update()
         {
@@ -51,6 +51,18 @@ namespace Project.Common.Core.Quest
                         Mathf.Clamp(screenPointPosition.y, MinY + _markerOutSideTransform.sizeDelta.y / 2, MaxY - _markerOutSideTransform.sizeDelta.y / 2));
                 }
             }
+        }
+
+        public void DeactivateTargetPointer()
+        {
+            _markerInScreenTransform.gameObject.SetActive(false);
+            _markerOutSideTransform.gameObject.SetActive(false);
+        }
+
+        public void ActivateTargetPointer()
+        {
+            _markerInScreenTransform.gameObject.SetActive(true);
+            _markerOutSideTransform.gameObject.SetActive(true);
         }
 
         public void SetTarget(Transform target, string name)

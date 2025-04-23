@@ -44,9 +44,9 @@ namespace Project.Common.UI
         }
 
         public void DisableTargetPointer() =>
-            _targetPointerController.gameObject.SetActive(false);
+            _targetPointerController.DeactivateTargetPointer();
 
-        public void EnableTargetpointer() =>
-            _targetPointerController.gameObject.SetActive(true);
+        public void EnableTargetPointer() =>
+            _targetPointerController.ActivateTargetPointer();
     }
 }
