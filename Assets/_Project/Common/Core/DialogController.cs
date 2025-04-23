@@ -38,7 +38,11 @@ namespace Project.Common.Core
             }
 
             _dialogModel.SetDialogState(true);
-            await _viewController.ShowDialogBoard();
+            if (_dialogModel.CurrentTakesData[0].WhoSpeaks == WhoSpeaks.Player)
+                await _viewController.ShowDialogBoard(_dialogModel.PlayerName);
+            else
+                await _viewController.ShowDialogBoard(_dialogModel.NPCName);
+            
             GoToNextTakeOrStopDialog();
         }
 

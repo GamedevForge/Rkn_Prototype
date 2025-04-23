@@ -47,10 +47,11 @@ namespace Project.Common.Core
             _dialogViewFactory.DialogUIButtonTextSpeedUpAnimation.OnClicked -= SpeedUpAnimation;
         }
 
-        public async UniTask ShowDialogBoard()
+        public async UniTask ShowDialogBoard(string name)
         {
             _dialogViewFactory.DialogUIButtonGoToNextTake.ActivateButton();
             _canvasRepository.SetStateAllCanvasWithout(false, _dialogViewFactory.DialogBoardWindow.gameObject, _widescreenAnimation.Property1);
+            _dialogViewFactory.NameText.text = name + ":";
             await _dialogViewFactory.ShowBoard();
         }
 
@@ -58,6 +59,7 @@ namespace Project.Common.Core
         {
             await _dialogViewFactory.DialogUIButtonGoToNextTake.PlayCloseAnimationAsync();
             await _dialogViewFactory.CloseBoard();
+            _dialogViewFactory.GetTextUIElementAsync(string.Empty).Forget();
             _canvasRepository.SetStateAllCanvasWithout(true, _dialogViewFactory.DialogBoardWindow.gameObject, _widescreenAnimation.Property1);
         }
 
