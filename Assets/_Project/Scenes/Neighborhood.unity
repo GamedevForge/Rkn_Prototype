@@ -1455,6 +1455,8 @@ GameObject:
   - component: {fileID: 241100462}
   - component: {fileID: 241100464}
   - component: {fileID: 241100463}
+  - component: {fileID: 241100466}
+  - component: {fileID: 241100465}
   m_Layer: 6
   m_Name: TestNPC
   m_TagString: Untagged
@@ -1519,6 +1521,166 @@ CapsuleCollider:
   m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: -0.2, z: 0}
+--- !u!114 &241100465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241100461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1501b7f78532764a9fa47285a3a7790, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 241100466}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: <Signal>k__BackingField
+      Entry: 10
+      Data: 0
+  <SignalIDs>k__BackingField: 
+  NPCID: test_npc
+--- !u!114 &241100466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 241100461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40fbc99274b750f489530697c3f52d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 241100466}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: _animations
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[Project.Common.Core.NPCAnimatorController+AnimationMethod,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: irritation
+    - Name: $v
+      Entry: 7
+      Data: 2|Project.Common.Core.NPCAnimatorController+AnimationMethod, Assembly-CSharp
+    - Name: target
+      Entry: 10
+      Data: 0
+    - Name: declaringType
+      Entry: 7
+      Data: 3|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Project.Common.Core.NPCAnimatorController, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: methodName
+      Entry: 1
+      Data: ShakeFit
+    - Name: delegateType
+      Entry: 7
+      Data: 4|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: Project.Common.Core.NPCAnimatorController+AnimationMethod, Assembly-CSharp
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: signature
+      Entry: 7
+      Data: 5|System.Type[], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: idle
+    - Name: $v
+      Entry: 7
+      Data: 6|Project.Common.Core.NPCAnimatorController+AnimationMethod, Assembly-CSharp
+    - Name: target
+      Entry: 10
+      Data: 0
+    - Name: declaringType
+      Entry: 9
+      Data: 3
+    - Name: methodName
+      Entry: 1
+      Data: Idle
+    - Name: delegateType
+      Entry: 9
+      Data: 4
+    - Name: signature
+      Entry: 7
+      Data: 7|System.Type[], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  _animator: {fileID: 816359053}
 --- !u!1 &273306980
 GameObject:
   m_ObjectHideFlags: 0
@@ -3669,6 +3831,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f1a3ec61884905e49a4aa4c88d375e5d, type: 3}
   m_PrefabInstance: {fileID: 816359051}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &816359053 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: f1a3ec61884905e49a4aa4c88d375e5d, type: 3}
+  m_PrefabInstance: {fileID: 816359051}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &828714845
 GameObject:
   m_ObjectHideFlags: 0
@@ -4593,6 +4760,8 @@ GameObject:
   - component: {fileID: 1008458924}
   - component: {fileID: 1008458923}
   - component: {fileID: 1008458926}
+  - component: {fileID: 1008458927}
+  - component: {fileID: 1008458928}
   m_Layer: 0
   m_Name: SceneInstaller
   m_TagString: Untagged
@@ -4671,6 +4840,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 1008458923}
   - {fileID: 1008458926}
+  - {fileID: 1008458927}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -4717,6 +4887,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _questEvents:
   - {fileID: 380060929}
+--- !u!114 &1008458927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008458922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9156dca9220bbd34092161c72ae26904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _npcReceiverArray: {fileID: 1008458928}
+--- !u!114 &1008458928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008458922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b27917810ed07ee4eb3edf7d06fab23a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _receiver:
+  - {fileID: 241100465}
 --- !u!1 &1017751201
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace Project.Common.Core
 {
-    public class NPCAnimatorController : SerializedMonoBehaviour, ISignalMethod<NPCData>
+    public class NPCAnimatorController : SerializedMonoBehaviour, ISignalMethod<DialogSignal>
     {
         public delegate void AnimationMethod();
 
         private const string IDLE = "Idle";
-        private const string SHAKE_FIT = "ShakeFit";
+        private const string SHAKE_FIT = "ShakeFist";
         
         [SerializeField] private Animator _animator;
         [SerializeField] private Dictionary<string, AnimationMethod> _animations;
@@ -20,7 +20,7 @@ namespace Project.Common.Core
         public void ShakeFit() =>
             _animator.SetTrigger(SHAKE_FIT);
 
-        public void TriggerMethod(NPCData data)
+        public void TriggerMethod(DialogSignal data)
         {
             foreach (var key in _animations.Keys)
             {

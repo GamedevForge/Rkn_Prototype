@@ -9,15 +9,18 @@ namespace Project.Common.Core
     {
         private readonly DialogModel _dialogModel;
         private readonly DialogViewController _viewController;
+        private readonly SignalBus _signalBus;
 
         private int CurrentTakeCount = 0;
 
         public DialogController(
             DialogModel dialogModel, 
-            DialogViewController viewController)
+            DialogViewController viewController,
+            SignalBus signalBus)
         {
             _dialogModel = dialogModel;
             _viewController = viewController;
+            _signalBus = signalBus;
         }
         
         public void Initialize() =>
@@ -76,6 +79,8 @@ namespace Project.Common.Core
         private async UniTask GoToNextTake(TakeData takeData)
         {
             _viewController.HideGoToNextTakeButton();
+
+            _signalBus.Fire(new DialogSignal { NPCID = _dialogModel.CurrentDialogData.NPCID, SignalID = takeData.SignalID });
 
             if (takeData.WhoSpeaks == WhoSpeaks.Player)
             {

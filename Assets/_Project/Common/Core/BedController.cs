@@ -50,9 +50,4 @@ namespace Project.Common.Core
             _holdIsProcessing = false;
         }
     }
-
-    public class DialogSignal
-    {
-        
-    }
 }

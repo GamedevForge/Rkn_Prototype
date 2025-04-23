@@ -1,6 +1,6 @@
 ﻿namespace Project.Common.Core
 {
-    public struct NPCData
+    public class DialogSignal
     {
         public string NPCID;
         public string SignalID;

@@ -2,14 +2,17 @@
 
 namespace Project.Common.Core
 {
-    public class NPCSignalReceiver : BaseSignalReceiver<NPCData>
+    public class NPCSignalReceiver : BaseSignalReceiver<DialogSignal>
     {
         [SerializeField] private string NPCID;
 
-        public override void SignalMethod(NPCData data)
+        public override void SignalMethod(DialogSignal signal)
         {
-            if (data.NPCID == NPCID)
-                Signal.TriggerMethod(data);
+            if (signal.SignalID == "none")
+                return;
+            
+            if (signal.NPCID == NPCID)
+                Signal.TriggerMethod(signal);
         }
     }
 }

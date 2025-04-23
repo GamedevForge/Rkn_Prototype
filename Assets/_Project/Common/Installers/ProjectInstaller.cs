@@ -2,12 +2,12 @@ using Project.Common.Configs;
 using Project.Common.Core;
 using Project.Common.Core.Quest;
 using Project.Common.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
 namespace Project.Common.Installers
 {
-
     public class ProjectInstaller : MonoInstaller
     {
         [InjectOptional]
@@ -37,6 +37,10 @@ namespace Project.Common.Installers
 
         public override void InstallBindings()
         {
+            SignalBusInstaller.Install(Container);
+
+            Container.DeclareSignal<DialogSignal>();
+
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
             Container.Bind<RequirementsDataService>().AsSingle().WithArguments(_requirementsData);
             Container.Bind<PlayerRayCastData>().FromInstance(_playerRayCastData).AsSingle();
