@@ -10,7 +10,7 @@ namespace Project.Common.Core
 {
     public class DialogViewController : IInitializable, IDisposable
     {
-        public event Action<TakeData[]> OnOptionallyButtonClicked;
+        public event Action<AnswerConfig> OnOptionallyButtonClicked;
         
         private readonly DialogViewFactory _dialogViewFactory;
         private readonly List<OptionallyDialogUIButton> _activeButtons = new();
@@ -18,7 +18,7 @@ namespace Project.Common.Core
         private readonly IProperty<WidescreenAnimation, GameObject> _widescreenAnimation;
 
         private DialogTextUIElement _currentText;
-        private TakeData _currentTakeData;
+        private TakeConfig _currentTakeData;
 
         public bool TextAnimationIsActive { get; private set; } = false;
 
@@ -69,7 +69,7 @@ namespace Project.Common.Core
         public void HideGoToNextTakeButton() =>
             _dialogViewFactory.DialogUIButtonGoToNextTake.gameObject.SetActive(false);
 
-        public async UniTask ShowNextUIElement(TakeData takeData, string name)
+        public async UniTask ShowNextUIElement(TakeConfig takeData, string name)
         {
             await HideAllButtonsAsync();
             ReleaseAllButtons();
@@ -87,9 +87,9 @@ namespace Project.Common.Core
             {
                 List<UniTask> tasks = new();
                 
-                foreach(string key in takeData.DialogOptionsAfterPlayersAnswer.Keys)
+                foreach(AnswerConfig answerConfig in takeData.DialogOptionsAfterPlayersAnswer)
                 {
-                    OptionallyDialogUIButton button = _dialogViewFactory.GetButton(key);
+                    OptionallyDialogUIButton button = _dialogViewFactory.GetButton(answerConfig.AnswerText);
                     button.OnClicked += SendOptionallyPlayerInput;
                     _activeButtons.Add(button);
                     tasks.Add(button.PlayShowAnimationAsync());
@@ -105,8 +105,14 @@ namespace Project.Common.Core
                 _currentText.SpeedUpAnimation().Forget();
         }
 
-        private void SendOptionallyPlayerInput(string key) =>
-            OnOptionallyButtonClicked?.Invoke(_currentTakeData.DialogOptionsAfterPlayersAnswer[key]);
+        private void SendOptionallyPlayerInput(string key)
+        {
+            foreach (AnswerConfig answerConfig in _currentTakeData.DialogOptionsAfterPlayersAnswer)
+            {
+                if (answerConfig.AnswerText == key)
+                    OnOptionallyButtonClicked?.Invoke(answerConfig);
+            }
+        }
 
         private void SendPlayerInputUntilGoToNextTake() =>
             OnOptionallyButtonClicked?.Invoke(null);

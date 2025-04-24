@@ -7,6 +7,6 @@ namespace Project.Common.Configs
     public class DialogData : SerializedScriptableObject
     {
         [field: SerializeField] public string NPCID { get; private set; }
-        [field: SerializeField] public TakeData[] DialogTakes { get; private set; }
+        [field: SerializeField] public TakeConfig[] DialogTakes { get; private set; }
     }
 }

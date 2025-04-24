@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bda61982099ca22429e69950fba8294c, type: 3}
-  m_Name: _TestNPCDialogData
+  m_Name: Answer1
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -23,8 +23,13 @@ MonoBehaviour:
     SerializationNodes: []
   <NPCID>k__BackingField: test_npc
   <DialogTakes>k__BackingField:
-  - {fileID: 11400000, guid: d39def43a6fcf9f4ba4f39ce74484932, type: 2}
-  - {fileID: 11400000, guid: 2890bae4d92e71248871e7dc75e29ba0, type: 2}
-  - {fileID: 11400000, guid: 0ff563a21e3449b4f8e2c1f21093f166, type: 2}
-  - {fileID: 11400000, guid: 9dd54be5d3580f04a8b1bbb2b63768d3, type: 2}
-  - {fileID: 11400000, guid: 8b528fc8f71fa3444b83245d34e26a31, type: 2}
+  - <WhoSpeaks>k__BackingField: 0
+    <Type>k__BackingField: 0
+    <Text>k__BackingField: "\u0410 \u043F\u043E\u0447\u0435\u043C\u0443 \u0442\u0430\u043A?"
+    <SignalID>k__BackingField: irritation
+    <DialogOptionsAfterPlayersAnswer>k__BackingField: []
+  - <WhoSpeaks>k__BackingField: 1
+    <Type>k__BackingField: 0
+    <Text>k__BackingField: "\u041D\u0435 \u0441\u043F\u0430\u043B\u043E\u0441\u044C."
+    <SignalID>k__BackingField: none
+    <DialogOptionsAfterPlayersAnswer>k__BackingField: []

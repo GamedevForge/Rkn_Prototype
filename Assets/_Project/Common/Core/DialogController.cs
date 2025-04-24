@@ -56,7 +56,7 @@ namespace Project.Common.Core
             CurrentTakeCount = 0;
         }
 
-        private async void GoToNextTakeOrStopDialog(TakeData[] takesData = null)
+        private async void GoToNextTakeOrStopDialog(AnswerConfig answerConfigs = null)
         {
             if (CurrentTakeCount >= _dialogModel.CurrentTakesData.Count)
             {
@@ -64,19 +64,19 @@ namespace Project.Common.Core
                 return;
             }
 
-            if (takesData != null)
+            if (answerConfigs != null)
             {
-                _dialogModel.CurrentTakesData.InsertRange(CurrentTakeCount, takesData);
+                _dialogModel.CurrentTakesData.InsertRange(CurrentTakeCount, answerConfigs.DialogData.DialogTakes);
             }
 
-            TakeData takeData = _dialogModel.CurrentTakesData[CurrentTakeCount];
+            TakeConfig takeData = _dialogModel.CurrentTakesData[CurrentTakeCount];
 
             await GoToNextTake(takeData);
 
             CurrentTakeCount++;
         }
 
-        private async UniTask GoToNextTake(TakeData takeData)
+        private async UniTask GoToNextTake(TakeConfig takeData)
         {
             _viewController.HideGoToNextTakeButton();
 
