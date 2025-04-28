@@ -4,11 +4,12 @@ using Zenject;
 using Project.Common.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace Project.Common.Core.Quest
 {
     public class QuestController : IInitializable
-    {
+    {     
         private readonly QuestConfigService _configService;
         private readonly QuestViewController _view;
         private readonly List<QuestEvent> _questEvents = new();
@@ -61,7 +62,8 @@ namespace Project.Common.Core.Quest
 
             if (id == CurrentQuestConfig.ID)
             {
-                CurrentQuestConfig.IsActive = false;
+                //CurrentQuestConfig.IsActive = false;
+                _configService.CloseQuest(CurrentQuestConfig.ID);
                 await RemoveQuestView(CurrentQuestConfig);
                 await GetNextQuest();
             }

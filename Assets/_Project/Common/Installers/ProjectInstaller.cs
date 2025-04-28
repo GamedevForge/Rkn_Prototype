@@ -1,8 +1,8 @@
 using Project.Common.Configs;
 using Project.Common.Core;
 using Project.Common.Core.Quest;
+using Project.Common.Core.SaveLoadSystem;
 using Project.Common.UI;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 
@@ -17,6 +17,9 @@ namespace Project.Common.Installers
         [SerializeField] private PlayerRayCastData _playerRayCastData;
         [SerializeField] private RequirementsData _requirementsData;
         [SerializeField] private NewsListData _newsListData;
+
+        [Header("SaveLoadSystem:")]
+        [SerializeField] private GameObject _saveLoadControllerPrefab;
 
         [Header("Quest:")]
         [SerializeField] private GameObject _boardPrefab;
@@ -41,6 +44,8 @@ namespace Project.Common.Installers
 
             Container.DeclareSignal<DialogSignal>();
 
+            Container.BindInterfacesAndSelfTo<SaveLoadModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerWorldPosition>().AsSingle();
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
             Container.Bind<RequirementsDataService>().AsSingle().WithArguments(_requirementsData);
             Container.Bind<PlayerRayCastData>().FromInstance(_playerRayCastData).AsSingle();
@@ -67,6 +72,7 @@ namespace Project.Common.Installers
             Container.BindInterfacesAndSelfTo<DialogViewController>().AsSingle();
             Container.BindInterfacesAndSelfTo<DialogController>().AsSingle();
 
+            Container.Bind<SaveLoadControllerFactory>().AsSingle().WithArguments(_saveLoadControllerPrefab);
             Container.BindInterfacesTo<ProjectEntryPoint>().AsSingle().WithArguments(new WidescreenData { Prefab = _widescreenPrefab} );
         }
     }
