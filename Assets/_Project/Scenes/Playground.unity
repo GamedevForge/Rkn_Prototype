@@ -4183,6 +4183,7 @@ MonoBehaviour:
   _assetsInputs: {fileID: 135756641613574975}
   _cursorRectTransform: {fileID: 1546616903}
   _canvasRectTransform: {fileID: 1787178172}
+  _playerTransformOnDestroy: {fileID: 135756641613574994}
   _windowsData: {fileID: 11400000, guid: 769ea051123a1e2458fb581d3f11be6f, type: 2}
   _newsWindowWidget: {fileID: 1050643719}
   _newsWindowCloseWidget: {fileID: 1608507429}
@@ -10888,6 +10889,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eca9e0ecd7b84545bd65efe1ba6f330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &135756641613574994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857717171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a20d8daa85ddcb40b0af868c3f5481c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerTransform: {fileID: 135756641613574986}
 --- !u!1 &2114283753834967212
 GameObject:
   m_ObjectHideFlags: 0
@@ -11404,6 +11418,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 135756641613574992}
+    - targetCorrespondingSourceObject: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 135756641613574994}
   m_SourcePrefab: {fileID: 100100000, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
 --- !u!1001 &7288094137546172433
 PrefabInstance:

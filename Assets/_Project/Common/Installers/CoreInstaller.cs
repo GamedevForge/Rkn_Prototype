@@ -24,6 +24,7 @@ namespace Project.Common.Installers
         [SerializeField] private StarterAssetsInputs _assetsInputs;
         [SerializeField] private RectTransform _cursorRectTransform;
         [SerializeField] private RectTransform _canvasRectTransform;
+        [SerializeField] private PlayerTransform _playerTransformOnDestroy;
 
         [Header("Windows:")]
         [SerializeField] private WindowsData _windowsData;
@@ -74,7 +75,7 @@ namespace Project.Common.Installers
 
             Container.Bind<PlayerRayCasterModel>().AsSingle();
             Container.Bind<PlayerState>().AsSingle();
-            Container.Bind<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform);
+            Container.BindInterfacesAndSelfTo<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform, _playerTransformOnDestroy);
             Container.Bind<CursorAnimation>().AsSingle().WithArguments(_assetsInputs, _cursorRectTransform, _cursorData);
             Container.Bind<NewsWindowModel1>().AsSingle();
             Container.Bind<WindowsRepository>().AsSingle();

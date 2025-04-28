@@ -1,29 +1,17 @@
-﻿using Project.Common.Configs;
-using Project.Common.UI;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Project.Common.Core.SaveLoadSystem
 {
-    public class SaveLoadController : MonoBehaviour
+    public class SaveLoadController : MonoBehaviour, ISaveController
     {
         private readonly SaveLoadSystem _system = new();
 
         private SaveLoadModel _model;
-        private IPlyerWorldPositionProperty _position;
-        private DayHandler _dayHandler;
-        private QuestConfigService _questConfigService;
 
-        public void Initialize(
-            SaveLoadModel model, 
-            IPlyerWorldPositionProperty position, 
-            DayHandler dayHandler,
-            QuestConfigService questConfigService)
+        public void Initialize(SaveLoadModel model)
         {
             _model = model;
-            _position = position;
-            _dayHandler = dayHandler;
-            _questConfigService = questConfigService;
 
             PlayerSaveData playerSaveData = _system.Load();
 
@@ -31,25 +19,17 @@ namespace Project.Common.Core.SaveLoadSystem
             {
                 playerSaveData = new()
                 {
-                    PlayerWorldPosition = _position.PlayerPosition,
-                    Day = _dayHandler.DayNumber,
+                    PlayerWorldPosition = Vector3.zero,
+                    Day = 1,
                     SceneName = "Neighborhood",
                 };
             }
 
             _model.SetCurrentData(playerSaveData);
-
-            _dayHandler.OnDayNumberChanged += Save;
-            _questConfigService.OnQuestClose += Save;
-            _position.OnTransformDisable += Save;
         }
 
         private void OnDestroy()
         {
-            _dayHandler.OnDayNumberChanged -= Save;
-            _questConfigService.OnQuestClose -= Save;
-            _position.OnTransformDisable -= Save;
-
             Save();
         }
 
@@ -61,6 +41,18 @@ namespace Project.Common.Core.SaveLoadSystem
                 _model.Property.SceneName = currentSceneName;
 
             _system.Save(_model.Property);
+        }
+
+        public void Clear()
+        {
+            PlayerSaveData playerSaveData = new()
+            {
+                PlayerWorldPosition = Vector3.zero,
+                Day = 1,
+                SceneName = "Neighborhood",
+                QuestSaveData = null,
+            };
+            _model.SetCurrentData(playerSaveData);
         }
 
         public void Save(int _) =>

@@ -2,6 +2,7 @@
 using Project.Common.Core.SaveLoadSystem;
 using Project.Common.UI;
 using System;
+using System.Collections.Generic;
 using Zenject;
 
 namespace Project.Common.Configs
@@ -13,17 +14,20 @@ namespace Project.Common.Configs
         private readonly QuestData _questData;
         private readonly DayHandler _dayHandler;
         private readonly IProperty<PlayerSaveData> _playerSaveData;
+        private readonly ISaveController _saveController;
 
         public QuestConfig[] CurrentQuestConfigs { get; private set; }
 
         public QuestConfigService(
             QuestData questData, 
             DayHandler dayHandler, 
-            IProperty<PlayerSaveData> playerSaveData)
+            IProperty<PlayerSaveData> playerSaveData,
+            ISaveController saveController)
         {
             _questData = questData;
             _dayHandler = dayHandler;
             _playerSaveData = playerSaveData;
+            _saveController = saveController;
         }
 
         public void Initialize()
@@ -44,6 +48,7 @@ namespace Project.Common.Configs
                 if (dayNumber < _questData.QuestConfigs.Count)
                 {
                     _playerSaveData.Property.QuestSaveData = new QuestSaveData();
+                    _playerSaveData.Property.QuestSaveData.QuestSaveConfigs = new List<QuestSaveConfig>();
                     QuestSaveData questSaveData = _playerSaveData.Property.QuestSaveData;
 
                     CurrentQuestConfigs = _questData.QuestConfigs[dayNumber];
@@ -84,6 +89,7 @@ namespace Project.Common.Configs
                 if (config.ID == id)
                     config.IsActive = false;
             }
+            _saveController.Save();
             OnQuestClose?.Invoke();
         }
 

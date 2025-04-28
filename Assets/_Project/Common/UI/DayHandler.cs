@@ -8,13 +8,17 @@ namespace Project.Common.UI
     public class DayHandler : IInitializable
     {
         private readonly IProperty<PlayerSaveData> _playerSaveData;
+        private readonly ISaveController _saveController;
         
         public event Action<int> OnDayNumberChanged;
         
         public int DayNumber { get; private set; }
 
-        public DayHandler(int day, IProperty<PlayerSaveData> platerSaveData) =>
+        public DayHandler(int day, IProperty<PlayerSaveData> platerSaveData, ISaveController saveController)
+        {
             _playerSaveData = platerSaveData;
+            _saveController = saveController;
+        }
 
         public void Initialize() =>
             DayNumber = _playerSaveData.Property.Day;
@@ -23,6 +27,7 @@ namespace Project.Common.UI
         {  
             DayNumber = dayNumber;
             _playerSaveData.Property.Day = DayNumber;
+            _saveController.Save();
             OnDayNumberChanged?.Invoke(DayNumber);
         }
     }

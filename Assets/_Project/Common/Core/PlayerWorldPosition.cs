@@ -9,6 +9,7 @@ namespace Project.Common.Core
         public event Action OnTransformDisable;
 
         private readonly IProperty<PlayerSaveData> _saveLoadModel;
+        private readonly ISaveController _saveController;
         
         private Transform _currentPlayerTransform;
 
@@ -24,13 +25,25 @@ namespace Project.Common.Core
         }
         public bool CurrentPlayerTransformIsNotNull => _currentPlayerTransform != null;
 
-        public PlayerWorldPosition(IProperty<PlayerSaveData> saveLoadModel) =>
+        public PlayerWorldPosition(IProperty<PlayerSaveData> saveLoadModel, ISaveController saveController)
+        {
             _saveLoadModel = saveLoadModel;
+            _saveController = saveController;
+        }
 
         public void DisableCurrentTransform()
         {
             _saveLoadModel.Property.PlayerWorldPosition = PlayerPosition;
             _currentPlayerTransform = null;
+            _saveController.Save();
+            OnTransformDisable?.Invoke();
+        }
+
+        public void DisableCurrentTransform(Vector3 lastPosition)
+        {
+            _saveLoadModel.Property.PlayerWorldPosition = lastPosition;
+            _currentPlayerTransform = null;
+            _saveController.Save();
             OnTransformDisable?.Invoke();
         }
 

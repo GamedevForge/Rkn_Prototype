@@ -40,11 +40,18 @@ namespace Project.Common.Installers
 
         public override void InstallBindings()
         {
+            SaveLoadModel saveLoadModel = new();
+            SaveLoadControllerFactory saveLoadControllerFactory = new(saveLoadModel, _saveLoadControllerPrefab);
+            SaveLoadController saveLoadController = saveLoadControllerFactory.Create();
+
             SignalBusInstaller.Install(Container);
 
             Container.DeclareSignal<DialogSignal>();
 
-            Container.BindInterfacesAndSelfTo<SaveLoadModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SaveLoadModel>().FromInstance(saveLoadModel).AsSingle();
+            Container.BindInterfacesAndSelfTo<SaveLoadController>().FromInstance(saveLoadController).AsSingle();
+
+            Container.Bind<SaveLoadControllerFactory>().AsSingle().WithArguments(_saveLoadControllerPrefab);
             Container.BindInterfacesAndSelfTo<PlayerWorldPosition>().AsSingle();
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
             Container.Bind<RequirementsDataService>().AsSingle().WithArguments(_requirementsData);
@@ -72,7 +79,6 @@ namespace Project.Common.Installers
             Container.BindInterfacesAndSelfTo<DialogViewController>().AsSingle();
             Container.BindInterfacesAndSelfTo<DialogController>().AsSingle();
 
-            Container.Bind<SaveLoadControllerFactory>().AsSingle().WithArguments(_saveLoadControllerPrefab);
             Container.BindInterfacesTo<ProjectEntryPoint>().AsSingle().WithArguments(new WidescreenData { Prefab = _widescreenPrefab} );
         }
     }

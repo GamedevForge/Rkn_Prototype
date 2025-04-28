@@ -5,7 +5,7 @@ namespace Project.Common.Core.SaveLoadSystem
 {
     public class SaveLoadSystem
     {
-        private string FilePath => Application.persistentDataPath + "/PlaterData.json";
+        private string FilePath => Application.persistentDataPath + "/PlayerData.json";
         
         public void Save(PlayerSaveData playerSaveData)
         {
