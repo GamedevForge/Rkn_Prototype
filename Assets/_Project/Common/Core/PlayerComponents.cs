@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.Common.Core.SaveLoadSystem;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -36,7 +37,8 @@ namespace Project.Common.Core
 
         private void OnDestroy(Vector3 lastPosition)
         {
-            _playerWorldPosition.DisableCurrentTransform(lastPosition);
+            _playerWorldPosition.SetPosition(lastPosition);
+            _playerWorldPosition.DisableCurrentTransform();
             _playerTransform.PositionPerDestroyed -= OnDestroy;
         }
     }

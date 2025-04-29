@@ -31,17 +31,11 @@ namespace Project.Common.Core
             _saveController = saveController;
         }
 
+        public void SetPosition(Vector3 position) =>
+            _saveLoadModel.Property.PlayerWorldPosition = position;
+
         public void DisableCurrentTransform()
         {
-            _saveLoadModel.Property.PlayerWorldPosition = PlayerPosition;
-            _currentPlayerTransform = null;
-            _saveController.Save();
-            OnTransformDisable?.Invoke();
-        }
-
-        public void DisableCurrentTransform(Vector3 lastPosition)
-        {
-            _saveLoadModel.Property.PlayerWorldPosition = lastPosition;
             _currentPlayerTransform = null;
             _saveController.Save();
             OnTransformDisable?.Invoke();

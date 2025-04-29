@@ -37,7 +37,7 @@ namespace Project.Common.UI
                 _newsCountPerDay++;
         }
 
-        private void ZeroOut(int _) =>
+        private void ZeroOut() =>
             _newsCountPerDay = 0;
     }
 }

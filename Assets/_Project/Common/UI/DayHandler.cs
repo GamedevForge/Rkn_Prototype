@@ -10,7 +10,7 @@ namespace Project.Common.UI
         private readonly IProperty<PlayerSaveData> _playerSaveData;
         private readonly ISaveController _saveController;
         
-        public event Action<int> OnDayNumberChanged;
+        public event Action OnDayNumberChanged;
         
         public int DayNumber { get; private set; }
 
@@ -28,7 +28,7 @@ namespace Project.Common.UI
             DayNumber = dayNumber;
             _playerSaveData.Property.Day = DayNumber;
             _saveController.Save();
-            OnDayNumberChanged?.Invoke(DayNumber);
+            OnDayNumberChanged?.Invoke();
         }
     }
 }

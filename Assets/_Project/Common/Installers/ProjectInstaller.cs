@@ -21,6 +21,9 @@ namespace Project.Common.Installers
         [Header("SaveLoadSystem:")]
         [SerializeField] private GameObject _saveLoadControllerPrefab;
 
+        [Header("SpawnPoints:")]
+        [SerializeField] private SceneSpawnPointData _sceneSpawnPointData;
+
         [Header("Quest:")]
         [SerializeField] private GameObject _boardPrefab;
         [SerializeField] private GameObject _targetPointerPrefab;
@@ -48,9 +51,11 @@ namespace Project.Common.Installers
 
             Container.DeclareSignal<DialogSignal>();
 
+            Container.BindInterfacesAndSelfTo<GameState>().AsSingle();
             Container.BindInterfacesAndSelfTo<SaveLoadModel>().FromInstance(saveLoadModel).AsSingle();
             Container.BindInterfacesAndSelfTo<SaveLoadController>().FromInstance(saveLoadController).AsSingle();
 
+            Container.Bind<SceneSpawnPointData>().FromInstance(_sceneSpawnPointData).AsSingle();
             Container.Bind<SaveLoadControllerFactory>().AsSingle().WithArguments(_saveLoadControllerPrefab);
             Container.BindInterfacesAndSelfTo<PlayerWorldPosition>().AsSingle();
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);

@@ -10,11 +10,13 @@ namespace Project.Common.Configs
     public class QuestConfigService : IInitializable, IDisposable
     {
         public event Action OnQuestClose;
+        public event Action OnCurrentQuestConfigChange;
         
         private readonly QuestData _questData;
         private readonly DayHandler _dayHandler;
         private readonly IProperty<PlayerSaveData> _playerSaveData;
         private readonly ISaveController _saveController;
+        private readonly GameState _gameState;
 
         public QuestConfig[] CurrentQuestConfigs { get; private set; }
 
@@ -22,25 +24,31 @@ namespace Project.Common.Configs
             QuestData questData, 
             DayHandler dayHandler, 
             IProperty<PlayerSaveData> playerSaveData,
-            ISaveController saveController)
+            ISaveController saveController,
+            GameState gameState)
         {
             _questData = questData;
             _dayHandler = dayHandler;
             _playerSaveData = playerSaveData;
             _saveController = saveController;
+            _gameState = gameState;
         }
 
         public void Initialize()
         {
             _dayHandler.OnDayNumberChanged += ChangeCurrentQuestConfigs;
-            ChangeCurrentQuestConfigs(_dayHandler.DayNumber);
+            _gameState.OnGameStart += ChangeCurrentQuestConfigs;
         }
 
-        public void Dispose() =>
-            _dayHandler.OnDayNumberChanged -= ChangeCurrentQuestConfigs;
-
-        private void ChangeCurrentQuestConfigs(int dayNumber)
+        public void Dispose()
         {
+            _dayHandler.OnDayNumberChanged -= ChangeCurrentQuestConfigs;
+            _gameState.OnGameStart -= ChangeCurrentQuestConfigs;
+        }
+
+        private void ChangeCurrentQuestConfigs()
+        {
+            int dayNumber = _dayHandler.DayNumber;
             if (_playerSaveData.Property.QuestSaveData == null)
             {       
                 if (dayNumber != 0)
@@ -70,6 +78,7 @@ namespace Project.Common.Configs
                     _playerSaveData.Property.QuestSaveData = null;
                 }
             }
+            OnCurrentQuestConfigChange?.Invoke();
         }
 
         private QuestSaveConfig GetSaveDataConfig(string id)
@@ -87,7 +96,10 @@ namespace Project.Common.Configs
             foreach (var config in _playerSaveData.Property.QuestSaveData.QuestSaveConfigs)
             {
                 if (config.ID == id)
+                {
                     config.IsActive = false;
+                    break;
+                }
             }
             _saveController.Save();
             OnQuestClose?.Invoke();

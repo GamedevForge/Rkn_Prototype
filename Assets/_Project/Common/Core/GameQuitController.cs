@@ -25,9 +25,9 @@ namespace Project.Common.Core
             _dayHandler.OnDayNumberChanged -= Quit;
         }
 
-        private void Quit(int day)
+        private void Quit()
         {
-            if (day >= 3)
+            if (_dayHandler.DayNumber >= 3)
                 _sceneLoader.LoadScene("MainMenuScene");
         }
     }

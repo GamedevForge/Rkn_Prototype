@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Project.Common.Core.SaveLoadSystem
 {
+    [Serializable]
     public class PlayerSaveData
     {
         public string SceneName;

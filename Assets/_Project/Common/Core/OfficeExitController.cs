@@ -1,4 +1,5 @@
 ﻿using Project.Common.Configs;
+using UnityEngine;
 using Zenject;
 
 namespace Project.Common.Core
@@ -6,7 +7,9 @@ namespace Project.Common.Core
     public class OfficeExitController : BusController
     {
         private QuestConfigService _questConfigService;
-        
+
+        protected override Vector3 SpawnPointOnSceneChange => PlayerSpawnPointData.SpawnPoint[Scene.Neighborhood];
+
         public override string Name => GetObjectConfig(ObjectType.Door).Name;
         public override bool CanInteract => _questConfigService.GetQuestConfig() == null ||
             _questConfigService.GetQuestConfig().ID == "go_home";

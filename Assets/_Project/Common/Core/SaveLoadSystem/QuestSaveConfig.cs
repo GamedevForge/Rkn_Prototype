@@ -1,5 +1,8 @@
-﻿namespace Project.Common.Core.SaveLoadSystem
+﻿using System;
+
+namespace Project.Common.Core.SaveLoadSystem
 {
+    [Serializable]
     public class QuestSaveConfig
     {
         public string ID;

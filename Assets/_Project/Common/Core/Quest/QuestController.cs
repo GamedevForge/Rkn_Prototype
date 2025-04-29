@@ -8,7 +8,7 @@ using System;
 
 namespace Project.Common.Core.Quest
 {
-    public class QuestController : IInitializable
+    public class QuestController : IInitializable, IDisposable
     {     
         private readonly QuestConfigService _configService;
         private readonly QuestViewController _view;
@@ -22,7 +22,17 @@ namespace Project.Common.Core.Quest
             _view = questView;
         }
         
-        public async void Initialize()
+        public void Initialize()
+        {
+            _configService.OnCurrentQuestConfigChange += ActivateQuestController;
+        }
+        
+        public void Dispose()
+        {
+            _configService.OnCurrentQuestConfigChange -= ActivateQuestController;
+        }
+
+        private async void ActivateQuestController()
         {
             CurrentQuestConfig = _configService.GetQuestConfig();
             if (CurrentQuestConfig == null)
@@ -110,5 +120,6 @@ namespace Project.Common.Core.Quest
 
         private UniTask RemoveQuestView(QuestConfig questConfig) =>
             _view.RemoveQuest(questConfig);
+
     }
 }

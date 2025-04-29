@@ -14,6 +14,11 @@ namespace Project.Common.Core
 
         private ObjectsDataService _dataService;
         private ZenjectSceneLoader _sceneLoader;
+        private PlayerWorldPosition _playerWorldPosition;
+
+        protected SceneSpawnPointData PlayerSpawnPointData {  get; private set; }
+
+        protected virtual Vector3 SpawnPointOnSceneChange => PlayerSpawnPointData.SpawnPoint[Scene.Playground];
 
         [field: SerializeField] public Transform MarkerTarget { get; private set; }
         [field: SerializeField] public float HoldTime { get; private set; }
@@ -22,15 +27,22 @@ namespace Project.Common.Core
         public virtual bool CanInteract { get; private set; } = true;
         public virtual string Name => _dataService.GetObjectConfig(ObjectType.Bus).Name;
 
-        [Inject] private void Construct(ObjectsDataService dataService, ZenjectSceneLoader sceneLoader)
+        [Inject] private void Construct(
+            ObjectsDataService dataService, 
+            ZenjectSceneLoader sceneLoader,
+            PlayerWorldPosition playerWorldPosition,
+            SceneSpawnPointData sceneSpawnPointData)
         {
             _dataService = dataService;
             _sceneLoader = sceneLoader;
+            _playerWorldPosition = playerWorldPosition;
+            PlayerSpawnPointData = sceneSpawnPointData;
         }
 
         public virtual void Interact()
         {
             OnEvent?.Invoke();
+            SetPositionForNextScene();
             LoadScene();
         }
 
@@ -41,6 +53,9 @@ namespace Project.Common.Core
 
         protected ObjectConfig GetObjectConfig(ObjectType objectType) =>
             _dataService.GetObjectConfig(objectType);
+
+        protected void SetPositionForNextScene() =>
+            _playerWorldPosition.SetPosition(SpawnPointOnSceneChange);
 
         private void LoadScene() =>
             _sceneLoader.LoadScene(SceneName);

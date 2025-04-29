@@ -1,4 +1,5 @@
-﻿using Project.Common.Core;
+﻿using Project.Common.Configs;
+using Project.Common.Core;
 using Project.Common.Core.SaveLoadSystem;
 using Project.Common.Installers;
 using UnityEngine;
@@ -15,21 +16,29 @@ namespace Project.Common.UI
         private DayHandler _dayHandler;
         private IProperty<PlayerSaveData> _saveData;
         private SaveLoadController _saveLoadController;
+        private GameState _gameState;
 
         [Inject] private void Construct(ZenjectSceneLoader sceneLoader,
             DayHandler dayHandler,
             IProperty<PlayerSaveData> saveData,
-            SaveLoadController saveLoadController)
+            SaveLoadController saveLoadController,
+            GameState gameState)
         {
             _sceneLoader = sceneLoader;
             _dayHandler = dayHandler;
             _saveData = saveData;
             _saveLoadController = saveLoadController;
+            _gameState = gameState;
         }
 
         public void LoadScene()
         {
-            //_dayHandler.SetDayCount(_dayReceiver.DayNumber);
+            _gameState.StartGame();
+            if (_saveData.Property.SceneName == "Playground")
+                _gameState.GoToPlayground();
+            else
+                _gameState.GoToHome();
+            
             _sceneLoader.LoadScene(_saveData.Property.SceneName, LoadSceneMode.Single, (container) =>
             {
                 container.BindInstance(_dayReceiver.DayNumber).WhenInjectedInto<ProjectInstaller>();
