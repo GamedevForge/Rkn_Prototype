@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Zenject;
 using Project.Common.Configs;
 
 namespace Project.Common.Core
@@ -9,11 +8,13 @@ namespace Project.Common.Core
         private PlayerRayCasterModel _model;
         private PlayerRayCastData _data;
 
-        [Inject] private void Construct(PlayerRayCastData data) =>
-            _data = data;
-
-        public void Initialize(PlayerRayCasterModel model) =>
+        public void Initialize(
+            PlayerRayCasterModel model,
+            PlayerRayCastData data)
+        {
             _model = model;
+            _data = data;
+        }
 
         private void Update()
         {

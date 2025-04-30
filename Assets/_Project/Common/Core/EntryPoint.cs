@@ -10,56 +10,40 @@ namespace Project.Common.Core
     public class EntryPoint : IInitializable, IDisposable
     {
         private readonly PlayerState _playerState;
-        private readonly PlayerInteractController _interactController;
-        private readonly PlayerRayCasterController _rayCasterController;
-        private readonly PlayerRayCasterModel _rayCasterModel;
-        private readonly PlayerStateController _playerStateController;
         private readonly InteractiveObjectsTextController _textController;
-        private readonly PlayerQuitController _playerQuitController;
         private readonly FirstPersonController _firstPersonController;
         private readonly CursorAnimation _cursorAnimation;
         private readonly PlayerComponents _playerComponents;
         private readonly WindowsRepository _windowsRepository;
         private readonly IInstantiator _instantiator;
         private readonly NewsModel _newsModel;
+        private readonly NewsController _newsController;
 
         private DataBaseWindowViewModel _dataBaseWindowViewModel;
         private DataBaseViewController _dataBaseViewController;
 
         public EntryPoint(PlayerState playerState,
-            PlayerInteractController playerInteractController,
-            PlayerRayCasterController rayCasterController,
-            PlayerRayCasterModel rayCasterModel,
             FirstPersonController firstPersonController,
-            CharacterController characterController,
-            InteractableObjectsView interactiveObjectsTextView,
             NewsModel newsModel,
             IInstantiator instantiator,
             WindowsRepository windowsRepository,
             PlayerComponents playerComponents,
             CursorAnimation cursorAnimation,
-            PlayerQuitController playerQuitController,
             NewsWindowData newsWindowData,
             DataBaseWindowData dataBaseWindowData,
-            RequirementsWindowData requirementsWindowData)
+            RequirementsWindowData requirementsWindowData,
+            NewsController newsController,
+            InteractableObjectsView interactableObjectsView,
+            PlayerRayCasterModel playerRayCasterModel)
         {
             _playerState = playerState;
-            _interactController = playerInteractController;
-            _rayCasterController = rayCasterController;
-            _rayCasterModel = rayCasterModel;
             _playerComponents = playerComponents;
             _instantiator = instantiator;
             _newsModel = newsModel;
-            
-            _playerStateController = new(
-                firstPersonController, 
-                characterController, 
-                _playerState);
-            _textController = new(interactiveObjectsTextView,
-                rayCasterModel);
+            _newsController = newsController;
+            _textController = new InteractiveObjectsTextController(interactableObjectsView, playerRayCasterModel);
             
             _firstPersonController = firstPersonController;
-            _playerQuitController = playerQuitController;
             _cursorAnimation = cursorAnimation;
             _windowsRepository = windowsRepository;
 
@@ -71,17 +55,16 @@ namespace Project.Common.Core
 
         public void Initialize()
         {
-            _interactController.Initialize(_rayCasterModel);
-            _rayCasterController.Initialize(_rayCasterModel);
-            _playerStateController.Initialize();
+            //_interactController.Initialize(_rayCasterModel);
+            //_rayCasterController.Initialize(_rayCasterModel);
+            //_playerStateController.Initialize();
             _textController.Initialize();
-            _playerQuitController.Initialize(_playerState, _firstPersonController);
+            //_playerQuitController.Initialize(_playerState, _firstPersonController);
             _cursorAnimation.Initialize();
         }
 
         public void Dispose()
         {
-            _playerStateController.Dispose();
             _textController.Dispose();
             _cursorAnimation.Dispose();
             _dataBaseWindowViewModel.Dispose();
@@ -114,7 +97,7 @@ namespace Project.Common.Core
                 newsWindowData.RejectButtonTransform,
                 _firstPersonController,
                 _playerState);
-            newsWindowData.NewsController.Initialize(_newsModel, newsWindowViewModel, animation, _playerState);
+            _newsController.SetNews(_newsModel, newsWindowViewModel, animation);
             _windowsRepository.Add(newsWindowViewModel, newsWindowController);
         }
 

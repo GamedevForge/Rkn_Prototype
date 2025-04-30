@@ -23,16 +23,17 @@ namespace Project.Common.UI
             _playerState.InputOnKeyboard &&
             _model.NewsIsNotOverForToday;
 
-        public void Initialize(
+        public void Initialize(PlayerState playerState) =>
+            _playerState = playerState;
+
+        public void SetNews(
             NewsModel newsModel,
             INewsViewModel newsViewModel,
-            NewsApproveOrRejectAnimations newsApproveOrRejectAnimations,
-            PlayerState playerState)
+            NewsApproveOrRejectAnimations newsApproveOrRejectAnimations)
         {
             _model = newsModel;
             _view = newsViewModel;
             _animationController = newsApproveOrRejectAnimations;
-            _playerState = playerState;
 
             if (_model.NewsIsNotOverForToday == false)
                 _view.NewsIsOver();

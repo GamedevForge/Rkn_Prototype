@@ -14,7 +14,7 @@ namespace Project.Common.Core
 
         private ObjectsDataService _dataService;
         private ZenjectSceneLoader _sceneLoader;
-        private PlayerWorldPosition _playerWorldPosition;
+        private PlayerPositionController _playerPositionController;
 
         protected SceneSpawnPointData PlayerSpawnPointData {  get; private set; }
 
@@ -30,13 +30,13 @@ namespace Project.Common.Core
         [Inject] private void Construct(
             ObjectsDataService dataService, 
             ZenjectSceneLoader sceneLoader,
-            PlayerWorldPosition playerWorldPosition,
+            PlayerPositionController playerPositionController,
             SceneSpawnPointData sceneSpawnPointData)
         {
             _dataService = dataService;
             _sceneLoader = sceneLoader;
-            _playerWorldPosition = playerWorldPosition;
             PlayerSpawnPointData = sceneSpawnPointData;
+            _playerPositionController = playerPositionController;
         }
 
         public virtual void Interact()
@@ -55,7 +55,7 @@ namespace Project.Common.Core
             _dataService.GetObjectConfig(objectType);
 
         protected void SetPositionForNextScene() =>
-            _playerWorldPosition.SetPosition(SpawnPointOnSceneChange);
+            _playerPositionController.SetPosition(SpawnPointOnSceneChange);
 
         private void LoadScene() =>
             _sceneLoader.LoadScene(SceneName);

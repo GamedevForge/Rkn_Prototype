@@ -6,12 +6,12 @@ namespace Project.Common.Installers
 {
     public class ProjectEntryPoint : IInitializable
     {
-        private readonly Core.IFactory<GameObject, WidescreenData> _widesreenFactory;
-        private readonly WidescreenData _widescreenData;
+        private readonly Core.IFactory<GameObject, BaseFactoryData> _widesreenFactory;
+        private readonly BaseFactoryData _widescreenData;
 
         public ProjectEntryPoint(
-            Core.IFactory<GameObject, WidescreenData> widesreenFactory,
-            WidescreenData widescreenData)
+            Core.IFactory<GameObject, BaseFactoryData> widesreenFactory,
+            BaseFactoryData widescreenData)
         {
             _widesreenFactory = widesreenFactory;
             _widescreenData = widescreenData;

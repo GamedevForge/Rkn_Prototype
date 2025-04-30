@@ -2,7 +2,7 @@
 
 namespace Project.Common.Core
 {
-    public struct WidescreenData
+    public struct BaseFactoryData
     {
         public GameObject Prefab;
     }

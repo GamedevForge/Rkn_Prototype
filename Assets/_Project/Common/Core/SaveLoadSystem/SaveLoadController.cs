@@ -8,10 +8,14 @@ namespace Project.Common.Core.SaveLoadSystem
         private readonly SaveLoadSystem _system = new();
 
         private SaveLoadModel _model;
+        private PlayerPositionController _positionController;
 
-        public void Initialize(SaveLoadModel model)
+        public void Initialize(
+            SaveLoadModel model,
+            PlayerPositionController playerPositionController)
         {
             _model = model;
+            _positionController = playerPositionController;
 
             PlayerSaveData playerSaveData = _system.Load();
 
@@ -36,6 +40,7 @@ namespace Project.Common.Core.SaveLoadSystem
         public void Save()
         {
             string currentSceneName = SceneManager.GetActiveScene().name;
+            _model.Property.PlayerWorldPosition = _positionController.CurrentPosition;
 
             if (currentSceneName != "MainMenuScene")
                 _model.Property.SceneName = currentSceneName;

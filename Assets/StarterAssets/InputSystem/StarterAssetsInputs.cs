@@ -31,15 +31,15 @@ namespace StarterAssets
 		[Header("Lock jump")]
 		[SerializeField] private bool _lockJumping;
 
-		[Inject] private void Construct(PlayerState playerState) =>
+		public void Initialize(PlayerState playerState)
+		{
 			_playerState = playerState;
-
-        private void Awake()
-        {
-            SetCursorState(cursorLocked);
             _playerState.OnSitDownAtComputer += SitOnComputer;
-			_playerState.OnStandUpAtComputer += StandUpOnComputer;
+            _playerState.OnStandUpAtComputer += StandUpOnComputer;
         }
+
+        private void Awake() =>
+            SetCursorState(cursorLocked);
 
         private void OnDestroy()
         {

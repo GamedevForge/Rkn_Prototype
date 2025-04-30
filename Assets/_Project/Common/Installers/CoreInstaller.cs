@@ -11,7 +11,7 @@ namespace Project.Common.Installers
 {
     public class CoreInstaller : MonoInstaller
     {
-        //[SerializeField] private InteractableObjectsView _interactiveObjectsTextView;
+        [SerializeField] private InteractableObjectsView _interactiveObjectsTextView;
         //[SerializeField] private FirstPersonController _firstPersonController;
         //[SerializeField] private CharacterController _characterController;
         //[SerializeField] private PlayerInteractController _playerInteractController;
@@ -67,6 +67,7 @@ namespace Project.Common.Installers
         public override void InstallBindings()
         {
             Container.Bind<CursorAnimation>().AsSingle().WithArguments(_cursorRectTransform, _cursorData);
+            Container.Bind<InteractableObjectsView>().FromInstance(_interactiveObjectsTextView).AsSingle();
             Container.Bind<NewsWindowModel1>().AsSingle();
             Container.Bind<WindowsRepository>().AsSingle();
 
@@ -78,7 +79,6 @@ namespace Project.Common.Installers
                     CanvasRectTransform = _canvasRectTransform,
                     NewsButtonTransform = _newsButtonRectTransform,
                     TargetRectTransform = _newsWindowRectTransform,
-                    NewsController = _newsController,
                     ApproveButtonTransform = _approveButtonTransform,
                     RejectButtonTransform = _rejectButtonTransform,
                     CameraLookAtPointTransform = _lookAtPointForCamera,

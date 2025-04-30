@@ -4,7 +4,7 @@ using Project.Common.UI;
 namespace Project.Common.Core
 {
     public class WidesreenFactory : 
-        IFactory<GameObject, WidescreenData>, 
+        IFactory<GameObject, BaseFactoryData>, 
         IProperty<WidescreenAnimation, GameObject>
     {
         private readonly CanvasRepository _canvasRepository;
@@ -21,7 +21,7 @@ namespace Project.Common.Core
             _instantiator = instantiator;
         }
 
-        public GameObject Create(WidescreenData data)
+        public GameObject Create(BaseFactoryData data)
         {
             Property1 = _instantiator.InstantiatePrefab(data.Prefab);
             WidescreenComponentsAndData widescreenComponentsAndData = Property1.GetComponent<WidescreenComponentsAndData>();

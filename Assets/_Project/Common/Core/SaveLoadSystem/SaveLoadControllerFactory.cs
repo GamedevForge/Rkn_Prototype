@@ -7,6 +7,7 @@ namespace Project.Common.Core.SaveLoadSystem
         private readonly GameObject _saveLoadControllerPrefab;
 
         private readonly SaveLoadModel _model;
+        private readonly PlayerPositionController _positionController;
 
         public SaveLoadControllerFactory(
             SaveLoadModel model, 
@@ -23,7 +24,7 @@ namespace Project.Common.Core.SaveLoadSystem
             
             GameObject.DontDestroyOnLoad(saveLoadControllerGameObject);
             saveLoadController = saveLoadControllerGameObject.GetComponent<SaveLoadController>();
-            saveLoadController.Initialize(_model);
+            saveLoadController.Initialize(_model, _positionController);
 
             return saveLoadControllerGameObject.GetComponent<SaveLoadController>();
         }

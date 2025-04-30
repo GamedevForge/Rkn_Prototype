@@ -13,7 +13,6 @@ namespace Project.Common.Core
         public RectTransform CanvasRectTransform;
         public RectTransform TargetRectTransform;
         public RectTransform NewsButtonTransform;
-        public NewsController NewsController;
         public Transform RejectButtonTransform;
         public Transform ApproveButtonTransform;
         public Transform CameraLookAtPointTransform;

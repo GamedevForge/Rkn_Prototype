@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3908349643382721791}
   - component: {fileID: 6978225696373435876}
   - component: {fileID: 3265043290628919088}
+  - component: {fileID: 6944928803616359266}
   m_Layer: 8
   m_Name: PlayerCapsule
   m_TagString: Player
@@ -351,6 +352,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 6264681970185375196}
+--- !u!114 &6944928803616359266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231412783483301453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd9bbdd328a90ab458458f272e7d5f09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Agent>k__BackingField: {fileID: 5045772795079934050}
+  <CameraTransform>k__BackingField: {fileID: 6264681970185375196}
+  <PlayerTransform>k__BackingField: {fileID: 3266359599340332586}
 --- !u!1 &3973754843752066996
 GameObject:
   m_ObjectHideFlags: 0

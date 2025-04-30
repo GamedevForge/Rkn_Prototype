@@ -17,18 +17,22 @@ namespace Project.Common.UI
         private IProperty<PlayerSaveData> _saveData;
         private SaveLoadController _saveLoadController;
         private GameState _gameState;
+        private PlayerPositionController _playerPositionController;
 
-        [Inject] private void Construct(ZenjectSceneLoader sceneLoader,
+        [Inject] private void Construct(
+            ZenjectSceneLoader sceneLoader,
             DayHandler dayHandler,
             IProperty<PlayerSaveData> saveData,
             SaveLoadController saveLoadController,
-            GameState gameState)
+            GameState gameState,
+            PlayerPositionController playerPositionController)
         {
             _sceneLoader = sceneLoader;
             _dayHandler = dayHandler;
             _saveData = saveData;
             _saveLoadController = saveLoadController;
             _gameState = gameState;
+            _playerPositionController = playerPositionController;
         }
 
         public void LoadScene()
@@ -38,7 +42,9 @@ namespace Project.Common.UI
                 _gameState.GoToPlayground();
             else
                 _gameState.GoToHome();
-            
+
+            _playerPositionController.SetPosition(_saveData.Property.PlayerWorldPosition);
+
             _sceneLoader.LoadScene(_saveData.Property.SceneName, LoadSceneMode.Single, (container) =>
             {
                 container.BindInstance(_dayReceiver.DayNumber).WhenInjectedInto<ProjectInstaller>();
@@ -48,6 +54,7 @@ namespace Project.Common.UI
         public void StartNewGame()
         {
             _saveLoadController.Clear();
+            _playerPositionController.SetOriginPositionOnNeighborhood();
             LoadScene();
         }
     }

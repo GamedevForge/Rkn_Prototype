@@ -13,7 +13,8 @@ namespace Project.Common.Core
         private PlayerState _playerState;
         private FirstPersonController _firstPersonController;
 
-        public void Initialize(PlayerState playerState, 
+        public void Initialize(
+            PlayerState playerState, 
             FirstPersonController firstPersonController)
         {
             _playerState = playerState;

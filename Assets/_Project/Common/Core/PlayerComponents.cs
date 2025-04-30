@@ -1,46 +1,13 @@
-﻿using Project.Common.Core.SaveLoadSystem;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using Zenject;
 
 namespace Project.Common.Core
 {
-    public class PlayerComponents : IInitializable
+    public class PlayerComponents : MonoBehaviour
     {
-        private readonly PlayerWorldPosition _playerWorldPosition;
-        private readonly PlayerTransform _playerTransform;
-
-        public readonly NavMeshAgent Agent;
-        public readonly Transform CameraTransform;
-        public readonly Transform PlayerTransform;
-        
-        public PlayerComponents(
-            NavMeshAgent agent,
-            Transform transform,
-            Transform playerTransform,
-            PlayerTransform playerTransformComponent, 
-            PlayerWorldPosition playerWorldPosition)
-        { 
-            Agent = agent;
-            CameraTransform = transform;
-            PlayerTransform = playerTransform;
-            _playerWorldPosition = playerWorldPosition;
-            _playerTransform = playerTransformComponent;
-        }
-
-        public void Initialize()
-        {
-            _playerWorldPosition.SetCurrentPlayerTransform(PlayerTransform);
-            _playerTransform.PositionPerDestroyed += OnDestroy;
-        }
-
-        private void OnDestroy(Vector3 lastPosition)
-        {
-            _playerWorldPosition.SetPosition(lastPosition);
-            _playerWorldPosition.DisableCurrentTransform();
-            _playerTransform.PositionPerDestroyed -= OnDestroy;
-        }
+        [field: SerializeField] public NavMeshAgent Agent { get; private set; }
+        [field: SerializeField] public Transform CameraTransform { get; private set; }
+        [field: SerializeField] public Transform PlayerTransform { get; private set; }
     }
 }
 
