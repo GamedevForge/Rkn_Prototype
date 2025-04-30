@@ -365,8 +365,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Agent>k__BackingField: {fileID: 5045772795079934050}
-  <CameraTransform>k__BackingField: {fileID: 6264681970185375196}
-  <PlayerTransform>k__BackingField: {fileID: 3266359599340332586}
+  <CameraTransform>k__BackingField: {fileID: 3266359599340332586}
+  <PlayerTransform>k__BackingField: {fileID: 6264681970185375196}
 --- !u!1 &3973754843752066996
 GameObject:
   m_ObjectHideFlags: 0

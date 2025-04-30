@@ -8,10 +8,10 @@ namespace Project.Common.UI
 {
     public class CursorMovement : MonoBehaviour
     {
-        [SerializeField] private StarterAssetsInputs _assetsInputs;
         [SerializeField] private RectTransform _monitorCanvasRectTransform;
         [SerializeField] private float _mouseSensivity;
 
+        private StarterAssetsInputs _assetsInputs;
         private PlayerState _playerState;
 
         private float _xOffSet = 0f;
@@ -19,8 +19,13 @@ namespace Project.Common.UI
 
         private float HalfSize => GetComponent<RectTransform>().sizeDelta.x / 2f;
 
-        [Inject] private void Construct(PlayerState playerState) =>
+        [Inject] private void Construct(
+            PlayerState playerState,
+            StarterAssetsInputs starterAssetsInputs)
+        {
             _playerState = playerState;
+            _assetsInputs = starterAssetsInputs;
+        }
 
         private void Update()
         {

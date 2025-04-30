@@ -7,11 +7,11 @@ namespace Project.Common.Core
 {
     public class MouseMovement : MonoBehaviour
     {
-        [SerializeField] private StarterAssetsInputs _assetsInputs;
         [SerializeField] private MeshRenderer _mousePadRenderer;
         [SerializeField] private Transform _mousePadTransform;
         [SerializeField] private float _speed;
 
+        private StarterAssetsInputs _assetsInputs;
         private PlayerState _playerState;
 
         private float _xOffSet = 0f;
@@ -20,8 +20,13 @@ namespace Project.Common.Core
         private Vector3 MousePadSize => _mousePadRenderer.bounds.size;
         private Vector3 MousePadPosition => _mousePadTransform.localPosition; 
 
-        [Inject] private void Construct(PlayerState playerState) =>
+        [Inject] private void Construct(
+            PlayerState playerState,
+            StarterAssetsInputs starterAssetsInputs)
+        {
             _playerState = playerState;
+            _assetsInputs = starterAssetsInputs;
+        }
 
         private void Update()
         {

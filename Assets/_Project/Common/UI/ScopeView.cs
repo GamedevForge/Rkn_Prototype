@@ -24,8 +24,8 @@ namespace Project.Common.UI
 
         private void OnDestroy()
         {
-            _playerState.OnSitDownAtComputer += Deactivate;
-            _playerState.OnStandUpAtComputer += Activate;
+            _playerState.OnSitDownAtComputer -= Deactivate;
+            _playerState.OnStandUpAtComputer -= Activate;
             _canvasRepository.Remove(gameObject);
         }
 
