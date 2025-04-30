@@ -11,20 +11,20 @@ namespace Project.Common.Installers
 {
     public class CoreInstaller : MonoInstaller
     {
-        [SerializeField] private InteractableObjectsView _interactiveObjectsTextView;
-        [SerializeField] private FirstPersonController _firstPersonController;
-        [SerializeField] private CharacterController _characterController;
-        [SerializeField] private PlayerInteractController _playerInteractController;
-        [SerializeField] private PlayerRayCasterController _playerRayCasterController;
-        [SerializeField] private NavMeshAgent _playerNavMeshAgent;
-        [SerializeField] private Transform _cameraTransform;
-        [SerializeField] private Transform _playerTransform;
-        [SerializeField] private PlayerQuitController _playerQuitController;
+        //[SerializeField] private InteractableObjectsView _interactiveObjectsTextView;
+        //[SerializeField] private FirstPersonController _firstPersonController;
+        //[SerializeField] private CharacterController _characterController;
+        //[SerializeField] private PlayerInteractController _playerInteractController;
+        //[SerializeField] private PlayerRayCasterController _playerRayCasterController;
+        //[SerializeField] private NavMeshAgent _playerNavMeshAgent;
+        //[SerializeField] private Transform _cameraTransform;
+        //[SerializeField] private Transform _playerTransform;
+        //[SerializeField] private PlayerQuitController _playerQuitController;
         [SerializeField] private CursorData _cursorData;
-        [SerializeField] private StarterAssetsInputs _assetsInputs;
+        //[SerializeField] private StarterAssetsInputs _assetsInputs;
         [SerializeField] private RectTransform _cursorRectTransform;
         [SerializeField] private RectTransform _canvasRectTransform;
-        [SerializeField] private PlayerTransform _playerTransformOnDestroy;
+        //[SerializeField] private PlayerTransform _playerTransformOnDestroy;
 
         [Header("Windows:")]
         [SerializeField] private WindowsData _windowsData;
@@ -66,22 +66,11 @@ namespace Project.Common.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<PlayerInteractController>().FromInstance(_playerInteractController).AsSingle();
-            Container.Bind<PlayerRayCasterController>().FromInstance(_playerRayCasterController).AsSingle();
-            Container.Bind<FirstPersonController>().FromInstance(_firstPersonController).AsSingle();
-            Container.Bind<CharacterController>().FromInstance(_characterController).AsSingle();
-            Container.Bind<PlayerQuitController>().FromInstance(_playerQuitController).AsSingle();
-            Container.Bind<StarterAssetsInputs>().FromInstance(_assetsInputs).AsSingle();
-
-            Container.Bind<PlayerRayCasterModel>().AsSingle();
-            Container.Bind<PlayerState>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform, _playerTransformOnDestroy);
-            Container.Bind<CursorAnimation>().AsSingle().WithArguments(_assetsInputs, _cursorRectTransform, _cursorData);
+            Container.Bind<CursorAnimation>().AsSingle().WithArguments(_cursorRectTransform, _cursorData);
             Container.Bind<NewsWindowModel1>().AsSingle();
             Container.Bind<WindowsRepository>().AsSingle();
 
             Container.BindInterfacesTo<EntryPoint>().AsSingle().WithArguments(
-                _interactiveObjectsTextView,
                 new NewsWindowData
                 {
                     News = _newsListData,

@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using Project.Common.UI;
-using Project.Common.Core.SaveLoadSystem;
 
 namespace Project.Common.Core
 {
-    public class WidesreenFactory : IFactory<GameObject, WidescreenData>, IProperty<WidescreenAnimation, GameObject>
+    public class WidesreenFactory : 
+        IFactory<GameObject, WidescreenData>, 
+        IProperty<WidescreenAnimation, GameObject>
     {
         private readonly CanvasRepository _canvasRepository;
         private readonly Zenject.IInstantiator _instantiator;

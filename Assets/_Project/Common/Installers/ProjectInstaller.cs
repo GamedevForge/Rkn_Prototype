@@ -3,7 +3,9 @@ using Project.Common.Core;
 using Project.Common.Core.Quest;
 using Project.Common.Core.SaveLoadSystem;
 using Project.Common.UI;
+using StarterAssets;
 using UnityEngine;
+using UnityEngine.AI;
 using Zenject;
 
 namespace Project.Common.Installers
@@ -40,6 +42,20 @@ namespace Project.Common.Installers
 
         [Header("Other:")]
         [SerializeField] private GameObject _widescreenPrefab;
+
+        [Header("Player:")]
+        [SerializeField] private GameObject _playerPrefab;
+        [SerializeField] private InteractableObjectsView _interactiveObjectsTextView;
+        [SerializeField] private FirstPersonController _firstPersonController;
+        [SerializeField] private CharacterController _characterController;
+        [SerializeField] private PlayerInteractController _playerInteractController;
+        [SerializeField] private PlayerRayCasterController _playerRayCasterController;
+        [SerializeField] private NavMeshAgent _playerNavMeshAgent;
+        [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private Transform _playerTransform;
+        [SerializeField] private PlayerQuitController _playerQuitController;
+        [SerializeField] private StarterAssetsInputs _assetsInputs;
+        [SerializeField] private PlayerTransform _playerTransformOnDestroy;
 
         public override void InstallBindings()
         {
@@ -85,6 +101,17 @@ namespace Project.Common.Installers
             Container.BindInterfacesAndSelfTo<DialogController>().AsSingle();
 
             Container.BindInterfacesTo<ProjectEntryPoint>().AsSingle().WithArguments(new WidescreenData { Prefab = _widescreenPrefab} );
+
+            Container.Bind<PlayerInteractController>().FromInstance(_playerInteractController).AsSingle();
+            Container.Bind<PlayerRayCasterController>().FromInstance(_playerRayCasterController).AsSingle();
+            Container.Bind<FirstPersonController>().FromInstance(_firstPersonController).AsSingle();
+            Container.Bind<CharacterController>().FromInstance(_characterController).AsSingle();
+            Container.Bind<PlayerQuitController>().FromInstance(_playerQuitController).AsSingle();
+            Container.Bind<StarterAssetsInputs>().FromInstance(_assetsInputs).AsSingle();
+
+            Container.BindInterfacesAndSelfTo<PlayerRayCasterModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PlayerComponents>().AsSingle().WithArguments(_playerNavMeshAgent, _cameraTransform, _playerTransform, _playerTransformOnDestroy);
         }
     }
 }
