@@ -5,16 +5,17 @@ namespace Project.Common.Core.SaveLoadSystem
     public class SaveLoadControllerFactory
     {
         private readonly GameObject _saveLoadControllerPrefab;
-
         private readonly SaveLoadModel _model;
         private readonly PlayerPositionController _positionController;
 
         public SaveLoadControllerFactory(
             SaveLoadModel model, 
-            GameObject saveLoadControllerPrefab)
+            GameObject saveLoadControllerPrefab,
+            PlayerPositionController playerPositionController)
         {
             _model = model;
             _saveLoadControllerPrefab = saveLoadControllerPrefab;
+            _positionController = playerPositionController;
         }
 
         public SaveLoadController Create()

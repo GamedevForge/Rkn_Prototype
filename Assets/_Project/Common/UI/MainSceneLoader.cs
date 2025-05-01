@@ -35,15 +35,13 @@ namespace Project.Common.UI
             _playerPositionController = playerPositionController;
         }
 
-        public void LoadScene()
+        private void LoadScene()
         {
             _gameState.StartGame();
             if (_saveData.Property.SceneName == "Playground")
                 _gameState.GoToPlayground();
             else
                 _gameState.GoToHome();
-
-            _playerPositionController.SetPosition(_saveData.Property.PlayerWorldPosition);
 
             _sceneLoader.LoadScene(_saveData.Property.SceneName, LoadSceneMode.Single, (container) =>
             {
@@ -54,7 +52,14 @@ namespace Project.Common.UI
         public void StartNewGame()
         {
             _saveLoadController.Clear();
+            _dayHandler.SetDayCountOnStartGame();
             _playerPositionController.SetOriginPositionOnNeighborhood();
+            LoadScene();
+        }
+
+        public void ContinueGame()
+        {
+            _playerPositionController.SetPosition(_saveData.Property.PlayerWorldPosition);
             LoadScene();
         }
     }

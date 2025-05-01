@@ -108,3 +108,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 2231412783483301453, guid: 2352e65404d0f0e4b93ea3cc8c01356f, type: 3}
   _playerRayCastData: {fileID: 11400000, guid: 53f076ce7d6e5a14ebda09ff34ac8eb9, type: 2}
+  _sceneSpawnPointData: {fileID: 11400000, guid: 7e4666648b2e05443b0807b553e7d397, type: 2}
+  _saveLoadControllerPrefab: {fileID: 1872988069693678077, guid: f56e26d792323c6479b01b4db065b0ee, type: 3}

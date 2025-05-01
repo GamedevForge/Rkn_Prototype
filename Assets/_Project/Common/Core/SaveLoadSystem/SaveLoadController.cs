@@ -40,7 +40,6 @@ namespace Project.Common.Core.SaveLoadSystem
         public void Save()
         {
             string currentSceneName = SceneManager.GetActiveScene().name;
-            _model.Property.PlayerWorldPosition = _positionController.CurrentPosition;
 
             if (currentSceneName != "MainMenuScene")
                 _model.Property.SceneName = currentSceneName;
@@ -59,8 +58,5 @@ namespace Project.Common.Core.SaveLoadSystem
             };
             _model.SetCurrentData(playerSaveData);
         }
-
-        public void Save(int _) =>
-            Save();
     }
 }

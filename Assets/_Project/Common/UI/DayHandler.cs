@@ -1,11 +1,10 @@
 ﻿using Project.Common.Core;
 using Project.Common.Core.SaveLoadSystem;
 using System;
-using Zenject;
 
 namespace Project.Common.UI
 {
-    public class DayHandler : IInitializable
+    public class DayHandler
     {
         private readonly IProperty<PlayerSaveData> _playerSaveData;
         private readonly ISaveController _saveController;
@@ -20,7 +19,7 @@ namespace Project.Common.UI
             _saveController = saveController;
         }
 
-        public void Initialize() =>
+        public void SetDayCountOnStartGame() =>
             DayNumber = _playerSaveData.Property.Day;
 
         public void SetDayCount(int dayNumber)

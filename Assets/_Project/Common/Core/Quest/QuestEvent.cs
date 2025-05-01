@@ -21,10 +21,11 @@ namespace Project.Common.Core.Quest
         public Transform Target => _event.MarkerTarget;
 
         [Inject] private void Construct(QuestController controller) =>
-            _controller = controller;
+            SetQuestController(controller);
 
-        private void Awake()
+        public void SetQuestController(QuestController controller)
         {
+            _controller = controller;
             _event.OnEvent += TriggerEvent;
             _controller.AddQuestEvent(this);
         }

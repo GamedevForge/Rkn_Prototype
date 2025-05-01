@@ -72,7 +72,6 @@ namespace Project.Common.Core.Quest
 
             if (id == CurrentQuestConfig.ID)
             {
-                //CurrentQuestConfig.IsActive = false;
                 _configService.CloseQuest(CurrentQuestConfig.ID);
                 await RemoveQuestView(CurrentQuestConfig);
                 await GetNextQuest();

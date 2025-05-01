@@ -4,7 +4,6 @@ using Project.Common.Configs;
 using Cysharp.Threading.Tasks;
 using Project.Common.UI;
 using System;
-using System.Collections.Generic;
 
 namespace Project.Common.Core
 {

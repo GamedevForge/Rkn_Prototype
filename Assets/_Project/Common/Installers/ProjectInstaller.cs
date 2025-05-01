@@ -3,9 +3,7 @@ using Project.Common.Core;
 using Project.Common.Core.Quest;
 using Project.Common.Core.SaveLoadSystem;
 using Project.Common.UI;
-using StarterAssets;
 using UnityEngine;
-using UnityEngine.AI;
 using Zenject;
 
 namespace Project.Common.Installers
@@ -45,25 +43,17 @@ namespace Project.Common.Installers
 
         public override void InstallBindings()
         {
-            SaveLoadModel saveLoadModel = new();
-            SaveLoadControllerFactory saveLoadControllerFactory = new(saveLoadModel, _saveLoadControllerPrefab);
-            SaveLoadController saveLoadController = saveLoadControllerFactory.Create();
-
             SignalBusInstaller.Install(Container);
 
             Container.DeclareSignal<DialogSignal>();
 
             Container.BindInterfacesAndSelfTo<GameState>().AsSingle();
-            Container.BindInterfacesAndSelfTo<SaveLoadModel>().FromInstance(saveLoadModel).AsSingle();
-            Container.BindInterfacesAndSelfTo<SaveLoadController>().FromInstance(saveLoadController).AsSingle();
 
-            Container.Bind<SceneSpawnPointData>().FromInstance(_sceneSpawnPointData).AsSingle();
             Container.Bind<SaveLoadControllerFactory>().AsSingle().WithArguments(_saveLoadControllerPrefab);
-            Container.BindInterfacesAndSelfTo<PlayerWorldPosition>().AsSingle();
             Container.Bind<ObjectsDataService>().AsSingle().WithArguments(_objectsData);
             Container.Bind<RequirementsDataService>().AsSingle().WithArguments(_requirementsData);
             Container.Bind<PlayerRayCastData>().FromInstance(_playerRayCastData).AsSingle();
-            Container.Bind<DayHandler>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DayHandler>().AsSingle();
             Container.Bind<NewsListData>().FromInstance(_newsListData).AsSingle();
             Container.BindInterfacesAndSelfTo<NewsModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameQuitController>().AsSingle();

@@ -7323,7 +7323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a184aed5d01b741a4c73f1c93b3122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _assetsInputs: {fileID: 0}
   _mousePadRenderer: {fileID: 198383757}
   _mousePadTransform: {fileID: 198383755}
   _speed: 0.02
@@ -8370,7 +8369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeb90de2d763e54498281b68649d4923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _assetsInputs: {fileID: 0}
   _monitorCanvasRectTransform: {fileID: 1787178172}
   _mouseSensivity: 50
 --- !u!114 &1546616905
@@ -10392,7 +10390,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 247
-  _assetsInputs: {fileID: 0}
 --- !u!1 &1823573320
 GameObject:
   m_ObjectHideFlags: 0

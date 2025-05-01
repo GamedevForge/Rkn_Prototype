@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarterAssets;
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -8,6 +9,8 @@ namespace Project.Common.Configs
     {
         private readonly GameObject _playerGameObject;
         private readonly GameState _gameState;
+
+        private StarterAssetsInputs _gameInputs => _playerGameObject.GetComponent<StarterAssetsInputs>();
 
         public PlayerActiveController(
             GameObject playerGameObject,
@@ -30,10 +33,16 @@ namespace Project.Common.Configs
             _gameState.OnGameStop -= DeactivatePlayerGameObject;
         }
 
-        private void ActivatePlayerGameObject() =>
+        private void ActivatePlayerGameObject()
+        {
             _playerGameObject.SetActive(true);
+            _gameInputs.HideCursor();         
+        }
 
-        private void DeactivatePlayerGameObject() =>
+        private void DeactivatePlayerGameObject()
+        {
+            _gameInputs.ShowCursor();
             _playerGameObject.SetActive(false);
+        }
     }
 }
